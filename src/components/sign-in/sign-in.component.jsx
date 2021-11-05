@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
-import { signInWithGoogle } from "./../../firebase/firebase.utils";
+import { auth, signInWithGoogle } from "./../../firebase/firebase.utils";
 
 import FormInput from "../form-input/form-input.component";
+import FormWrapper from "../form-wrapper/form-wrapper.component";
 import CustomButton from "../custom-button/custom-button.component";
 
 import { SignInFormWrapper, CustomButtonsWrapper } from "./sign-in.styles";
@@ -15,34 +16,46 @@ const SignIn = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await auth.signInWithEmailAndPassword(formData.email, formData.password);
+      setFormData({ email: "", password: "" });
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   return (
-    <SignInFormWrapper>
-      <form>
+    <FormWrapper>
+      <form onSubmit={handleSubmit}>
         <Title>У меня уже есть аккаунт</Title>
         <FormInput
           name="email"
           type="email"
           label="Введите адрес почты"
           required
-          handleChange={handleChange}
           id={"sign-in-email"}
+          handleChange={handleChange}
         />
         <FormInput
           name="password"
           type="password"
           label="Введите пароль"
           required
-          handleChange={handleChange}
           id={"sign-in-name"}
+          handleChange={handleChange}
         />
         <CustomButtonsWrapper>
-          <CustomButton>Войти</CustomButton>
+          <CustomButton type="submit">Войти</CustomButton>
           <CustomButton onClick={signInWithGoogle} isGoogleButton>
             Войти с Google
           </CustomButton>
         </CustomButtonsWrapper>
       </form>
-    </SignInFormWrapper>
+    </FormWrapper>
   );
 };
 

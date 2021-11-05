@@ -1,16 +1,49 @@
-import React, { useState } from "react";
+import React from "react";
 
+import CustomButton from "./../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.component";
-import { SignUpFormWrapper, Title } from "./sign-up.styles";
+import SpinnerComponent from "../spinner/spinner.component";
+import FormWrapper from "../form-wrapper/form-wrapper.component";
+
 import useForm from "../../hooks/useForm.hook";
 import { validateData } from "../../utils/validateData";
 
-const SignUp = () => {
-  const { userData, handleChange, handleSubmit, errors } =
-    useForm(validateData);
+import { SignUpFormWrapper, Title } from "./sign-up.styles";
+import {
+  auth,
+  createUserProfileDocument,
+} from "./../../firebase/firebase.utils";
+import { Spinner } from "../spinner/spinner.styles";
 
-  return (
-    <SignUpFormWrapper>
+const SignUp = () => {
+  const signUpWithEmailAndPassword = async (userData) => {
+    if (Object.values(userData).every(Boolean)) {
+      const { displayName, email, password } = userData;
+
+      try {
+        const { user } = await auth.createUserWithEmailAndPassword(
+          email,
+          password
+        );
+        console.log(user);
+
+        await createUserProfileDocument({
+          ...user,
+          displayName,
+        });
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+  };
+
+  const { userData, handleChange, handleSubmit, errors, isSubmitting } =
+    useForm(validateData, signUpWithEmailAndPassword);
+
+  return isSubmitting ? (
+    <Spinner />
+  ) : (
+    <FormWrapper>
       <form onSubmit={handleSubmit}>
         <Title>Зарегистрироваться</Title>
         <FormInput
@@ -57,9 +90,9 @@ const SignUp = () => {
         >
           {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         </FormInput>
-        <CustomButton></CustomButton>
+        <CustomButton>Зарегистрироваться</CustomButton>
       </form>
-    </SignUpFormWrapper>
+    </FormWrapper>
   );
 };
 

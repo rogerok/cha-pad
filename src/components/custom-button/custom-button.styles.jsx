@@ -3,11 +3,11 @@ import styled, { css } from "styled-components";
 export const customButtonStyles = css`
   background-color: black;
   color: white;
-  border: 5px solid white;
+  border: 1px solid white;
   transition: 0.2s linear;
   &:hover {
     background-color: transparent;
-    border: 5px solid black;
+    border: 1px solid black;
   }
 `;
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { createStructuredSelector } from "reselect";
@@ -37,38 +37,41 @@ const App = ({ currentUser, setCurrentUser }) => {
     });
     return unsubscribeFromAuth;
   }, []);
-
+  console.log(currentUser);
   return (
     <React.Fragment>
-      <BrowserRouter>
-        <Switch>
-          <main
-            style={{
-              margin: "0 auto",
-              padding: "0 50px",
-              height: "100vw",
-              maxWidth: "1370px",
-              backgroundImage: `url(${background})`,
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              backgroundColor: "#232526",
-              color: "white",
-            }}
-          >
-            <Header />
-            <Route exact path="/tea-library" component={TeaLibrary} />
-            <Route exact path="/tea-pad" component={TeaPad} />
-            <Route
-              exact
-              path="/sign-in"
-              render={() =>
-                currentUser ? <Redirect to="/" /> : <SignInAndSignUpPage />
-              }
-            />
-          </main>
-        </Switch>
-      </BrowserRouter>
+      <Switch>
+        <main
+          className="main-bg"
+          style={{
+            margin: "0 auto",
+            padding: "0 50px",
+            minHeight: "100vh",
+            maxWidth: "1370px",
+            minWidth: "100%",
+            backgroundImage: `url(${background})`,
+            backgroundPosition: "center",
+            backgroundSize: "contain",
+            backgroundRepeat: "repeat",
+            backgroundColor: "#232526",
+            color: "white",
+          }}
+        >
+          <Header />
+          <Route path="/tea-library/" component={TeaLibrary} />
+          <Route
+            path="/tea-pad"
+            render={() => (true ? <TeaPad /> : <Redirect to="/sign-in" />)}
+          />
+          <Route
+            exact
+            path="/sign-in"
+            render={() =>
+              currentUser ? <Redirect to="/" /> : <SignInAndSignUpPage />
+            }
+          />
+        </main>
+      </Switch>
     </React.Fragment>
   );
 };

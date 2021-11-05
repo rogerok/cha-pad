@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  padding-bottom: 20px;
+  margin-bottom: 30px;
 `;
 
 export const WrapperInput = styled.div`
   margin-top: 20px;
   max-width: 100%;
-  border: 5px solid white;
+  border: 1px solid white;
 `;
 
 export const Input = styled.input`

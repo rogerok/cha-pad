@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.main`
+export const Wrapper = styled.div`
   margin: 0 auto;
-  padding: 0 50px;
-  height: 100vw;
+  padding-bottom: 30px;
   max-width: 1370px;
 `;

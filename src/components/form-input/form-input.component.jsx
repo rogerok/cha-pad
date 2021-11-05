@@ -8,7 +8,7 @@ const FormInput = ({ children, label, id, handleChange, ...otherProps }) => {
       <WrapperInput>
         <Input onChange={handleChange} id={id} {...otherProps} />
       </WrapperInput>
-      {children} ?? {null} 
+      {children ?? null}
     </Wrapper>
   );
 };

@@ -1,7 +1,31 @@
 import React from "react";
+import { Route } from "react-router-dom";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
 
-const TeaPad = () => {
-  return <div className="">TeaPad</div>;
+import { createStructuredSelector } from "reselect";
+import { selectUiData } from "../../redux/tea-library/tea-library.selectors";
+
+import AddTea from "../add-tea/add-tea.component";
+import CollectionOverview from "./../../components/collection-overview/collection-overview.component";
+import WrapperComponent from "./../../components/wrapper/wrapper.component";
+import FormInput from "../../components/form-input/form-input.component";
+
+const TeaPad = ({ match, uiData }) => {
+  return (
+    <WrapperComponent>
+      <Route
+        exact
+        path={`${match.path}`}
+        render={(props) => <CollectionOverview teaCollection={uiData} />}
+      />
+      <Route exact path={`${match.path}/add-tea`} component={AddTea} />
+    </WrapperComponent>
+  );
 };
 
-export default TeaPad;
+const mapStateToProps = createStructuredSelector({
+  uiData: selectUiData,
+});
+
+export default withRouter(connect(mapStateToProps)(TeaPad));

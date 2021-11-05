@@ -1,7 +1,22 @@
 import React from "react";
 
-const TeaLibrary = () => {
-  return <div className="">TeaLibrary</div>;
+import CollectionOverview from "../../components/collection-overview/collection-overview.component";
+import WrapperComponent from "../../components/wrapper/wrapper.component";
+
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectTeaCollection } from "../../redux/tea-library/tea-library.selectors";
+
+const TeaLibrary = ({ teaCollection }) => {
+  return (
+    <WrapperComponent>
+      <CollectionOverview teaCollection={teaCollection} />
+    </WrapperComponent>
+  );
 };
 
-export default TeaLibrary;
+const mapStateToProps = createStructuredSelector({
+  teaCollection: selectTeaCollection,
+});
+
+export default connect(mapStateToProps)(TeaLibrary);

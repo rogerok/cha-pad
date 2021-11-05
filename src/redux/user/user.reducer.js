@@ -2,6 +2,8 @@ import { userActionsTypes } from "./user.types";
 
 const INITIAL_STATE = {
   currentUser: null,
+  isFetchingUserData: false,
+  tastedTea: [],
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
