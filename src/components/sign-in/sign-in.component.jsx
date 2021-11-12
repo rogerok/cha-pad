@@ -6,7 +6,7 @@ import FormInput from "../form-input/form-input.component";
 import FormWrapper from "../form-wrapper/form-wrapper.component";
 import CustomButton from "../custom-button/custom-button.component";
 
-import { SignInFormWrapper, CustomButtonsWrapper } from "./sign-in.styles";
+import { CustomButtonsWrapper } from "./sign-in.styles";
 import { Title } from "./sign-in.styles";
 
 const SignIn = () => {
