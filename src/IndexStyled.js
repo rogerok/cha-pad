@@ -36,6 +36,8 @@ const IndexStyled = createGlobalStyle`
     margin: 0 auto;
     padding: 0 50px;
     color: white;
+    background: #232526 url(${bgImage}) repeat-y top right;
+    background-size: contain;
   }
 
 
@@ -49,9 +51,6 @@ const IndexStyled = createGlobalStyle`
     color: #fdfdfdeb;
     font-weight: normal;
     font-size: 18px;
-
-    background: #232526 url(${bgImage}) no-repeat fixed center center;
-    background-size: cover;
   }
 
   code {
