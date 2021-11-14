@@ -15,6 +15,7 @@ const IndexStyled = createGlobalStyle`
   a {
     text-decoration: none;
   }
+
   a,
   a:visited,
   a:active {
@@ -30,21 +31,16 @@ const IndexStyled = createGlobalStyle`
   }
 }*/
 
-    .main-bg {
-      /*animation: bgScroll 20s linear infinite;*/
-      margin: 0 auto;
-      padding: 0 50px;
-      min-height: 100vh;
-      min-width: 100vw;
-      color: white;
-    }
- 
-  
+  .main-bg {
+    /*animation: bgScroll 20s linear infinite;*/
+    margin: 0 auto;
+    padding: 0 50px;
+    color: white;
+  }
+
+
   body {
     margin: 0;
-    //width: 100%;
-    min-height: 100vh;
-    height: 20000px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -54,11 +50,8 @@ const IndexStyled = createGlobalStyle`
     font-weight: normal;
     font-size: 18px;
 
-    background-image: url(${bgImage});
-    background-position: top left;
-    background-size: contain;
-    background-repeat: repeat-y;
-    background-color: #232526;
+    background: #232526 url(${bgImage}) no-repeat fixed center center;
+    background-size: cover;
   }
 
   code {
@@ -66,5 +59,4 @@ const IndexStyled = createGlobalStyle`
     monospace;
   }
 `
-
 export default IndexStyled
