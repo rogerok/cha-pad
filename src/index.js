@@ -7,17 +7,18 @@ import { Provider } from "react-redux";
 
 import store from "./redux/store";
 
-import "./index.css";
 import App from "./App";
+import IndexStyled from "./IndexStyled";
 
 ReactDOM.render(
-  <Provider store={store}>
     <React.StrictMode>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </React.StrictMode>
-  </Provider>,
+        <Provider store={store}>
+            <IndexStyled />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </Provider>
+    </React.StrictMode>,
 
   document.getElementById("root")
 );
