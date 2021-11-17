@@ -9,7 +9,6 @@ import { selectUiData } from "../../redux/tea-library/tea-library.selectors";
 import AddTea from "../../components/add-tea/add-tea.component";
 import CollectionOverview from "./../../components/collection-overview/collection-overview.component";
 import WrapperComponent from "./../../components/wrapper/wrapper.component";
-import FormInput from "../../components/form-input/form-input.component";
 
 const TeaPad = ({ match, uiData }) => {
   return (

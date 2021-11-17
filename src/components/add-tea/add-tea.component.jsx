@@ -5,6 +5,8 @@ import { useHistory } from "react-router";
 import { selectTeaGradesName } from "../../redux/tea-library/tea-library.selectors";
 import { createStructuredSelector } from "reselect";
 
+import { fetchUserData } from "../../redux/user/user.actions";
+
 import FormInput from "../form-input/form-input.component";
 import FormWrapper from "../form-wrapper/form-wrapper.component";
 import Select from "../select/select.component";
@@ -14,7 +16,7 @@ import CustomButton from "../custom-button/custom-button.component";
 
 import { CheckboxContainer } from "./add-tea.styles";
 
-const AddTea = ({ teaGradesName }) => {
+const AddTea = ({ teaGradesName, addTeaData }) => {
   const history = useHistory();
 
   const [teaData, setTeaData] = useState({
@@ -31,20 +33,23 @@ const AddTea = ({ teaGradesName }) => {
       ...teaData,
       [name]: name === "wouldTaste" ? !teaData.wouldTaste : value,
     });
-    console.log(e.target);
   };
-  console.log(teaData);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setTeaData({
+      ...teaData,
+      date: new Date(),
+    });
+
+    addTeaData(teaData);
+  };
 
   return (
     <WrapperComponent>
       <FormWrapper wide>
-        <form
-          id="add-tea-form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            console.log(teaData);
-          }}
-        >
+        <form id="add-tea-form" onSubmit={handleSubmit}>
           <FormInput
             name="teaName"
             type="text"
@@ -108,4 +113,8 @@ const mapStateToProps = createStructuredSelector({
   teaGradesName: selectTeaGradesName,
 });
 
-export default connect(mapStateToProps)(AddTea);
+const mapDispatchToProps = (dispatch) => ({
+  addTeaData: (data) => dispatch(fetchUserData(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddTea);

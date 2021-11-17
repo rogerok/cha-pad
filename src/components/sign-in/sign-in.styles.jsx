@@ -1,15 +1,5 @@
 import styled from "styled-components";
 
-export const SignInFormWrapper = styled.div`
-  margin-top: 50px;
-  width: 40%;
-  padding: 50px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border: 1px solid white;
-`;
-
 export const Title = styled.h2`
   margin-bottom: 30px;
   font-size: 24px;
