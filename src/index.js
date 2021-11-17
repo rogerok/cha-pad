@@ -11,16 +11,16 @@ import App from "./App";
 import IndexStyled from "./IndexStyled";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <BrowserRouter>
-        <PersistGate persistor={persistor}>
-          <IndexStyled />
+  <React.StrictMode>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <IndexStyled />
+        <BrowserRouter>
           <App />
-        </PersistGate>
-      </BrowserRouter>
-    </React.StrictMode>
-  </Provider>,
+        </BrowserRouter>
+      </PersistGate>
+    </Provider>
+  </React.StrictMode>,
 
   document.getElementById("root")
 );
