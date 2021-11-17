@@ -13,10 +13,6 @@ import TeaPad from "./pages/tea-pad/tea-pad.component";
 import TeaLibrary from "./pages/tea-library/tea-library.component";
 import Header from "./components/header/header.component";
 
-import background from "./img/background-image.jpg";
-
-import "./App.css";
-
 const App = ({ currentUser, setCurrentUser }) => {
   useEffect(() => {
     const unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
@@ -41,22 +37,7 @@ const App = ({ currentUser, setCurrentUser }) => {
   return (
     <React.Fragment>
       <Switch>
-        <main
-          className="main-bg"
-          style={{
-            margin: "0 auto",
-            padding: "0 50px",
-            minHeight: "100vh",
-            maxWidth: "1370px",
-            minWidth: "100%",
-            backgroundImage: `url(${background})`,
-            backgroundPosition: "center",
-            backgroundSize: "contain",
-            backgroundRepeat: "repeat",
-            backgroundColor: "#232526",
-            color: "white",
-          }}
-        >
+        <main className="main-bg">
           <Header />
           <Route path="/tea-library/" component={TeaLibrary} />
           <Route
