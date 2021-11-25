@@ -1,17 +1,34 @@
-import { createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
 import logger from "redux-logger";
-import { persistStore } from "redux-persist";
 
-import rootReducer from "./rootReducer";
+import userReducer from "./user/userSlice";
+import teaLibraryReducer from "./tea-library/teaLibrarySlice";
 
-const middlewares = [logger];
+import { configureStore } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
+import { persistStore, persistReducer } from "redux-persist";
+import { combineReducers } from "redux";
 
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(...middlewares))
-);
+/* const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["user"],
+};
+ */
+const reducers = combineReducers({
+  user: userReducer,
+  teaLibrary: teaLibraryReducer,
+});
+/* const persistedReducers = persistReducer(persistConfig, reducers); */
 
-const persistor = persistStore(store);
-
-export { store, persistor };
+export const store = configureStore({
+  reducer: reducers,
+  /*   middlleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(logger), */
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+});
+export const persistor = persistStore(store);

@@ -1,6 +1,33 @@
-import { userActionsTypes } from "./user.types";
+/* /* import { userActionsTypes } from "./user.types";
 
-const INITIAL_STATE = {
+import { createSlice } from "@reduxjs/toolkit";
+/* import { setCurrentUser } from "./user.actions"; */
+
+/* const userSlice = createSlice({
+  name: "user",
+  initialState: {
+    currentUser: null,
+    isFetchingUserData: false,
+    addedTea: {
+      darkOolong: [],
+      greenTea: [],
+      gabaTea: [],
+      lightOolong: [],
+      redTea: [],
+      shengPuerh: [],
+      shuPuerh: [],
+      whiteTea: [],
+      withoutGrade: [],
+    },
+  },
+  reducers: {
+    setCurrentUser: (state, action) => (state.currentUser = action.payload),
+    getUserData: (state, action) =>
+      (state.addedTea[action.payload.teaGrade] = action.payload.teaGrade),
+  },
+}); */
+
+/* const INITIAL_STATE = {
   currentUser: null,
   isFetchingUserData: false,
   addedTea: {
@@ -15,6 +42,7 @@ const INITIAL_STATE = {
     withoutGrade: [],
   },
 };
+
 
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -38,6 +66,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
     default:
       return state;
   }
-};
+}; */
 
-export default userReducer;
+/* export const { setCurrentUser, getUserData } = userSlice.actions;
+export default userSlice.reducer;
+ */

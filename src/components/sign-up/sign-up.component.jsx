@@ -8,7 +8,7 @@ import FormWrapper from "../form-wrapper/form-wrapper.component";
 import useForm from "../../hooks/useForm.hook";
 import { validateData } from "../../utils/validateData";
 
-import { SignUpFormWrapper, Title } from "./sign-up.styles";
+import { Title } from "./sign-up.styles";
 import {
   auth,
   createUserProfileDocument,

@@ -1,14 +1,15 @@
 import React from "react";
 
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
-import { selectCurrentUser } from "./../../redux/user/user.selector";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../redux/user/userSlice";
 
 import { auth } from "../../firebase/firebase.utils";
 
 import { HeaderContainer, Nav, NavOption } from "./header.styles";
 
-const Header = ({ currentUser }) => {
+const Header = () => {
+  const currentUser = useSelector(selectCurrentUser);
+
   return (
     <HeaderContainer>
       <Nav>
@@ -27,8 +28,4 @@ const Header = ({ currentUser }) => {
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
-});
-
-export default connect(mapStateToProps)(Header);
+export default Header;

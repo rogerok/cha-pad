@@ -13,12 +13,14 @@ import IndexStyled from "./IndexStyled";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <IndexStyled />
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </PersistGate>
+      {/*       <PersistGate persistor={persistor}>
+       */}{" "}
+      <IndexStyled />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+      {/*       </PersistGate>
+       */}{" "}
     </Provider>
   </React.StrictMode>,
 

@@ -1,13 +1,17 @@
 import React from "react";
+
 import { Route } from "react-router-dom";
+
+import { useSelector } from "react-redux";
+
+import { selectTeaCollection } from "../../redux/tea-library/teaLibrarySlice";
+
 import CollectionOverview from "../../components/collection-overview/collection-overview.component";
 import WrapperComponent from "../../components/wrapper/wrapper.component";
 
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
-import { selectTeaCollection } from "../../redux/tea-library/tea-library.selectors";
-
-const TeaLibrary = ({ match, teaCollection }) => {
+const TeaLibrary = ({ match }) => {
+  const teaCollection = useSelector(selectTeaCollection());
+  console.log(teaCollection);
   return (
     <WrapperComponent>
       <Route
@@ -20,8 +24,4 @@ const TeaLibrary = ({ match, teaCollection }) => {
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  teaCollection: selectTeaCollection,
-});
-
-export default connect(mapStateToProps)(TeaLibrary);
+export default TeaLibrary;

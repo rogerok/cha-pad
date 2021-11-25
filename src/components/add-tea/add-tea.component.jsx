@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
-import { useHistory } from "react-router";
 
-import { selectTeaGradesName } from "../../redux/tea-library/tea-library.selectors";
-import { createStructuredSelector } from "reselect";
+import { useSelector, useDispatch } from "react-redux";
+import { selectTeaGradesName } from "../../redux/tea-library/teaLibrarySlice";
+
+import { useHistory } from "react-router";
 
 import { fetchUserData } from "../../redux/user/user.actions";
 
@@ -16,7 +16,10 @@ import CustomButton from "../custom-button/custom-button.component";
 
 import { CheckboxContainer } from "./add-tea.styles";
 
-const AddTea = ({ teaGradesName, addTeaData }) => {
+const AddTea = () => {
+  const teaGradesName = useSelector(selectTeaGradesName);
+  const dispatch = useDispatch();
+
   const history = useHistory();
 
   const [teaData, setTeaData] = useState({
@@ -43,7 +46,8 @@ const AddTea = ({ teaGradesName, addTeaData }) => {
       date: new Date(),
     });
 
-    addTeaData(teaData);
+    /*     dispatch(teaData);
+     */
   };
 
   return (
@@ -109,12 +113,12 @@ const AddTea = ({ teaGradesName, addTeaData }) => {
   );
 };
 
-const mapStateToProps = createStructuredSelector({
+/* const mapStateToProps = createStructuredSelector({
   teaGradesName: selectTeaGradesName,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addTeaData: (data) => dispatch(fetchUserData(data)),
 });
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddTea);
+ */
+export default /* connect(mapStateToProps, mapDispatchToProps) */ AddTea;

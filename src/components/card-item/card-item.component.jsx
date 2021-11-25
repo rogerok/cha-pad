@@ -4,7 +4,7 @@ import { Route } from "react-router";
 import { withRouter } from "react-router";
 
 import CustomLink from "./../custom-link/custom-link.component";
-import TeaArticle from "../tea-article/tea-article.component";
+import TeaArticle from '../tea-article/tea-article.component';
 
 import { CardListItem, ImageContainer, Description } from "./card-item.styles";
 

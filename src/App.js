@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
 
-import { createStructuredSelector } from "reselect";
-import { selectCurrentUser } from "./redux/user/user.selector";
-import { setCurrentUser } from "./redux/user/user.actions";
+import { setCurrentUser, selectCurrentUser } from "./redux/user/userSlice";
 
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
@@ -15,22 +13,28 @@ import Header from "./components/header/header.component";
 
 import background from "./img/background-image.jpg";
 
-const App = ({ currentUser, setCurrentUser }) => {
+const App = () => {
+  const currentUser = useSelector(selectCurrentUser);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
+        console.log(userAuth);
         //createUserProfileDocument returns user reference object
         const userRef = await createUserProfileDocument(userAuth);
         //if user logged in we add event listener and update our app state, if something was changed in our user database
         userRef.onSnapshot((snapshot) => {
-          setCurrentUser({
-            id: snapshot.id,
-            ...snapshot.data(),
-          });
+          dispatch(
+            setCurrentUser({
+              id: snapshot.id,
+              ...snapshot.data(),
+            })
+          );
         });
       } else {
         //userAuth will be null, if user log out
-        setCurrentUser(userAuth);
+        dispatch(setCurrentUser(userAuth));
       }
     });
     return unsubscribeFromAuth;
@@ -74,12 +78,4 @@ const App = ({ currentUser, setCurrentUser }) => {
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
