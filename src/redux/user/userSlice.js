@@ -1,9 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
 
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    currentUser: null,
+    currentUser: false,
     isFetchingUserData: false,
     addedTea: {
       darkOolong: [],
@@ -26,8 +26,12 @@ const userSlice = createSlice({
   },
 });
 
-export const selectCurrentUser = (state) => state.currentUser;
-export const selectUserData = (state) => state.addedTea;
+const selectUser = (state) => state.user;
+
+export const selectCurrentUser = createSelector(
+  [selectUser],
+  (user) => user.currentUser
+);
 
 export const { setCurrentUser, setUserData } = userSlice.actions;
 export default userSlice.reducer;

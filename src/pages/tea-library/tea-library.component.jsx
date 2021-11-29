@@ -10,8 +10,8 @@ import CollectionOverview from "../../components/collection-overview/collection-
 import WrapperComponent from "../../components/wrapper/wrapper.component";
 
 const TeaLibrary = ({ match }) => {
-  const teaCollection = useSelector(selectTeaCollection());
-  console.log(teaCollection);
+  const teaCollection = useSelector(selectTeaCollection);
+
   return (
     <WrapperComponent>
       <Route

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
 
 export const teaLibrarySlice = createSlice({
   name: "teaLibrary",
@@ -128,12 +128,15 @@ export const teaLibrarySlice = createSlice({
   reducers: {},
 });
 
-export const selectTeaCollection = (state) =>
+/* export const selectTeaCollection = (state) =>
   state.teaGrades
     ? Object.keys(state.teaGrades).map(
         (collection) => state.teaGrades[collection]
       )
     : [];
+
+const log = (state) => console.log(state);
+log();
 
 export const selectTeaGradesName = (state) =>
   Object.keys(state.teaGrades).map((grade) => {
@@ -141,8 +144,37 @@ export const selectTeaGradesName = (state) =>
       gradeValue: grade,
       gradeName: state.teaGrades[grade].grade,
     };
-  });
+  }); */
 
 export const selectTeaUiData = (state) => state.teaPadUiData;
+
+const selectTeaLibrary = (state) => state.teaLibrary;
+
+export const selectTeaGrades = createSelector(
+  [selectTeaLibrary],
+  (grades) => grades.teaGrades
+);
+
+export const selectTeaCollection = createSelector(
+  [selectTeaGrades],
+  (teaGrades) =>
+    teaGrades
+      ? Object.keys(teaGrades).map((collection) => teaGrades[collection])
+      : []
+);
+
+export const selectUiData = createSelector(
+  [selectTeaLibrary],
+  (uiData) => uiData.teaPadUiData
+);
+
+export const selectTeaGradesName = createSelector([selectTeaGrades], (grades) =>
+  Object.keys(grades).map((grade) => {
+    return {
+      gradeValue: grade,
+      gradeName: grades[grade].grade,
+    };
+  })
+);
 
 export default teaLibrarySlice.reducer;

@@ -5,15 +5,15 @@ import { withRouter } from "react-router";
 
 import { useSelector } from "react-redux";
 
-import { selectTeaUiData } from "../../redux/tea-library/teaLibrarySlice";
+import { selectUiData } from "../../redux/tea-library/teaLibrarySlice";
 
 import AddTea from "../../components/add-tea/add-tea.component";
 import CollectionOverview from "./../../components/collection-overview/collection-overview.component";
 import WrapperComponent from "./../../components/wrapper/wrapper.component";
 
 const TeaPad = ({ match }) => {
-  const uiData = useSelector((state) => state.teaLibrary.teaPadUiData);
-  console.log(uiData);
+  const uiData = useSelector(selectUiData);
+
   return (
     <WrapperComponent>
       <Route
