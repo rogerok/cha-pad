@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Route } from "react-router-dom";
-import { withRouter } from "react-router";
+import { Outlet, Routes, useLocation } from "react-router";
 
 import { useSelector } from "react-redux";
 
@@ -11,19 +11,16 @@ import AddTea from "../../components/add-tea/add-tea.component";
 import CollectionOverview from "./../../components/collection-overview/collection-overview.component";
 import WrapperComponent from "./../../components/wrapper/wrapper.component";
 
-const TeaPad = ({ match }) => {
+const TeaPad = () => {
   const uiData = useSelector(selectUiData);
+  const location = useLocation();
 
   return (
     <WrapperComponent>
-      <Route
-        exact
-        path={`${match.path}`}
-        render={(props) => <CollectionOverview teaCollection={uiData} />}
-      />
-      <Route exact path={`${match.path}/add-tea`} component={AddTea} />
+      <CollectionOverview teaCollection={uiData} />
+      <Outlet />
     </WrapperComponent>
   );
 };
 
-export default withRouter(TeaPad);
+export default TeaPad;

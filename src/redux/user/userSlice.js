@@ -3,7 +3,7 @@ import { createSlice, createSelector } from "@reduxjs/toolkit";
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    currentUser: false,
+    currentUser: null /* set to null, when development will end */,
     isFetchingUserData: false,
     addedTea: {
       darkOolong: [],

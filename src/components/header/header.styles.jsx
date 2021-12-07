@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const navOptionsStyles = css`
   padding: 30px;
@@ -9,6 +9,9 @@ const navOptionsStyles = css`
   text-decoration: none;
   &:hover {
     color: #f5f5f5c5;
+  }
+  &.active {
+    color: #360d0deb;
   }
 `;
 
@@ -28,6 +31,6 @@ export const Nav = styled.nav`
   padding: 0 100px;
 `;
 
-export const NavOption = styled(Link)`
+export const NavOption = styled(NavLink)`
   ${navOptionsStyles}
 `;

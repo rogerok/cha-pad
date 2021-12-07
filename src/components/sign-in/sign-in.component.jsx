@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { auth, signInWithGoogle } from "./../../firebase/firebase.utils";
 
@@ -10,7 +11,23 @@ import { CustomButtonsWrapper } from "./sign-in.styles";
 import { Title } from "./sign-in.styles";
 
 const SignIn = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const fromPage = location.state?.from?.pathname || "/";
+
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [isLogged, setIsLogged] = useState(false);
+
+  const googleSignIn = async () => {
+    try {
+      await signInWithGoogle().additionalUserInfo?.profile;
+      setIsLogged(true);
+    } catch (err) {
+      console.log(err);
+    }
+    /*     if (isLogged) navigate("/");
+    setIsLogged(false); */
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,9 +40,12 @@ const SignIn = () => {
     try {
       await auth.signInWithEmailAndPassword(formData.email, formData.password);
       setFormData({ email: "", password: "" });
+      setIsLogged(true);
     } catch (err) {
       alert(err.message);
     }
+    /*     if (isLogged) navigate("/");
+    setIsLogged(false); */
   };
 
   return (

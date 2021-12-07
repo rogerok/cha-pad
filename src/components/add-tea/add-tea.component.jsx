@@ -3,9 +3,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectTeaGradesName } from "../../redux/tea-library/teaLibrarySlice";
 
-import { useHistory } from "react-router";
-
-import { fetchUserData } from "../../redux/user/user.actions";
+import { useNavigate } from "react-router";
 
 import FormInput from "../form-input/form-input.component";
 import FormWrapper from "../form-wrapper/form-wrapper.component";
@@ -20,7 +18,12 @@ const AddTea = () => {
   const teaGradesName = useSelector(selectTeaGradesName);
   const dispatch = useDispatch();
 
-  const history = useHistory();
+  const navigate = useNavigate();
+
+  const goBack = (e) => {
+    e.preventDefault();
+    navigate(-1);
+  };
 
   const [teaData, setTeaData] = useState({
     teaName: "",
@@ -40,14 +43,21 @@ const AddTea = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    console.log(e);
     setTeaData({
       ...teaData,
       date: new Date(),
     });
 
-    /*     dispatch(teaData);
-     */
+    dispatch(teaData);
+
+    setTeaData({
+      teaName: "",
+      teaAge: "",
+      teaGrade: "",
+      teaReview: "",
+      wouldTaste: false,
+    });
   };
 
   return (
@@ -59,7 +69,6 @@ const AddTea = () => {
             type="text"
             id="name-tea"
             label="Введите название чая"
-            required
             onChange={handleChange}
           />
 
@@ -76,7 +85,6 @@ const AddTea = () => {
             form="add-tea-form"
             label="Выберите сорт чая"
             options={teaGradesName}
-            required
             onChange={handleChange}
           />
           <CheckboxContainer>
@@ -104,8 +112,8 @@ const AddTea = () => {
               justifyContent: "space-between",
             }}
           >
-            <CustomButton>Добавить</CustomButton>
-            <CustomButton onClick={() => history.goBack()}>Назад</CustomButton>
+            <CustomButton type="submit">Добавить</CustomButton>
+            <CustomButton onClick={goBack}>Назад</CustomButton>
           </div>
         </form>
       </FormWrapper>
@@ -113,12 +121,4 @@ const AddTea = () => {
   );
 };
 
-/* const mapStateToProps = createStructuredSelector({
-  teaGradesName: selectTeaGradesName,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  addTeaData: (data) => dispatch(fetchUserData(data)),
-});
- */
-export default /* connect(mapStateToProps, mapDispatchToProps) */ AddTea;
+export default AddTea;

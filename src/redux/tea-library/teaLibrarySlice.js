@@ -128,24 +128,6 @@ export const teaLibrarySlice = createSlice({
   reducers: {},
 });
 
-/* export const selectTeaCollection = (state) =>
-  state.teaGrades
-    ? Object.keys(state.teaGrades).map(
-        (collection) => state.teaGrades[collection]
-      )
-    : [];
-
-const log = (state) => console.log(state);
-log();
-
-export const selectTeaGradesName = (state) =>
-  Object.keys(state.teaGrades).map((grade) => {
-    return {
-      gradeValue: grade,
-      gradeName: state.teaGrades[grade].grade,
-    };
-  }); */
-
 export const selectTeaUiData = (state) => state.teaPadUiData;
 
 const selectTeaLibrary = (state) => state.teaLibrary;

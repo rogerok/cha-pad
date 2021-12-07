@@ -1,26 +1,47 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Route, Routes, useNavigate, useRoutes } from "react-router-dom";
 
-import { setCurrentUser, selectCurrentUser } from "./redux/user/userSlice";
+import { setCurrentUser } from "./redux/user/userSlice";
 
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import RequireAuth from "./hoc/RequireAuth.hoc";
 
+import Layout from "./components/layout/layout-component";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
+import Posts from "./components/posts/posts-component";
 import TeaPad from "./pages/tea-pad/tea-pad.component";
 import TeaLibrary from "./pages/tea-library/tea-library.component";
-import Header from "./components/header/header.component";
+import AddTea from "./components/add-tea/add-tea.component";
 
-import background from "./img/background-image.jpg";
+const routes = [
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      { path: "tea-library", element: <TeaLibrary /> },
+      { path: "tea-library/:category", element: <Posts /> },
+      {
+        path: "tea-pad",
+        element: (
+          <RequireAuth>
+            <TeaPad />
+          </RequireAuth>
+        ),
+      },
+      { path: "tea-pad/add-tea", element: <AddTea /> },
+      { path: "sign-in", element: <SignInAndSignUpPage /> },
+    ],
+  },
+];
 
 const App = () => {
-  const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
+  const elements = useRoutes(routes);
 
   useEffect(() => {
     const unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
-        console.log(userAuth);
         //createUserProfileDocument returns user reference object
         const userRef = await createUserProfileDocument(userAuth);
         //if user logged in we add event listener and update our app state, if something was changed in our user database
@@ -39,41 +60,20 @@ const App = () => {
     });
     return unsubscribeFromAuth;
   }, []);
-  console.log(currentUser);
+
   return (
     <React.Fragment>
-      <Switch>
-        <main
-          className="main-bg"
-          style={{
-            margin: "0 auto",
-            padding: "0 50px",
-            minHeight: "100vh",
-            maxWidth: "1370px",
-            minWidth: "100%",
-            backgroundImage: `url(${background})`,
-            backgroundPosition: "center",
-            backgroundSize: "contain",
-            backgroundRepeat: "repeat",
-            backgroundColor: "#232526",
-            color: "white",
-          }}
-        >
-          <Header />
-          <Route path="/tea-library/" component={TeaLibrary} />
-          <Route
-            path="/tea-pad"
-            render={() => (true ? <TeaPad /> : <Redirect to="/sign-in" />)}
-          />
-          <Route
-            exact
-            path="/sign-in"
-            render={() =>
-              currentUser ? <Redirect to="/" /> : <SignInAndSignUpPage />
-            }
-          />
-        </main>
-      </Switch>
+      {elements}
+
+      {/*       <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="tea-library" element={<TeaLibrary />} />
+          <Route path="tea-library/:category" element={<Posts />} />
+          <Route path="tea-pad" element={<TeaPad />}></Route>
+          <Route path="tea-pad/add-tea" element={<AddTea />} />
+          <Route path="sign-in" element={<SignInAndSignUpPage />} />
+        </Route>
+      </Routes> */}
     </React.Fragment>
   );
 };
