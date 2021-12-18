@@ -1,14 +1,17 @@
-import React from "react";
+import React, {FC} from "react";
 
-import { Routes, useLocation } from "react-router";
-
-import CustomLink from "./../custom-link/custom-link.component";
-import TeaArticle from "../tea-article/tea-article.component";
+import CustomLink from "../custom-link/custom-link.component";
 
 import { CardListItem, ImageContainer, Description } from "./card-item.styles";
 
-const CardItem = ({ imageUrl, grade, description, routeName }) => {
-  const location = useLocation();
+interface CardItemProps {
+  imageUrl: string;
+  grade: string;
+  description: string;
+  routeName: string;
+}
+
+const CardItem: FC<CardItemProps> = ({ imageUrl, grade, description, routeName }) => {
 
   return (
     <CardListItem>

@@ -61,21 +61,7 @@ const App = () => {
     return unsubscribeFromAuth;
   }, []);
 
-  return (
-    <React.Fragment>
-      {elements}
-
-      {/*       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="tea-library" element={<TeaLibrary />} />
-          <Route path="tea-library/:category" element={<Posts />} />
-          <Route path="tea-pad" element={<TeaPad />}></Route>
-          <Route path="tea-pad/add-tea" element={<AddTea />} />
-          <Route path="sign-in" element={<SignInAndSignUpPage />} />
-        </Route>
-      </Routes> */}
-    </React.Fragment>
-  );
+  return <React.Fragment>{elements}</React.Fragment>;
 };
 
 export default App;

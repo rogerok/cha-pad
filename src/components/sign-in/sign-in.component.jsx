@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { auth, signInWithGoogle } from "./../../firebase/firebase.utils";
+import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
 
 import FormInput from "../form-input/form-input.component";
 import FormWrapper from "../form-wrapper/form-wrapper.component";
@@ -70,7 +70,13 @@ const SignIn = () => {
         />
         <CustomButtonsWrapper>
           <CustomButton type="submit">Войти</CustomButton>
-          <CustomButton onClick={signInWithGoogle} isGoogleButton>
+          <CustomButton
+            onClick={(e) => {
+              e.preventDefault();
+              signInWithGoogle();
+            }}
+            isGoogleButton
+          >
             Войти с Google
           </CustomButton>
         </CustomButtonsWrapper>
