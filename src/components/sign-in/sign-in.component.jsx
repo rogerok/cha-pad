@@ -11,13 +11,12 @@ import { CustomButtonsWrapper } from "./sign-in.styles";
 import { Title } from "./sign-in.styles";
 
 const SignIn = () => {
+  const [formData, setFormData] = useState({ email: "", password: "" });
+
+  /*   const fromPage = location.state?.from?.pathname || "/";
   const location = useLocation();
   const navigate = useNavigate();
-  const fromPage = location.state?.from?.pathname || "/";
-
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const [isLogged, setIsLogged] = useState(false);
-
+    const [isLogged, setIsLogged] = useState(false);
   const googleSignIn = async () => {
     try {
       await signInWithGoogle().additionalUserInfo?.profile;
@@ -25,10 +24,10 @@ const SignIn = () => {
     } catch (err) {
       console.log(err);
     }
-    /*     if (isLogged) navigate("/");
-    setIsLogged(false); */
+  if (isLogged) navigate("/");
+    setIsLogged(false);
   };
-
+ */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -40,7 +39,7 @@ const SignIn = () => {
     try {
       await auth.signInWithEmailAndPassword(formData.email, formData.password);
       setFormData({ email: "", password: "" });
-      setIsLogged(true);
+      /*       setIsLogged(true); */
     } catch (err) {
       alert(err.message);
     }

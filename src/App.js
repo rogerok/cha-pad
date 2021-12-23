@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Route, Routes, useNavigate, useRoutes } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useRoutes } from "react-router-dom";
 
 import { setCurrentUser } from "./redux/user/userSlice";
 

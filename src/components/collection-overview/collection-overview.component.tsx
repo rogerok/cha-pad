@@ -1,10 +1,15 @@
-import React from "react";
+import React, { FC } from "react";
 
 import CardItem from "../card-item/card-item.component";
+import { ITeaDataForInterfaces } from "../../ts/types";
 
 import { CollectionOverviewList } from "./collection-overview.styles";
 
-const CollectionOverview = ({ teaCollection }) => {
+interface CollectionOverviewProps {
+  teaCollection: ITeaDataForInterfaces[];
+}
+
+const CollectionOverview: FC<CollectionOverviewProps> = ({ teaCollection }) => {
   return (
     <CollectionOverviewList>
       {teaCollection.map(({ id, ...otherProps }) => (

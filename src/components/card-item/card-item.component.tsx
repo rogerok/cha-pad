@@ -1,18 +1,18 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
+import { ITeaDataForInterfaces } from "../../ts/types";
 
 import CustomLink from "../custom-link/custom-link.component";
 
 import { CardListItem, ImageContainer, Description } from "./card-item.styles";
 
-interface CardItemProps {
-  imageUrl: string;
-  grade: string;
-  description: string;
-  routeName: string;
-}
+type CardItemProps = ITeaDataForInterfaces;
 
-const CardItem: FC<CardItemProps> = ({ imageUrl, grade, description, routeName }) => {
-
+const CardItem: FC<CardItemProps> = ({
+  imageUrl,
+  grade,
+  description,
+  routeName,
+}) => {
   return (
     <CardListItem>
       <ImageContainer>

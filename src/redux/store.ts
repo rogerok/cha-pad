@@ -1,4 +1,4 @@
-import logger from "redux-logger";
+import { logger } from "redux-logger";
 
 import userReducer from "./user/userSlice";
 import teaLibraryReducer from "./tea-library/teaLibrarySlice";
@@ -29,3 +29,6 @@ export const store = configureStore({
     }).concat(logger),
 });
 export const persistor = persistStore(store);
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
