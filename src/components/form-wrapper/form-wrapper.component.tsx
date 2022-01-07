@@ -1,7 +1,11 @@
-import React from "react";
+import React, { FC } from "react";
 import { FormWrapperContainer } from "./form-wrapper.styles";
 
-const FormWrapper = ({ children, wide }) => {
+interface FormWrapperProps {
+  wide?: boolean;
+}
+
+const FormWrapper: FC<FormWrapperProps> = ({ children, wide }) => {
   return (
     <FormWrapperContainer wide={wide ?? ""}>{children}</FormWrapperContainer>
   );

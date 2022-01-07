@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { FC, useState } from "react";
 
 import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
 
@@ -10,8 +9,16 @@ import CustomButton from "../custom-button/custom-button.component";
 import { CustomButtonsWrapper } from "./sign-in.styles";
 import { Title } from "./sign-in.styles";
 
-const SignIn = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+interface FormData {
+  email: string;
+  password: string;
+}
+
+const SignIn: FC = () => {
+  const [formData, setFormData] = useState<FormData>({
+    email: "",
+    password: "",
+  });
 
   /*   const fromPage = location.state?.from?.pathname || "/";
   const location = useLocation();
@@ -28,19 +35,21 @@ const SignIn = () => {
     setIsLogged(false);
   };
  */
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void | null> => {
     e.preventDefault();
 
     try {
       await auth.signInWithEmailAndPassword(formData.email, formData.password);
       setFormData({ email: "", password: "" });
       /*       setIsLogged(true); */
-    } catch (err) {
+    } catch (err: any) {
       alert(err.message);
     }
     /*     if (isLogged) navigate("/");
@@ -57,7 +66,7 @@ const SignIn = () => {
           label="Введите адрес почты"
           required
           id={"sign-in-email"}
-          handleChange={handleChange}
+          onChange={handleChange}
         />
         <FormInput
           name="password"
@@ -65,7 +74,7 @@ const SignIn = () => {
           label="Введите пароль"
           required
           id={"sign-in-name"}
-          handleChange={handleChange}
+          onChange={handleChange}
         />
         <CustomButtonsWrapper>
           <CustomButton type="submit">Войти</CustomButton>

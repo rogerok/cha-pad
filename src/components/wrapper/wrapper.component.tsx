@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import { Wrapper } from "./wrapper.styles";
 
-const WrapperComponent = ({ children }) => {
+const WrapperComponent: FC = ({ children }) => {
   return <Wrapper>{children}</Wrapper>;
 };
 

@@ -7,17 +7,10 @@ export interface ITeaDataForInterfaces {
 }
 
 export interface IUser {
-  createdAt: {};
+  createdAt: Date;
   displayName: string;
   email: string;
   id: string;
-}
-
-export interface ITea {
-  teaName: string;
-  teaGrade: string;
-  teaAge: string;
-  wouldTase: boolean;
 }
 
 export interface ICurrentUserAddedTea {
@@ -30,6 +23,15 @@ export interface ICurrentUserAddedTea {
   darkOolong: string[];
   gabaTea: string[];
   withoutGrade: string[];
+}
+
+export interface ITea {
+  teaName: string;
+  teaGrade: string;
+  teaAge: string;
+  teaReview: string;
+  wouldTaste: boolean;
+  date?: Object;
 }
 
 export interface ITeaGrades {
@@ -60,4 +62,18 @@ export interface ITeaGrades {
   withoutGrade: {
     [key: string]: ITea;
   };
+}
+
+export interface IValidateUserData {
+  displayName: string;
+  email: string;
+  password: string;
+  confirmPassword?: string;
+}
+
+export interface IValidationErrors {
+  displayNameError: string;
+  emailError: string;
+  passwordError: string;
+  confirmPasswordError?: string;
 }

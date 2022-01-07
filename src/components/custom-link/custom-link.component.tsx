@@ -1,7 +1,11 @@
-import React from "react";
+import React, { FC } from "react";
 import { CustomLinkContainer } from "./custom-link.styles";
 
-const CustomLink = ({ children, ...otherProps }) => {
+interface CustomLinkProps {
+  to: string;
+}
+
+const CustomLink: FC<CustomLinkProps> = ({ children, ...otherProps }) => {
   return <CustomLinkContainer {...otherProps}>{children}</CustomLinkContainer>;
 };
 

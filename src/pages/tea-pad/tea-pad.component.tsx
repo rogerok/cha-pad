@@ -2,9 +2,8 @@ import React, { FC } from "react";
 
 import { Outlet } from "react-router";
 
-import { useSelector } from "react-redux";
-
 import { selectUiData } from "../../redux/tea-library/teaLibrarySlice";
+import { useAppSelector } from "../../hooks/redux.hooks";
 
 import { ITeaDataForInterfaces } from "../../ts/types";
 
@@ -16,7 +15,7 @@ interface TeaPadData {
 }
 
 const TeaPad: FC<TeaPadData> = () => {
-  const uiData = useSelector(selectUiData);
+  const uiData = useAppSelector(selectUiData);
 
   return (
     <WrapperComponent>

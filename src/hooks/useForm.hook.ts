@@ -1,23 +1,33 @@
+import { validateData } from "./../utils/validateData";
+import { IValidateUserData, IValidationErrors } from "./../ts/types";
 import { useState, useEffect } from "react";
 
-const useForm = (validateData, signUpWithEmailAndPassword) => {
-  const [userData, setUserData] = useState({
+const useForm = (
+  validateData: (userData: IValidateUserData) => IValidationErrors,
+  signUpWithEmailAndPassword: (userData: IValidateUserData) => void
+) => {
+  const [userData, setUserData] = useState<IValidateUserData>({
     displayName: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<IValidationErrors>({
+    displayNameError: "",
+    emailError: "",
+    passwordError: "",
+    confirmPasswordError: "",
+  });
 
   const [isSubmitting, setSubmitting] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrors(validateData(userData));
     setSubmitting(true);

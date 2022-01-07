@@ -18,9 +18,7 @@ const CardItem: FC<CardItemProps> = ({
       <ImageContainer>
         <img src={imageUrl} alt={grade} />
       </ImageContainer>
-
       <Description>{description}</Description>
-
       <CustomLink to={`${routeName}`}>перейти</CustomLink>
     </CardListItem>
   );

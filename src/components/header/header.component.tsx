@@ -22,7 +22,6 @@ const Header = () => {
         ) : (
           <NavOption to="/sign-in">Войти</NavOption>
         )}
-        {currentUser ? <img src={currentUser.photoURL} alt="" /> : null}
       </Nav>
     </HeaderContainer>
   );

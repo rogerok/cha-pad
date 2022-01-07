@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, FC } from "react";
+import { useAppDispatch } from "./hooks/redux.hooks";
 import { useRoutes } from "react-router-dom";
 
 import { setCurrentUser } from "./redux/user/userSlice";
@@ -19,13 +19,13 @@ const routes = [
     path: "/",
     element: <Layout />,
     children: [
-      { path: "tea-library", element: <TeaLibrary /> },
+      { path: "tea-library", element: <TeaLibrary teaCollection={[]} /> },
       { path: "tea-library/:category", element: <Posts /> },
       {
         path: "tea-pad",
         element: (
           <RequireAuth>
-            <TeaPad />
+            <TeaPad uiData={[]} />
           </RequireAuth>
         ),
       },
@@ -35,8 +35,8 @@ const routes = [
   },
 ];
 
-const App = () => {
-  const dispatch = useDispatch();
+const App: FC = () => {
+  const dispatch = useAppDispatch();
   const elements = useRoutes(routes);
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-export const customButtonStyles = css`
+const customButtonStyles = css`
   background-color: black;
   color: white;
   border: 1px solid white;
@@ -11,7 +11,7 @@ export const customButtonStyles = css`
   }
 `;
 
-export const googleSignInButtonStyles = css`
+const googleSignInButtonStyles = css`
   background-color: #4285f4;
   color: #ffffff;
 `;

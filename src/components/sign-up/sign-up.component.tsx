@@ -1,22 +1,22 @@
-import React from "react";
+import React, { FC } from "react";
 
-import CustomButton from "./../custom-button/custom-button.component";
+import { IValidateUserData } from "../../ts/types";
+
+import CustomButton from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.component";
-import SpinnerComponent from "../spinner/spinner.component";
 import FormWrapper from "../form-wrapper/form-wrapper.component";
 
 import useForm from "../../hooks/useForm.hook";
 import { validateData } from "../../utils/validateData";
 
 import { Title } from "./sign-up.styles";
-import {
-  auth,
-  createUserProfileDocument,
-} from "./../../firebase/firebase.utils";
+import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 import { Spinner } from "../spinner/spinner.styles";
 
 const SignUp = () => {
-  const signUpWithEmailAndPassword = async (userData) => {
+  const signUpWithEmailAndPassword = async (
+    userData: IValidateUserData
+  ): Promise<void> => {
     if (Object.values(userData).every(Boolean)) {
       const { displayName, email, password } = userData;
 
@@ -31,8 +31,8 @@ const SignUp = () => {
           ...user,
           displayName,
         });
-      } catch (err) {
-        console.log(err.message);
+      } catch (error: any) {
+        console.log(error.message);
       }
     }
   };
@@ -51,44 +51,44 @@ const SignUp = () => {
           type="text"
           label="Ваше имя"
           id={"sign-up-name"}
-          handleChange={handleChange}
+          onChange={handleChange}
           value={userData.displayName}
           required
         >
-          {errors.displayName && <p>{errors.displayName}</p>}
+          {errors.displayNameError && <p>{errors.displayNameError}</p>}
         </FormInput>
         <FormInput
           name="email"
           type="email"
           label="Ваша почта"
           id={"sign-up-email"}
-          handleChange={handleChange}
+          onChange={handleChange}
           value={userData.email}
           required
         >
-          {errors.email && <p>{errors.email}</p>}
+          {errors.emailError && <p>{errors.emailError}</p>}
         </FormInput>
         <FormInput
           name="password"
           type="password"
           label="Ваш пароль"
           id={"sign-up-password"}
-          handleChange={handleChange}
+          onChange={handleChange}
           value={userData.password}
           required
         >
-          {errors.password && <p>{errors.password}</p>}
+          {errors.passwordError && <p>{errors.passwordError}</p>}
         </FormInput>
         <FormInput
           name="confirmPassword"
           type="password"
           label="Повторите пароль"
           id={"sign-up-password-confirm"}
-          handleChange={handleChange}
+          onChange={handleChange}
           value={userData.confirmPassword}
           required
         >
-          {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+          {errors.confirmPasswordError && <p>{errors.confirmPasswordError}</p>}
         </FormInput>
         <CustomButton>Зарегистрироваться</CustomButton>
       </form>

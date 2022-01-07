@@ -1,6 +1,6 @@
-import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
 
-import { IUser, ICurrentUserAddedTea } from "./../../ts/types";
+import { IUser, ICurrentUserAddedTea, ITea } from "./../../ts/types";
 
 interface User {
   currentUser: null | IUser;
@@ -8,6 +8,10 @@ interface User {
   addedTea: ICurrentUserAddedTea;
 }
 
+interface UserAction {
+  type: string;
+  payload?: any;
+}
 const initialState: User = {
   currentUser: null /* set to null, when development will end */,
   isFetching: false,
@@ -31,8 +35,11 @@ const userSlice = createSlice({
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
-    /*     setUserData: (state: User, action: UserAction) =>
-      state.addedTea[action.payload.teaGrade].push(action.payload.teaName), */
+    setUserData: (state, action: PayloadAction<ITea>) => {
+      state.addedTea[
+        action.payload.teaGrade as keyof ICurrentUserAddedTea
+      ].push(action.payload.teaName);
+    },
   },
 });
 
@@ -43,5 +50,5 @@ export const selectCurrentUser = createSelector(
   (user) => user.currentUser
 );
 
-export const { setCurrentUser /* setUserData */ } = userSlice.actions;
+export const { setCurrentUser, setUserData } = userSlice.actions;
 export default userSlice.reducer;

@@ -1,6 +1,6 @@
-import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
 
-import { ITeaGrades, ITeaDataForInterfaces } from "./../../ts/types";
+import { ITeaGrades, ITeaDataForInterfaces, ITea } from "./../../ts/types";
 
 interface TeaLibraryInterfaceData {
   shengPuerh: ITeaDataForInterfaces;
@@ -16,7 +16,6 @@ interface TeaLibraryInterfaceData {
 type TeaPadInterfaceData = ITeaDataForInterfaces[];
 
 interface AddedTeaByUsers {
-  wantToTaste: ITeaGrades;
   tasted: ITeaGrades;
 }
 
@@ -123,18 +122,6 @@ const initialState: TeaLibraryState = {
   ],
 
   addedTeaByUsers: {
-    wantToTaste: {
-      shengPuerh: {},
-      shuPuerh: {},
-      whiteTea: {},
-      redTea: {},
-      lightOolong: {},
-      darkOolong: {},
-      greenTea: {},
-      gabaTea: {},
-      withoutGrade: {},
-    },
-
     tasted: {
       shengPuerh: {},
       shuPuerh: {},
@@ -152,7 +139,16 @@ const initialState: TeaLibraryState = {
 export const teaLibrarySlice = createSlice({
   name: "teaLibrary",
   initialState,
-  reducers: {},
+  reducers: {
+    setTastedTea: (state, action: PayloadAction<ITea>) => {
+      Object.assign(
+        state.addedTeaByUsers.tasted[
+          action.payload.teaGrade as keyof ITeaGrades
+        ],
+        action.payload
+      );
+    },
+  },
 });
 
 export const selectTeaUiData = (state: TeaLibraryState) => state.teaPadUiData;
@@ -178,12 +174,12 @@ export const selectUiData = createSelector(
 );
 
 export const selectTeaGradesName = createSelector([selectTeaGrades], (grades) =>
-  Object.keys(grades).map((grade) => {
+  Object.keys(grades).map((gradeItem) => {
     return {
-      gradeValue: grade,
-      gradeName: grades[grade].grade,
+      gradeValue: gradeItem,
+      gradeName: grades[gradeItem].grade,
     };
   })
 );
-
+export const { setTastedTea } = teaLibrarySlice.actions;
 export default teaLibrarySlice.reducer;
