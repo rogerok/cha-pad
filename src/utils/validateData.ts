@@ -15,6 +15,7 @@ export const validateData = (data: IValidateUserData) => {
 
   if (!email) {
     errors.emailError = "Необходимо ввести почту";
+    // eslint-disable-next-line no-useless-escape
   } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
     errors.emailError = "Введите корректный адрес почты";
   }

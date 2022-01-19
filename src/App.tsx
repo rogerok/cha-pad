@@ -22,7 +22,7 @@ const routes = [
       { path: "tea-library", element: <TeaLibrary teaCollection={[]} /> },
       { path: "tea-library/:category", element: <Posts /> },
       {
-        path: "tea-pad",
+        path: "tea-pad/",
         element: (
           <RequireAuth>
             <TeaPad uiData={[]} />

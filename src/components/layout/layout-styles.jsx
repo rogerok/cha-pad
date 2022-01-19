@@ -8,10 +8,10 @@ export const LayoutContainer = styled.main`
   min-height: 100vh;
   max-width: 1370px;
   min-width: 100%;
-  background-image: "../../img/background-image.jpg";
+  background-image: url(${background});
   background-position: center;
   background-size: contain;
   background-repeat: repeat;
-  background-color: #223526;
+  background-color: #525251;
   color: white;
 `;

@@ -1,19 +1,14 @@
 import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
 
-import { IUser, ICurrentUserAddedTea, ITea } from "./../../ts/types";
+import { IUser, ITea, ITeaData, TeaDataByUsers } from "./../../ts/types";
 
 interface User {
   currentUser: null | IUser;
   isFetching: Boolean;
-  addedTea: ICurrentUserAddedTea;
-}
-
-interface UserAction {
-  type: string;
-  payload?: any;
+  addedTea: Record<string, string[]>;
 }
 const initialState: User = {
-  currentUser: null /* set to null, when development will end */,
+  currentUser: null /* set to null, when developmenting will end */,
   isFetching: false,
   addedTea: {
     darkOolong: [],
@@ -36,14 +31,14 @@ const userSlice = createSlice({
       state.currentUser = action.payload;
     },
     setUserData: (state, action: PayloadAction<ITea>) => {
-      state.addedTea[
-        action.payload.teaGrade as keyof ICurrentUserAddedTea
-      ].push(action.payload.teaName);
+      state.addedTea[action.payload.teaGrade as keyof TeaDataByUsers].push(
+        action.payload.teaName
+      );
     },
   },
 });
 
-const selectUser = (state: any) => state.user;
+const selectUser = (state: { user: User }) => state.user;
 
 export const selectCurrentUser = createSelector(
   [selectUser],

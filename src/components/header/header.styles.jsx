@@ -11,7 +11,7 @@ const navOptionsStyles = css`
     color: #f5f5f5c5;
   }
   &.active {
-    color: #360d0deb;
+    color: #8b8b8beb;
   }
 `;
 

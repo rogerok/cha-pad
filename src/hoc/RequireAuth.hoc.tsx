@@ -11,7 +11,7 @@ const RequireAuth: FC = ({ children }): JSX.Element => {
   if (!currentUser)
     return <Navigate to="/sign-in" state={{ from: location }} />;
 
-  return <>children</>;
+  return <>{children}</>;
 };
 
 export default RequireAuth;

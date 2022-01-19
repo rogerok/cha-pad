@@ -1,4 +1,5 @@
 export interface ITeaDataForInterfaces {
+  name?: string;
   id?: string | number;
   grade?: string;
   routeName: string;
@@ -13,17 +14,19 @@ export interface IUser {
   id: string;
 }
 
-export interface ICurrentUserAddedTea {
-  shengPuerh: string[];
-  shuPuerh: string[];
-  whiteTea: string[];
-  redTea: string[];
-  greenTea: string[];
-  lightOolong: string[];
-  darkOolong: string[];
-  gabaTea: string[];
-  withoutGrade: string[];
+export interface ITeaData<T> {
+  shengPuerh: T;
+  shuPuerh: T;
+  whiteTea: T;
+  redTea: T;
+  greenTea: T;
+  lightOolong: T;
+  darkOolong: T;
+  gabaTea: T;
+  withoutGrade?: T;
 }
+
+export type TeaDataByUsers = ITeaData<ITea[]>;
 
 export interface ITea {
   teaName: string;
@@ -31,10 +34,38 @@ export interface ITea {
   teaAge: string;
   teaReview: string;
   wouldTaste: boolean;
-  date?: Object;
+  date?: Date;
+  addedBy?: string;
 }
 
-export interface ITeaGrades {
+export interface IValidateUserData {
+  displayName: string;
+  email: string;
+  password: string;
+  confirmPassword?: string;
+}
+
+export interface IValidationErrors {
+  displayNameError: string;
+  emailError: string;
+  passwordError: string;
+  confirmPasswordError?: string;
+}
+
+// refactroring interfaces
+interface IUserData {
+  displayName: string;
+  email: string;
+}
+
+/* interface IAdded {
+  tea: ITeaData<string[]>;
+  t: ITeaData<Record<string, ITea[]>>;
+  a: ITeaData<[ITea]>;
+}
+ */
+
+/* export interface ITeaGrades {
   shengPuerh: {
     [key: string]: ITea;
   };
@@ -62,18 +93,16 @@ export interface ITeaGrades {
   withoutGrade: {
     [key: string]: ITea;
   };
-}
+} */
 
-export interface IValidateUserData {
-  displayName: string;
-  email: string;
-  password: string;
-  confirmPassword?: string;
-}
-
-export interface IValidationErrors {
-  displayNameError: string;
-  emailError: string;
-  passwordError: string;
-  confirmPasswordError?: string;
-}
+/* export interface ICurrentUserAddedTea {
+  shengPuerh: string[];
+  shuPuerh: string[];
+  whiteTea: string[];
+  redTea: string[];
+  greenTea: string[];
+  lightOolong: string[];
+  darkOolong: string[];
+  gabaTea: string[];
+  withoutGrade: string[];
+} */

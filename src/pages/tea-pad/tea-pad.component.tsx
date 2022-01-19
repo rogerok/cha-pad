@@ -20,7 +20,6 @@ const TeaPad: FC<TeaPadData> = () => {
   return (
     <WrapperComponent>
       <CollectionOverview teaCollection={uiData} />
-      <Outlet />
     </WrapperComponent>
   );
 };

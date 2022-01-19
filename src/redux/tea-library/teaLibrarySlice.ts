@@ -1,34 +1,34 @@
-import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createSelector,
+  PayloadAction,
+  createAsyncThunk,
+} from "@reduxjs/toolkit";
 
-import { ITeaGrades, ITeaDataForInterfaces, ITea } from "./../../ts/types";
+import { firestore } from "../../firebase/firebase.utils";
 
-interface TeaLibraryInterfaceData {
-  shengPuerh: ITeaDataForInterfaces;
-  shuPuerh: ITeaDataForInterfaces;
-  whiteTea: ITeaDataForInterfaces;
-  redTea: ITeaDataForInterfaces;
-  lightOolong: ITeaDataForInterfaces;
-  darkOolong: ITeaDataForInterfaces;
-  greenTea: ITeaDataForInterfaces;
-  gabaTea: ITeaDataForInterfaces;
-}
-
-type TeaPadInterfaceData = ITeaDataForInterfaces[];
-
-interface AddedTeaByUsers {
-  tasted: ITeaGrades;
-}
+import {
+  ITeaDataForInterfaces,
+  ITea,
+  ITeaData,
+  TeaDataByUsers,
+} from "./../../ts/types";
 
 interface TeaLibraryState {
-  teaGrades: TeaLibraryInterfaceData;
-  teaPadUiData: TeaPadInterfaceData;
-  addedTeaByUsers: AddedTeaByUsers;
+  loading: boolean;
+  error: null | {};
+  teaGrades: ITeaData<ITeaDataForInterfaces>;
+  teaPadUiData: ITeaDataForInterfaces[];
+  addedTeaByUsers: Record<string, ITea[]>;
 }
 
 const initialState: TeaLibraryState = {
+  loading: false,
+  error: null,
   teaGrades: {
     shengPuerh: {
-      id: "1",
+      name: "shengPuerh",
+      id: "0",
       grade: "Шен пуэр",
       routeName: "sheng-puerh",
       description:
@@ -37,7 +37,8 @@ const initialState: TeaLibraryState = {
         "https://cdn.shopify.com/s/files/1/0046/1380/0029/products/BaoTangRawPuer2_2000x.jpg?v=1598465826",
     },
     shuPuerh: {
-      id: "2",
+      name: "shuPuerh",
+      id: "1",
       grade: "Шу пуэр",
       routeName: "shu-puerh",
       description:
@@ -46,7 +47,8 @@ const initialState: TeaLibraryState = {
         "https://rishi-tea.com/product/image/medium/oashuputc125-rp_puer-tea-cake-organic-loose-leaf-puer-tea.jpg",
     },
     whiteTea: {
-      id: "3",
+      name: "whiteTea",
+      id: "2",
       grade: "Белый чай",
       routeName: "white-tea",
       description:
@@ -55,7 +57,8 @@ const initialState: TeaLibraryState = {
         "http://cdn.shopify.com/s/files/1/0494/5177/products/SilverNeedle_1200x1200.jpg?v=1595080480",
     },
     redTea: {
-      id: "4",
+      name: "redTea",
+      id: "3",
       grade: "Красный чай",
       routeName: "red-tea",
       description:
@@ -64,7 +67,9 @@ const initialState: TeaLibraryState = {
         "https://cdn.shopify.com/s/files/1/0046/1380/0029/products/GushuHongCha2_600x.jpg?v=1598479909",
     },
     lightOolong: {
-      id: "5",
+      name: "lightOolong",
+
+      id: "4",
       grade: "Светлый улун",
       routeName: "light-oolong",
       description:
@@ -73,7 +78,8 @@ const initialState: TeaLibraryState = {
         "https://cdn11.bigcommerce.com/s-8466dwhhql/images/stencil/2048x2048/products/1155/1274/LightOolong__33181.1590092556.jpg?c=1",
     },
     darkOolong: {
-      id: "6",
+      name: "darkOolong",
+      id: "5",
       grade: "Темный улун",
       routeName: "dark-oolong",
       description:
@@ -82,7 +88,9 @@ const initialState: TeaLibraryState = {
         "https://cdn.webshopapp.com/shops/85422/files/333764223/image.jpg",
     },
     greenTea: {
-      id: "7",
+      name: "greenTea",
+
+      id: "6",
       grade: "Зеленый чай",
       routeName: "green-tea",
       description:
@@ -90,7 +98,8 @@ const initialState: TeaLibraryState = {
       imageUrl: "https://m.media-amazon.com/images/I/71iWjD-2BoL._SL1280_.jpg",
     },
     gabaTea: {
-      id: "8",
+      name: "gabaTea",
+      id: "7",
       grade: "ГАБА чай",
       routeName: "gaba-tea",
       description:
@@ -122,31 +131,68 @@ const initialState: TeaLibraryState = {
   ],
 
   addedTeaByUsers: {
-    tasted: {
-      shengPuerh: {},
-      shuPuerh: {},
-      whiteTea: {},
-      redTea: {},
-      lightOolong: {},
-      darkOolong: {},
-      greenTea: {},
-      gabaTea: {},
-      withoutGrade: {},
-    },
+    shengPuerh: [],
+    shuPuerh: [],
+    whiteTea: [],
+    redTea: [],
+    lightOolong: [],
+    darkOolong: [],
+    greenTea: [],
+    gabaTea: [],
+    withoutGrade: [],
   },
 };
+
+export const fetchAddedTeaByUsers = createAsyncThunk(
+  "teaLibrary/fetchTeaData",
+  async (teaGrade: string, thunkAPI) => {
+    try {
+      const response = await firestore
+        .collection("teaLibrary")
+        .doc("addedTeaByUsers")
+        .collection(teaGrade)
+        .get();
+      if (response.empty)
+        throw new Error("Вы еще не добавляли чай этого сорта");
+      return response.docs.map((doc) => doc.data());
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
 export const teaLibrarySlice = createSlice({
   name: "teaLibrary",
   initialState,
   reducers: {
     setTastedTea: (state, action: PayloadAction<ITea>) => {
-      Object.assign(
-        state.addedTeaByUsers.tasted[
-          action.payload.teaGrade as keyof ITeaGrades
-        ],
-        action.payload
-      );
+      state.addedTeaByUsers[
+        action.payload.teaGrade as keyof TeaDataByUsers
+      ].push(action.payload);
+    },
+  },
+  extraReducers: {
+    [fetchAddedTeaByUsers.pending.type]: (
+      state: TeaLibraryState,
+      action: PayloadAction<ITea>
+    ) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [fetchAddedTeaByUsers.fulfilled.type]: (
+      state: TeaLibraryState,
+      action: PayloadAction<ITea[]>
+    ) => {
+      state.addedTeaByUsers[
+        action.payload[0].teaGrade as keyof TeaDataByUsers
+      ].push(...action.payload);
+    },
+    [fetchAddedTeaByUsers.rejected.type]: (
+      state: TeaLibraryState,
+      action: PayloadAction<ITea>
+    ) => {
+      state.loading = false;
+      state.error = action.payload;
     },
   },
 });

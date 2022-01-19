@@ -1,4 +1,10 @@
 import React, { FC } from "react";
+import {
+  useParams,
+  useLocation,
+  matchRoutes,
+  useMatch,
+} from "react-router-dom";
 import { ITeaDataForInterfaces } from "../../ts/types";
 
 import CustomLink from "../custom-link/custom-link.component";
