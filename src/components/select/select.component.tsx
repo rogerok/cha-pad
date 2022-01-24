@@ -22,9 +22,8 @@ const Select: FC<SelectProps> = ({
       {label ? <label htmlFor={id}>{label}</label> : null}
 
       <SelectContainer onChange={onChange} {...otherProps}>
-        <SelectOption select="selected" value="withoutGrade">
-          Пожалуйста выберите сорт чая
-        </SelectOption>
+        <SelectOption label="Пожалуйста выберите сорт чая"></SelectOption>
+        <SelectOption value="withoutGrade">Без сорта</SelectOption>
         {options.map((option) => (
           <SelectOption value={option.gradeValue} key={option.gradeValue}>
             {option.gradeName}

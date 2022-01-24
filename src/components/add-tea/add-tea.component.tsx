@@ -5,8 +5,12 @@ import { useAppSelector, useAppDispatch } from "../../hooks/redux.hooks";
 import {
   selectTeaGradesName,
   setTastedTea,
+  addNewPost,
 } from "../../redux/tea-library/teaLibrarySlice";
-import { selectCurrentUser } from "../../redux/user/userSlice";
+import {
+  addTeaDataToUserProfile,
+  selectCurrentUser,
+} from "../../redux/user/userSlice";
 
 import { firestore } from "../../firebase/firebase.utils";
 
@@ -25,10 +29,10 @@ import { CheckboxContainer } from "./add-tea.styles";
 
 const AddTea: FC = () => {
   const userName = useAppSelector(selectCurrentUser)?.displayName;
-  const userId = useAppSelector(selectCurrentUser)?.displayName;
-  const teaGradesName = useAppSelector(selectTeaGradesName);
 
-  const dispatch = useAppDispatch();
+  const userId: string | undefined =
+    useAppSelector(selectCurrentUser)?.id ?? "";
+  const teaGradesName = useAppSelector(selectTeaGradesName);
 
   const [teaData, setTeaData] = useState<ITea>({
     teaName: "",
@@ -36,8 +40,10 @@ const AddTea: FC = () => {
     teaGrade: "",
     teaReview: "",
     wouldTaste: false,
-    addedBy: userName,
+    id: "",
   });
+
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
@@ -46,73 +52,32 @@ const AddTea: FC = () => {
     navigate(-1);
   };
 
-  const addTeaToCollection = async (data: ITea, uuid: string) => {
-    try {
-      await firestore
-        .collection(`teaLibrary`)
-        .doc(`addedTeaByUsers`)
-        .collection(data.teaGrade)
-        .doc(uuid)
-        .set({
-          ...data,
-          date: new Date(),
-          id: uuid,
-        });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const addTeaToUserData = async (data: ITea, uuid: string) => {
-    try {
-      const userAddedTeaRef = await firestore
-        .collection("users")
-        .doc(userId)
-        .collection("addedTea")
-        .doc(data.teaGrade);
-
-      await userAddedTeaRef.set(
-        {
-          [uuid]: {
-            wouldTaste: data.wouldTaste,
-            id: uuid,
-          },
-        },
-        { merge: true }
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ): void => {
     const { name, value } = e.target;
+
     setTeaData({
       ...teaData,
       [name]: name === "wouldTaste" ? !teaData.wouldTaste : value,
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const uuid: string = uuidGenerator();
+    const data = {
+      ...teaData,
+      addedBy: userName,
+      id: uuid,
+    };
 
-    dispatch(setTastedTea(teaData));
-
-    addTeaToCollection(teaData, uuid);
-    addTeaToUserData(teaData, uuid);
-
-    setTeaData({
-      teaName: "",
-      teaAge: "",
-      teaGrade: "",
-      teaReview: "",
-      wouldTaste: false,
-    });
+    dispatch(setTastedTea(data));
+    dispatch(addNewPost(data));
+    dispatch(addTeaDataToUserProfile({ data, userId }));
   };
 
   return (
@@ -126,6 +91,7 @@ const AddTea: FC = () => {
             label="Введите название чая"
             onChange={handleChange}
             value={teaData.teaName}
+            required
           />
 
           <FormInput
@@ -145,6 +111,7 @@ const AddTea: FC = () => {
             onChange={handleChange}
             id={"tea-grade"}
             value={teaData.teaGrade}
+            required
           />
           <CheckboxContainer>
             <p>Xочу попробовать</p>

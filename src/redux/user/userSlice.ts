@@ -1,15 +1,26 @@
-import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
+import { selectTeaCollection } from "./../tea-library/teaLibrarySlice";
+import { useAppDispatch } from "./../../hooks/redux.hooks";
+import {
+  createSlice,
+  createSelector,
+  PayloadAction,
+  createAsyncThunk,
+} from "@reduxjs/toolkit";
 
-import { IUser, ITea, ITeaData, TeaDataByUsers } from "./../../ts/types";
+import { firestore } from "../../firebase/firebase.utils";
+
+import { IUser, ITea, TeaDataByUsers } from "./../../ts/types";
 
 interface User {
-  currentUser: null | IUser;
-  isFetching: Boolean;
+  currentUser: IUser | null;
+  loading: Boolean;
+  error: any;
   addedTea: Record<string, string[]>;
 }
 const initialState: User = {
-  currentUser: null /* set to null, when developmenting will end */,
-  isFetching: false,
+  currentUser: null,
+  loading: false,
+  error: null,
   addedTea: {
     darkOolong: [],
     greenTea: [],
@@ -23,6 +34,44 @@ const initialState: User = {
   },
 };
 
+const setError = (state: User, action: PayloadAction<ITea>) => {
+  state.loading = false;
+  state.error = action.payload;
+};
+const setLoading = (state: User, action: PayloadAction<ITea>) => {
+  state.loading = true;
+  state.error = null;
+};
+
+export const addTeaDataToUserProfile = createAsyncThunk(
+  "user/addTeaDataToUserProfile",
+  async (
+    { data, userId }: { data: ITea; userId: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const userAddedTeaRef = firestore
+        .collection("users")
+        .doc(userId)
+        .collection("addedTea")
+        .doc(data.teaGrade);
+      console.log(userId);
+      const userResponse = await userAddedTeaRef.set(
+        {
+          [data.id as keyof ITea]: {
+            wouldTaste: data.wouldTaste,
+            id: data.id,
+          },
+        },
+        { merge: true }
+      );
+      console.log(userResponse);
+    } catch (error: any) {
+      rejectWithValue(error.message);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -35,6 +84,10 @@ const userSlice = createSlice({
         action.payload.teaName
       );
     },
+  },
+  extraReducers: {
+    [addTeaDataToUserProfile.pending.type]: setLoading,
+    [addTeaDataToUserProfile.rejected.type]: setError,
   },
 });
 

@@ -16,7 +16,7 @@ import {
 
 interface TeaLibraryState {
   loading: boolean;
-  error: null | {};
+  error: any;
   teaGrades: ITeaData<ITeaDataForInterfaces>;
   teaPadUiData: ITeaDataForInterfaces[];
   addedTeaByUsers: Record<string, ITea[]>;
@@ -145,7 +145,7 @@ const initialState: TeaLibraryState = {
 
 export const fetchAddedTeaByUsers = createAsyncThunk(
   "teaLibrary/fetchTeaData",
-  async (teaGrade: string, thunkAPI) => {
+  async (teaGrade: string, { rejectWithValue }) => {
     try {
       const response = await firestore
         .collection("teaLibrary")
@@ -156,10 +156,39 @@ export const fetchAddedTeaByUsers = createAsyncThunk(
         throw new Error("Вы еще не добавляли чай этого сорта");
       return response.docs.map((doc) => doc.data());
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
+
+export const addNewPost = createAsyncThunk(
+  "teaLibrary/addNewPost",
+  async (data: ITea, { rejectWithValue }) => {
+    try {
+      const response = await firestore
+        .collection(`teaLibrary`)
+        .doc(`addedTeaByUsers`)
+        .collection(data.teaGrade)
+        .doc(data.id)
+        .set({
+          ...data,
+          date: new Date(),
+        });
+      console.log(response);
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+const setError = (state: TeaLibraryState, action: PayloadAction<ITea>) => {
+  state.loading = false;
+  state.error = action.payload;
+};
+const setLoading = (state: TeaLibraryState, action: PayloadAction<ITea>) => {
+  state.loading = true;
+  state.error = null;
+};
 
 export const teaLibrarySlice = createSlice({
   name: "teaLibrary",
@@ -172,13 +201,8 @@ export const teaLibrarySlice = createSlice({
     },
   },
   extraReducers: {
-    [fetchAddedTeaByUsers.pending.type]: (
-      state: TeaLibraryState,
-      action: PayloadAction<ITea>
-    ) => {
-      state.loading = true;
-      state.error = null;
-    },
+    [fetchAddedTeaByUsers.pending.type]: setLoading,
+
     [fetchAddedTeaByUsers.fulfilled.type]: (
       state: TeaLibraryState,
       action: PayloadAction<ITea[]>
@@ -186,14 +210,14 @@ export const teaLibrarySlice = createSlice({
       state.addedTeaByUsers[
         action.payload[0].teaGrade as keyof TeaDataByUsers
       ].push(...action.payload);
-    },
-    [fetchAddedTeaByUsers.rejected.type]: (
-      state: TeaLibraryState,
-      action: PayloadAction<ITea>
-    ) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = null;
     },
+
+    [fetchAddedTeaByUsers.rejected.type]: setError,
+
+    [addNewPost.pending.type]: setLoading,
+    [addNewPost.rejected.type]: setError,
   },
 });
 

@@ -9,10 +9,10 @@ export const CustomLinkContainer = styled(Link)`
   padding: 15px;
   background-color: black;
   color: white;
-  border: 1px solid white;
+  border: 1px solid gray;
   transition: 0.2s linear;
   &:hover {
     background-color: transparent;
-    border: 1px solid black;
+    border: 1px solid white;
   }
 `;

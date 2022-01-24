@@ -36,6 +36,7 @@ export interface ITea {
   wouldTaste: boolean;
   date?: Date;
   addedBy?: string;
+  id?: string;
 }
 
 export interface IValidateUserData {
@@ -51,58 +52,3 @@ export interface IValidationErrors {
   passwordError: string;
   confirmPasswordError?: string;
 }
-
-// refactroring interfaces
-interface IUserData {
-  displayName: string;
-  email: string;
-}
-
-/* interface IAdded {
-  tea: ITeaData<string[]>;
-  t: ITeaData<Record<string, ITea[]>>;
-  a: ITeaData<[ITea]>;
-}
- */
-
-/* export interface ITeaGrades {
-  shengPuerh: {
-    [key: string]: ITea;
-  };
-  shuPuerh: {
-    [key: string]: ITea;
-  };
-  whiteTea: {
-    [key: string]: ITea;
-  };
-  redTea: {
-    [key: string]: ITea;
-  };
-  lightOolong: {
-    [key: string]: ITea;
-  };
-  darkOolong: {
-    [key: string]: ITea;
-  };
-  greenTea: {
-    [key: string]: ITea;
-  };
-  gabaTea: {
-    [key: string]: ITea;
-  };
-  withoutGrade: {
-    [key: string]: ITea;
-  };
-} */
-
-/* export interface ICurrentUserAddedTea {
-  shengPuerh: string[];
-  shuPuerh: string[];
-  whiteTea: string[];
-  redTea: string[];
-  greenTea: string[];
-  lightOolong: string[];
-  darkOolong: string[];
-  gabaTea: string[];
-  withoutGrade: string[];
-} */
