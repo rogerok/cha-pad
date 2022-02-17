@@ -3,6 +3,7 @@ import { CustomLinkContainer } from "./custom-link.styles";
 
 interface CustomLinkProps {
   to: string;
+  state: string | null;
 }
 
 const CustomLink: FC<CustomLinkProps> = ({ children, ...otherProps }) => {

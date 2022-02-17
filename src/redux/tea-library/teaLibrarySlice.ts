@@ -6,20 +6,25 @@ import {
 } from "@reduxjs/toolkit";
 
 import { firestore } from "../../firebase/firebase.utils";
-
+import { ITeaPadDataForInterfaces } from "./../../ts/types";
 import {
   ITeaDataForInterfaces,
   ITea,
   ITeaData,
-  TeaDataByUsers,
+  TAddedTea,
 } from "./../../ts/types";
 
 interface TeaLibraryState {
   loading: boolean;
   error: any;
   teaGrades: ITeaData<ITeaDataForInterfaces>;
-  teaPadUiData: ITeaDataForInterfaces[];
-  addedTeaByUsers: Record<string, ITea[]>;
+  teaPadUiData: ITeaPadDataForInterfaces[];
+  addedTeaByUsers: {
+    [key: string]: {
+      [key: string]: ITea;
+    };
+  };
+  /*   addedTeaByUsers: TAddedTea; */
 }
 
 const initialState: TeaLibraryState = {
@@ -109,21 +114,24 @@ const initialState: TeaLibraryState = {
   },
   teaPadUiData: [
     {
-      id: 1,
-      routeName: "add-tea",
+      action: "addTea",
+      id: "0",
       description: "Добавить чай",
+      routeName: "add-tea",
       imageUrl:
         "https://cdn11.bigcommerce.com/s-8466dwhhql/images/stencil/2048x2048/products/1155/1274/LightOolong__33181.1590092556.jpg?c=1",
     },
     {
-      id: 2,
+      action: "tastedTea",
+      id: "1",
       routeName: "tasted-tea",
       description: "Попробовал чай",
       imageUrl:
         "https://cdn.shopify.com/s/files/1/0046/1380/0029/products/BaoTangRawPuer2_2000x.jpg?v=1598465826",
     },
     {
-      id: 3,
+      action: "wouldTaste",
+      id: "2",
       routeName: "would-taste-tea",
       description: "Хочу попробовать",
       imageUrl: "https://m.media-amazon.com/images/I/71iWjD-2BoL._SL1280_.jpg",
@@ -131,20 +139,20 @@ const initialState: TeaLibraryState = {
   ],
 
   addedTeaByUsers: {
-    shengPuerh: [],
-    shuPuerh: [],
-    whiteTea: [],
-    redTea: [],
-    lightOolong: [],
-    darkOolong: [],
-    greenTea: [],
-    gabaTea: [],
-    withoutGrade: [],
+    shengPuerh: {},
+    shuPuerh: {},
+    whiteTea: {},
+    redTea: {},
+    lightOolong: {},
+    darkOolong: {},
+    greenTea: {},
+    gabaTea: {},
+    withoutGrade: {},
   },
 };
 
-export const fetchAddedTeaByUsers = createAsyncThunk(
-  "teaLibrary/fetchTeaData",
+export const fetchAddedPostsByUsers = createAsyncThunk(
+  "teaLibrary/fetchPostsData",
   async (teaGrade: string, { rejectWithValue }) => {
     try {
       const response = await firestore
@@ -193,49 +201,53 @@ const setLoading = (state: TeaLibraryState, action: PayloadAction<ITea>) => {
 export const teaLibrarySlice = createSlice({
   name: "teaLibrary",
   initialState,
-  reducers: {
-    setTastedTea: (state, action: PayloadAction<ITea>) => {
-      state.addedTeaByUsers[
-        action.payload.teaGrade as keyof TeaDataByUsers
-      ].push(action.payload);
-    },
-  },
+  reducers: {},
   extraReducers: {
-    [fetchAddedTeaByUsers.pending.type]: setLoading,
+    [fetchAddedPostsByUsers.pending.type]: setLoading,
+    [fetchAddedPostsByUsers.rejected.type]: setError,
 
-    [fetchAddedTeaByUsers.fulfilled.type]: (
+    [fetchAddedPostsByUsers.fulfilled.type]: (
       state: TeaLibraryState,
       action: PayloadAction<ITea[]>
     ) => {
-      state.addedTeaByUsers[
-        action.payload[0].teaGrade as keyof TeaDataByUsers
-      ].push(...action.payload);
+      action.payload.forEach((item) => {
+        state.addedTeaByUsers[item.teaGrade as keyof TAddedTea][
+          item.id as string
+        ] = item;
+      });
       state.loading = false;
       state.error = null;
     },
-
-    [fetchAddedTeaByUsers.rejected.type]: setError,
 
     [addNewPost.pending.type]: setLoading,
     [addNewPost.rejected.type]: setError,
   },
 });
+const selectTeaLibrary = (state: { teaLibrary: TeaLibraryState }) =>
+  state.teaLibrary;
 
 export const selectTeaUiData = (state: TeaLibraryState) => state.teaPadUiData;
 
-const selectTeaLibrary = (state: any) => state.teaLibrary;
-
 export const selectTeaGrades = createSelector(
   [selectTeaLibrary],
-  (grades) => grades.teaGrades
+  (grades): ITeaData<ITeaDataForInterfaces> => grades.teaGrades
 );
 
 export const selectTeaCollection = createSelector(
   [selectTeaGrades],
-  (teaGrades) =>
-    teaGrades
-      ? Object.keys(teaGrades).map((collection) => teaGrades[collection])
-      : []
+  (teaGrades): any => {
+    /*     teaGrades
+      ? Object.keys(teaGrades).map(
+          (collection: string) =>
+            teaGrades[collection as keyof ITeaData<ITeaDataForInterfaces>]
+        )
+      : []; */
+    if (!teaGrades) return [];
+    return Object.keys(teaGrades).map(
+      (collection: string) =>
+        teaGrades[collection as keyof ITeaData<ITeaDataForInterfaces>]
+    );
+  }
 );
 
 export const selectUiData = createSelector(
@@ -247,9 +259,22 @@ export const selectTeaGradesName = createSelector([selectTeaGrades], (grades) =>
   Object.keys(grades).map((gradeItem) => {
     return {
       gradeValue: gradeItem,
-      gradeName: grades[gradeItem].grade,
+      gradeName:
+        grades[gradeItem as keyof ITeaData<ITeaDataForInterfaces>]?.grade,
     };
   })
 );
-export const { setTastedTea } = teaLibrarySlice.actions;
+export const selectAddedTea = createSelector(
+  [selectTeaLibrary],
+  (teaLibrary) => teaLibrary.addedTeaByUsers
+);
+
+export const selectAddedPostsByUsers = createSelector(
+  selectAddedTea,
+  (_: any, teaGrade: string) => teaGrade,
+  (addedTea, teaGrade) =>
+    Object.keys(addedTea[teaGrade] ?? {}).map(
+      (item) => addedTea[teaGrade][item]
+    )
+);
 export default teaLibrarySlice.reducer;

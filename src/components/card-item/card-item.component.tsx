@@ -1,10 +1,5 @@
 import React, { FC } from "react";
-import {
-  useParams,
-  useLocation,
-  matchRoutes,
-  useMatch,
-} from "react-router-dom";
+
 import { ITeaDataForInterfaces } from "../../ts/types";
 
 import CustomLink from "../custom-link/custom-link.component";
@@ -14,6 +9,8 @@ import { CardListItem, ImageContainer, Description } from "./card-item.styles";
 type CardItemProps = ITeaDataForInterfaces;
 
 const CardItem: FC<CardItemProps> = ({
+  action,
+  name,
   imageUrl,
   grade,
   description,
@@ -25,7 +22,9 @@ const CardItem: FC<CardItemProps> = ({
         <img src={imageUrl} alt={grade} />
       </ImageContainer>
       <Description>{description}</Description>
-      <CustomLink to={`${routeName}`}>перейти</CustomLink>
+      <CustomLink to={routeName} state={name || action || null}>
+        перейти
+      </CustomLink>
     </CardListItem>
   );
 };

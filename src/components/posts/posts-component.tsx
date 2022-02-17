@@ -1,52 +1,59 @@
-import React, { FC, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { FC, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { selectAddedPostsByUsers } from "../../redux/tea-library/teaLibrarySlice";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
-import { convertPathnameToCamelCase } from "../../utils/utils";
-
-import { ITea, ITeaData } from "../../ts/types";
+import { fetchAddedPostsByUsers } from "../../redux/tea-library/teaLibrarySlice";
+/* import { useFetchPosts } from "../../hooks/useFetchPosts"; */
+import { ITea } from "../../ts/types";
 
 import WrapperComponent from "../wrapper/wrapper.component";
-import { fetchAddedTeaByUsers } from "../../redux/tea-library/teaLibrarySlice";
+import SpinnerComponent from "../spinner/spinner.component";
+import { fetchUserPostsId } from "../../redux/user/userSlice";
 
 const Posts: FC = () => {
   const dispatch = useAppDispatch();
-  const { category } = useParams();
-  const teaGrade = convertPathnameToCamelCase(category as string);
-  const addedTea = useAppSelector(
-    (state) =>
-      state.teaLibrary.addedTeaByUsers[teaGrade as keyof ITeaData<ITea[]>]
+  const teaGrade: string = useLocation().state;
+  const userId = useAppSelector((state) => state.user.currentUser?.id) ?? "";
+  const addedPosts = useAppSelector((state) =>
+    selectAddedPostsByUsers(state, teaGrade)
   );
-  const isLoading = useAppSelector((state) => state.teaLibrary.loading);
-  const isRejected = useAppSelector((state) => state.teaLibrary.error);
 
   useEffect(() => {
-    dispatch(fetchAddedTeaByUsers(teaGrade));
+    dispatch(fetchAddedPostsByUsers(teaGrade));
+    dispatch(fetchUserPostsId({ teaGrade, userId, wouldTaste: true }));
   }, []);
 
-  console.log(addedTea);
+  const isLoading = useAppSelector((state) => state.teaLibrary.loading);
+  const isRejected = useAppSelector((state) => state.teaLibrary.error);
+  const userRejected = useAppSelector((state) => state.user.error);
+  const userLoading = useAppSelector((state) => state.user.loading);
 
-  if (isLoading) return <div>loading...</div>;
-  if (isRejected) return <div>{isRejected}</div>;
+  if (isRejected || userRejected) return <div>{isRejected}</div>;
+  if (userRejected) return <div>{userRejected}</div>;
 
   return (
     <React.Fragment>
-      {addedTea.map((item) => (
-        <WrapperComponent>
-          <article>
-            <h2>Header</h2>
-            <section style={{ border: "1px solid white" }}>
-              <p>{item.teaReview}</p>
-              <footer>
-                <p>
-                  <time>time</time>
-                  posted by: {item.addedBy}
-                </p>
-              </footer>
-            </section>
-          </article>
-        </WrapperComponent>
-      ))}
+      {isLoading ? (
+        <SpinnerComponent />
+      ) : (
+        addedPosts.map((item: ITea) => (
+          <WrapperComponent key={item.id}>
+            <article>
+              <h2>{item.teaName}</h2>
+              <section style={{ border: "1px solid white" }}>
+                <p>{item.teaReview}</p>
+                <footer>
+                  <p>
+                    <time>time</time>
+                    posted by: {item.addedBy}
+                  </p>
+                </footer>
+              </section>
+            </article>
+          </WrapperComponent>
+        ))
+      )}
     </React.Fragment>
   );
 };

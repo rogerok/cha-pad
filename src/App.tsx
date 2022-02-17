@@ -1,36 +1,79 @@
-import React, { useEffect, FC } from "react";
+import React, { useEffect, FC, Suspense } from "react";
 import { useAppDispatch } from "./hooks/redux.hooks";
-import { useRoutes } from "react-router-dom";
 
+import { useRoutes } from "react-router-dom";
+import { ROUTES } from "./routes/routes";
 import { setCurrentUser } from "./redux/user/userSlice";
 
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import RequireAuth from "./hoc/RequireAuth.hoc";
 
-import Layout from "./components/layout/layout-component";
+/* import Layout from "./components/layout/layout-component";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
 import Posts from "./components/posts/posts-component";
 import TeaPad from "./pages/tea-pad/tea-pad.component";
 import TeaLibrary from "./pages/tea-library/tea-library.component";
 import AddTea from "./components/add-tea/add-tea.component";
+import TeaCategory from "./components/tea-category/tea-category.component";
+ */
+import Layout from "./components/layout/layout-component";
+import SpinnerComponent from "./components/spinner/spinner.component";
+import CardCollection from "./components/card-collection/card-collection.component";
+
+const SignInAndSignUpPage = React.lazy(
+  () => import("./pages/sign-in-and-sign-up/sign-in-and-sign-up.component")
+);
+const Posts = React.lazy(() => import("./components/posts/posts-component"));
+const TeaPad = React.lazy(() => import("./pages/tea-pad/tea-pad.component"));
+const TeaLibrary = React.lazy(
+  () => import("./pages/tea-library/tea-library.component")
+);
+const AddTea = React.lazy(
+  () => import("./components/add-tea/add-tea.component")
+);
+const TeaCategory = React.lazy(
+  () => import("./components/tea-category/tea-category.component")
+);
+
+const WouldTaste = React.lazy(
+  () => import("./components/would-taste/would-taste.component")
+);
 
 const routes = [
   {
-    path: "/",
+    path: ROUTES.HOMEPAGE,
     element: <Layout />,
     children: [
-      { path: "tea-library", element: <TeaLibrary teaCollection={[]} /> },
-      { path: "tea-library/:category", element: <Posts /> },
       {
-        path: "tea-pad/",
+        path: ROUTES.TEA_LIBRARY,
+        element: <TeaLibrary teaCollection={[]} />,
+      },
+      {
+        path: ROUTES.TEA_LIBRARY_COLLECTIONS,
+        element: <Posts />,
+      },
+      {
+        path: ROUTES.TEA_PAD,
         element: (
           <RequireAuth>
             <TeaPad uiData={[]} />
           </RequireAuth>
         ),
       },
-      { path: "tea-pad/add-tea", element: <AddTea /> },
-      { path: "sign-in", element: <SignInAndSignUpPage /> },
+      { path: ROUTES.ADD_TEA, element: <AddTea /> },
+      {
+        path: ROUTES.TASTED_TEA,
+        element: <TeaCategory teaCollection={[]} />,
+      },
+      {
+        path: ROUTES.TASTED_TEA_COLLECTION,
+        element: <Posts />,
+      },
+      {
+        path: ROUTES.WOULD_TASTE_TEA,
+        element: <WouldTaste />,
+      },
+      { path: ROUTES.SIGN_IN, element: <SignInAndSignUpPage /> },
     ],
   },
 ];
@@ -61,7 +104,11 @@ const App: FC = () => {
     return unsubscribeFromAuth;
   }, []);
 
-  return <React.Fragment>{elements}</React.Fragment>;
+  return (
+    <Suspense fallback={<SpinnerComponent />}>
+      <React.Fragment>{elements}</React.Fragment>
+    </Suspense>
+  );
 };
 
 export default App;

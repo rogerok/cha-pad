@@ -1,12 +1,15 @@
 import React, { FC } from "react";
-import { ITeaDataForInterfaces } from "../../ts/types";
+import {
+  ITeaDataForInterfaces,
+  ITeaPadDataForInterfaces,
+} from "../../ts/types";
 
 import CardItem from "../card-item/card-item.component";
 import WrapperComponent from "../wrapper/wrapper.component";
 import { CollectionOverviewList } from "./card-collection.styles";
 
 interface CardCollectionProps {
-  teaCollection: ITeaDataForInterfaces[];
+  teaCollection: ITeaDataForInterfaces[] | ITeaPadDataForInterfaces[];
 }
 
 const CardCollection: FC<CardCollectionProps> = ({ teaCollection }) => {

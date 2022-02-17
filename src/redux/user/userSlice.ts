@@ -1,5 +1,3 @@
-import { selectTeaCollection } from "./../tea-library/teaLibrarySlice";
-import { useAppDispatch } from "./../../hooks/redux.hooks";
 import {
   createSlice,
   createSelector,
@@ -8,7 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 
 import { firestore } from "../../firebase/firebase.utils";
-
+import firebase from "firebase/app";
 import { IUser, ITea, TeaDataByUsers } from "./../../ts/types";
 
 interface User {
@@ -34,11 +32,11 @@ const initialState: User = {
   },
 };
 
-const setError = (state: User, action: PayloadAction<ITea>) => {
+const setError = (state: User, action: any) => {
   state.loading = false;
   state.error = action.payload;
 };
-const setLoading = (state: User, action: PayloadAction<ITea>) => {
+const setLoading = (state: User, action: any) => {
   state.loading = true;
   state.error = null;
 };
@@ -55,17 +53,56 @@ export const addTeaDataToUserProfile = createAsyncThunk(
         .doc(userId)
         .collection("addedTea")
         .doc(data.teaGrade);
-      console.log(userId);
-      const userResponse = await userAddedTeaRef.set(
-        {
-          [data.id as keyof ITea]: {
-            wouldTaste: data.wouldTaste,
-            id: data.id,
-          },
-        },
-        { merge: true }
-      );
-      console.log(userResponse);
+
+      const isDocExist = (await userAddedTeaRef.get()).exists;
+      if (!isDocExist) {
+        await userAddedTeaRef.set({
+          wouldTaste: [],
+          tasted: [],
+        });
+      }
+
+      if (data.wouldTaste === true) {
+        userAddedTeaRef.update({
+          wouldTaste: firebase.firestore.FieldValue.arrayUnion(data.id),
+        });
+      }
+
+      if (data.wouldTaste === false) {
+        userAddedTeaRef.update({
+          tasted: firebase.firestore.FieldValue.arrayUnion(data.id),
+        });
+      }
+    } catch (error: any) {
+      rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchUserPostsId = createAsyncThunk(
+  "user/fetchUserPostsId",
+  async (
+    {
+      userId,
+      teaGrade,
+      wouldTaste,
+    }: { userId: string; teaGrade: string; wouldTaste: boolean },
+    { rejectWithValue }
+  ) => {
+    try {
+      const docRef = firestore
+        .collection("users")
+        .doc(userId)
+        .collection("addedTea")
+        .doc(teaGrade);
+      const isDocExist = (await docRef.get()).exists;
+
+      const data = (await docRef.get()).data();
+
+      return {
+        grade: teaGrade,
+        idList: wouldTaste ? data!.wouldTaste : data!.tasted,
+      };
     } catch (error: any) {
       rejectWithValue(error.message);
     }
@@ -79,15 +116,21 @@ const userSlice = createSlice({
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
-    setUserData: (state, action: PayloadAction<ITea>) => {
-      state.addedTea[action.payload.teaGrade as keyof TeaDataByUsers].push(
-        action.payload.teaName
-      );
-    },
   },
   extraReducers: {
     [addTeaDataToUserProfile.pending.type]: setLoading,
     [addTeaDataToUserProfile.rejected.type]: setError,
+
+    [fetchUserPostsId.pending.type]: setLoading,
+    [fetchUserPostsId.rejected.type]: setError,
+    [fetchUserPostsId.fulfilled.type]: (
+      state: User,
+      action: PayloadAction<{ grade: string; idList: string[] }>
+    ) => {
+      /*       state.addedTea[action.payload.grade as keyof User["addedTea"]].push(
+        ...action.payload.idList
+      ); */
+    },
   },
 });
 
@@ -98,5 +141,5 @@ export const selectCurrentUser = createSelector(
   (user) => user.currentUser
 );
 
-export const { setCurrentUser, setUserData } = userSlice.actions;
+export const { setCurrentUser /* setUserData */ } = userSlice.actions;
 export default userSlice.reducer;

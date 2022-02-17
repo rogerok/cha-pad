@@ -4,7 +4,6 @@ import { v4 as uuidGenerator } from "uuid";
 import { useAppSelector, useAppDispatch } from "../../hooks/redux.hooks";
 import {
   selectTeaGradesName,
-  setTastedTea,
   addNewPost,
 } from "../../redux/tea-library/teaLibrarySlice";
 import {
@@ -28,13 +27,15 @@ import CustomButton from "../custom-button/custom-button.component";
 import { CheckboxContainer } from "./add-tea.styles";
 
 const AddTea: FC = () => {
-  const userName = useAppSelector(selectCurrentUser)?.displayName;
+  const userName = useAppSelector(selectCurrentUser)?.displayName ?? "";
 
   const userId: string | undefined =
     useAppSelector(selectCurrentUser)?.id ?? "";
+  //@ts-ignore
   const teaGradesName = useAppSelector(selectTeaGradesName);
 
   const [teaData, setTeaData] = useState<ITea>({
+    addedBy: userName,
     teaName: "",
     teaAge: "",
     teaGrade: "",
@@ -71,13 +72,20 @@ const AddTea: FC = () => {
     const uuid: string = uuidGenerator();
     const data = {
       ...teaData,
-      addedBy: userName,
       id: uuid,
     };
 
-    dispatch(setTastedTea(data));
     dispatch(addNewPost(data));
     dispatch(addTeaDataToUserProfile({ data, userId }));
+    setTeaData({
+      addedBy: userName,
+      teaName: "",
+      teaAge: "",
+      teaGrade: "",
+      teaReview: "",
+      wouldTaste: false,
+      id: "",
+    });
   };
 
   return (
@@ -107,6 +115,7 @@ const AddTea: FC = () => {
             name="teaGrade"
             form="add-tea-form"
             label="Выберите сорт чая"
+            //@ts-ignore
             options={teaGradesName}
             onChange={handleChange}
             id={"tea-grade"}

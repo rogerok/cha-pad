@@ -1,10 +1,30 @@
 export interface ITeaDataForInterfaces {
   name?: string;
-  id?: string | number;
+  id?: string;
   grade?: string;
   routeName: string;
   description: string;
   imageUrl: string;
+  action?: string;
+}
+
+export interface ITeaPadDataForInterfaces {
+  routeName: string;
+  description: string;
+  imageUrl: string;
+  action: string;
+  id: string;
+}
+
+export interface ITea {
+  teaName: string;
+  teaGrade: string;
+  teaAge: string;
+  teaReview: string;
+  wouldTaste: boolean;
+  date?: Date;
+  addedBy: string;
+  id: string;
 }
 
 export interface IUser {
@@ -26,18 +46,13 @@ export interface ITeaData<T> {
   withoutGrade?: T;
 }
 
-export type TeaDataByUsers = ITeaData<ITea[]>;
+export type TAddedTea = ITeaData<addedTea>;
 
-export interface ITea {
-  teaName: string;
-  teaGrade: string;
-  teaAge: string;
-  teaReview: string;
-  wouldTaste: boolean;
-  date?: Date;
-  addedBy?: string;
-  id?: string;
-}
+type addedTea = {
+  [key: string]: ITea;
+};
+
+export type TeaDataByUsers = ITeaData<ITea[]>;
 
 export interface IValidateUserData {
   displayName: string;
