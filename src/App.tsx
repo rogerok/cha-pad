@@ -73,6 +73,10 @@ const routes = [
         path: ROUTES.WOULD_TASTE_TEA,
         element: <WouldTaste />,
       },
+      {
+        path: ROUTES.WOULD_TASTE_COLLECTION,
+        element: <Posts />,
+      },
       { path: ROUTES.SIGN_IN, element: <SignInAndSignUpPage /> },
     ],
   },

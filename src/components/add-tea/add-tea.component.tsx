@@ -42,6 +42,7 @@ const AddTea: FC = () => {
     teaReview: "",
     wouldTaste: false,
     id: "",
+    userId,
   });
 
   const dispatch = useAppDispatch();
@@ -73,6 +74,7 @@ const AddTea: FC = () => {
     const data = {
       ...teaData,
       id: uuid,
+      userId,
     };
 
     dispatch(addNewPost(data));
@@ -85,6 +87,7 @@ const AddTea: FC = () => {
       teaReview: "",
       wouldTaste: false,
       id: "",
+      userId,
     });
   };
 

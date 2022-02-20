@@ -25,6 +25,7 @@ export interface ITea {
   date?: Date;
   addedBy: string;
   id: string;
+  userId: string;
 }
 
 export interface IUser {

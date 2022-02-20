@@ -4,24 +4,31 @@ import { selectAddedPostsByUsers } from "../../redux/tea-library/teaLibrarySlice
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
 import { fetchAddedPostsByUsers } from "../../redux/tea-library/teaLibrarySlice";
-/* import { useFetchPosts } from "../../hooks/useFetchPosts"; */
+import useGetReducerAndSelector from "../../hooks/useFetchPosts";
 import { ITea } from "../../ts/types";
 
 import WrapperComponent from "../wrapper/wrapper.component";
 import SpinnerComponent from "../spinner/spinner.component";
-import { fetchUserPostsId } from "../../redux/user/userSlice";
+import { fetchUserPosts } from "../../redux/user/userSlice";
 
 const Posts: FC = () => {
   const dispatch = useAppDispatch();
   const teaGrade: string = useLocation().state;
+  const path = useLocation().pathname;
+  console.log(teaGrade);
   const userId = useAppSelector((state) => state.user.currentUser?.id) ?? "";
   const addedPosts = useAppSelector((state) =>
     selectAddedPostsByUsers(state, teaGrade)
   );
 
+  useGetReducerAndSelector(teaGrade, path);
+
   useEffect(() => {
-    dispatch(fetchAddedPostsByUsers(teaGrade));
-    dispatch(fetchUserPostsId({ teaGrade, userId, wouldTaste: true }));
+    const disp = async () => {
+      await dispatch(fetchAddedPostsByUsers(teaGrade));
+      await dispatch(fetchUserPosts({ teaGrade, userId, wouldTaste: true }));
+    };
+    disp();
   }, []);
 
   const isLoading = useAppSelector((state) => state.teaLibrary.loading);

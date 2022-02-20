@@ -11,7 +11,7 @@ import { useAppSelector } from "../../hooks/redux.hooks";
 import CardCollection from "../card-collection/card-collection.component";
 
 interface TeaCategoryData {
-  teaCollection: ITeaDataForInterfaces[] /* | ITeaPadDataForInterfaces[] */;
+  teaCollection: ITeaDataForInterfaces[];
 }
 
 const TeaCategory: FC<TeaCategoryData> = () => {

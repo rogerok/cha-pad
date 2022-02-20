@@ -236,12 +236,6 @@ export const selectTeaGrades = createSelector(
 export const selectTeaCollection = createSelector(
   [selectTeaGrades],
   (teaGrades): any => {
-    /*     teaGrades
-      ? Object.keys(teaGrades).map(
-          (collection: string) =>
-            teaGrades[collection as keyof ITeaData<ITeaDataForInterfaces>]
-        )
-      : []; */
     if (!teaGrades) return [];
     return Object.keys(teaGrades).map(
       (collection: string) =>

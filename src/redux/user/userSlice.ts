@@ -13,7 +13,7 @@ interface User {
   currentUser: IUser | null;
   loading: Boolean;
   error: any;
-  addedTea: Record<string, string[]>;
+  addedTea: Record<string, { [key: string]: ITea }[]>;
 }
 const initialState: User = {
   currentUser: null,
@@ -79,8 +79,8 @@ export const addTeaDataToUserProfile = createAsyncThunk(
   }
 );
 
-export const fetchUserPostsId = createAsyncThunk(
-  "user/fetchUserPostsId",
+export const fetchUserPosts = createAsyncThunk(
+  "user/fetchUserPosts",
   async (
     {
       userId,
@@ -90,18 +90,21 @@ export const fetchUserPostsId = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const docRef = firestore
-        .collection("users")
-        .doc(userId)
-        .collection("addedTea")
-        .doc(teaGrade);
-      const isDocExist = (await docRef.get()).exists;
+      const gradeDocRef = firestore
+        .collection("teaLibrary")
+        .doc("addedTeaByUsers")
+        .collection(teaGrade);
 
-      const data = (await docRef.get()).data();
+      const gradeData = await gradeDocRef.where("userId", "==", userId).get();
+      /*       if (gradeData.empty)
+        return new Error("Вы еще не добавляли чай этого cорта"); */
+      const data = gradeData.docs.map((doc) => doc.data());
+      /*       if (!data.length)
+        return new Error("Вы еще не добавляли чай этого cорта МАССИВ ПУСТОЙ"); */
 
       return {
         grade: teaGrade,
-        idList: wouldTaste ? data!.wouldTaste : data!.tasted,
+        posts: data,
       };
     } catch (error: any) {
       rejectWithValue(error.message);
@@ -121,15 +124,15 @@ const userSlice = createSlice({
     [addTeaDataToUserProfile.pending.type]: setLoading,
     [addTeaDataToUserProfile.rejected.type]: setError,
 
-    [fetchUserPostsId.pending.type]: setLoading,
-    [fetchUserPostsId.rejected.type]: setError,
-    [fetchUserPostsId.fulfilled.type]: (
+    [fetchUserPosts.pending.type]: setLoading,
+    [fetchUserPosts.rejected.type]: setError,
+    [fetchUserPosts.fulfilled.type]: (
       state: User,
-      action: PayloadAction<{ grade: string; idList: string[] }>
+      action: PayloadAction<{ grade: string; posts: [{ [key: string]: ITea }] }>
     ) => {
-      /*       state.addedTea[action.payload.grade as keyof User["addedTea"]].push(
-        ...action.payload.idList
-      ); */
+      state.addedTea[action.payload.grade as keyof User["addedTea"]].push(
+        ...action.payload.posts
+      );
     },
   },
 });
@@ -141,5 +144,12 @@ export const selectCurrentUser = createSelector(
   (user) => user.currentUser
 );
 
-export const { setCurrentUser /* setUserData */ } = userSlice.actions;
+export const { setCurrentUser } = userSlice.actions;
 export default userSlice.reducer;
+function state(state: any, action: any) {
+  throw new Error("Function not implemented.");
+}
+
+function action(state: (state: any, action: any) => void, action: any) {
+  throw new Error("Function not implemented.");
+}
