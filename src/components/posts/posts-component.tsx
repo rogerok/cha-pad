@@ -1,43 +1,37 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, ReactChild, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { selectAddedPostsByUsers } from "../../redux/tea-library/teaLibrarySlice";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
-import { fetchAddedPostsByUsers } from "../../redux/tea-library/teaLibrarySlice";
-import useGetReducerAndSelector from "../../hooks/useFetchPosts";
+
+import useFetchPosts from "../../hooks/useFetchPosts";
 import { ITea } from "../../ts/types";
 
 import WrapperComponent from "../wrapper/wrapper.component";
 import SpinnerComponent from "../spinner/spinner.component";
-import { fetchUserPosts } from "../../redux/user/userSlice";
 
 const Posts: FC = () => {
   const dispatch = useAppDispatch();
-  const teaGrade: string = useLocation().state;
-  const path = useLocation().pathname;
-  console.log(teaGrade);
-  const userId = useAppSelector((state) => state.user.currentUser?.id) ?? "";
-  const addedPosts = useAppSelector((state) =>
-    selectAddedPostsByUsers(state, teaGrade)
-  );
 
-  useGetReducerAndSelector(teaGrade, path);
+  const teaGrade: string = useLocation().state;
+
+  const { dispatcher, selectPosts, selectError, selectLoading, fetchData } =
+    useFetchPosts();
+
+  const isLoading = useAppSelector(selectLoading as any);
+  const isRejected = useAppSelector(selectError as any);
+  const addedPosts = useAppSelector((state) => selectPosts(state, teaGrade));
+
+  console.log(`${isLoading} loading`, isRejected, addedPosts);
 
   useEffect(() => {
-    const disp = async () => {
-      await dispatch(fetchAddedPostsByUsers(teaGrade));
-      await dispatch(fetchUserPosts({ teaGrade, userId, wouldTaste: true }));
+    /*     const disp = async () => {
+      await dispatch(dispatcher(fetchData));
     };
-    disp();
+    disp(); */
+    dispatch(dispatcher(fetchData));
   }, []);
 
-  const isLoading = useAppSelector((state) => state.teaLibrary.loading);
-  const isRejected = useAppSelector((state) => state.teaLibrary.error);
-  const userRejected = useAppSelector((state) => state.user.error);
-  const userLoading = useAppSelector((state) => state.user.loading);
-
-  if (isRejected || userRejected) return <div>{isRejected}</div>;
-  if (userRejected) return <div>{userRejected}</div>;
+  if (isRejected) return <div> {isRejected} </div>;
 
   return (
     <React.Fragment>

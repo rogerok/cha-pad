@@ -7,7 +7,7 @@ import {
 
 import { firestore } from "../../firebase/firebase.utils";
 import firebase from "firebase/app";
-import { IUser, ITea, TeaDataByUsers } from "./../../ts/types";
+import { IUser, ITea } from "./../../ts/types";
 
 interface User {
   currentUser: IUser | null;
@@ -80,6 +80,7 @@ export const addTeaDataToUserProfile = createAsyncThunk(
 );
 
 export const fetchUserPosts = createAsyncThunk(
+  //if respons with data is empty, error won't be throwhen and error will crush
   "user/fetchUserPosts",
   async (
     {
@@ -100,8 +101,8 @@ export const fetchUserPosts = createAsyncThunk(
         return new Error("Вы еще не добавляли чай этого cорта"); */
       const data = gradeData.docs.map((doc) => doc.data());
       /*       if (!data.length)
-        return new Error("Вы еще не добавляли чай этого cорта МАССИВ ПУСТОЙ"); */
-
+       return new Error("Вы еще не добавляли чай этого cорта МАССИВ ПУСТОЙ");
+      console.log(teaGrade, "ssdss");  */
       return {
         grade: teaGrade,
         posts: data,
@@ -133,6 +134,8 @@ const userSlice = createSlice({
       state.addedTea[action.payload.grade as keyof User["addedTea"]].push(
         ...action.payload.posts
       );
+      state.loading = false;
+      state.error = null;
     },
   },
 });
@@ -143,13 +146,21 @@ export const selectCurrentUser = createSelector(
   [selectUser],
   (user) => user.currentUser
 );
+const selectAddedTea = createSelector([selectUser], (user) => user.addedTea);
+export const selectUserPostsError = createSelector(
+  [selectUser],
+  (user) => user.error
+);
+export const selectUserPostsLoading = createSelector(
+  [selectUser],
+  (user) => user.loading
+);
+
+export const selectAddedPostsByUser = createSelector(
+  selectAddedTea,
+  (_: any, teaGrade: string) => teaGrade,
+  (addedTea, teaGrade) => addedTea[teaGrade]
+);
 
 export const { setCurrentUser } = userSlice.actions;
 export default userSlice.reducer;
-function state(state: any, action: any) {
-  throw new Error("Function not implemented.");
-}
-
-function action(state: (state: any, action: any) => void, action: any) {
-  throw new Error("Function not implemented.");
-}

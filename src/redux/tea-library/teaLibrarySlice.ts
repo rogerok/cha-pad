@@ -153,7 +153,7 @@ const initialState: TeaLibraryState = {
 
 export const fetchAddedPostsByUsers = createAsyncThunk(
   "teaLibrary/fetchPostsData",
-  async (teaGrade: string, { rejectWithValue }) => {
+  async ({ teaGrade }: { teaGrade: string }, { rejectWithValue }) => {
     try {
       const response = await firestore
         .collection("teaLibrary")
@@ -261,6 +261,14 @@ export const selectTeaGradesName = createSelector([selectTeaGrades], (grades) =>
 export const selectAddedTea = createSelector(
   [selectTeaLibrary],
   (teaLibrary) => teaLibrary.addedTeaByUsers
+);
+export const selectTeatLibraryPostsError = createSelector(
+  [selectTeaLibrary],
+  (teaLibrary) => teaLibrary.error
+);
+export const selectTeatLibraryPostsLoading = createSelector(
+  [selectTeaLibrary],
+  (teaLibrary) => teaLibrary.loading
 );
 
 export const selectAddedPostsByUsers = createSelector(
