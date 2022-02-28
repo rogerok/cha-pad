@@ -180,7 +180,7 @@ export const addNewPost = createAsyncThunk(
         .doc(data.id)
         .set({
           ...data,
-          date: new Date(),
+          date: Date.now(),
         });
       console.log(response);
     } catch (error: any) {

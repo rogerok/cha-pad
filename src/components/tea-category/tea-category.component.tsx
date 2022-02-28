@@ -1,9 +1,6 @@
 import React, { FC } from "react";
 
-import {
-  ITeaDataForInterfaces,
-  ITeaPadDataForInterfaces,
-} from "../../ts/types";
+import { ITeaDataForInterfaces } from "../../ts/types";
 
 import { selectTeaCollection } from "../../redux/tea-library/teaLibrarySlice";
 import { useAppSelector } from "../../hooks/redux.hooks";

@@ -131,9 +131,8 @@ const userSlice = createSlice({
       state: User,
       action: PayloadAction<{ grade: string; posts: [{ [key: string]: ITea }] }>
     ) => {
-      state.addedTea[action.payload.grade as keyof User["addedTea"]].push(
-        ...action.payload.posts
-      );
+      state.addedTea[action.payload.grade as keyof User["addedTea"]] =
+        action.payload.posts;
       state.loading = false;
       state.error = null;
     },
@@ -147,6 +146,7 @@ export const selectCurrentUser = createSelector(
   (user) => user.currentUser
 );
 const selectAddedTea = createSelector([selectUser], (user) => user.addedTea);
+
 export const selectUserPostsError = createSelector(
   [selectUser],
   (user) => user.error
@@ -159,7 +159,10 @@ export const selectUserPostsLoading = createSelector(
 export const selectAddedPostsByUser = createSelector(
   selectAddedTea,
   (_: any, teaGrade: string) => teaGrade,
-  (addedTea, teaGrade) => addedTea[teaGrade]
+  (addedTea, teaGrade) => {
+    if (!addedTea[teaGrade].length) return [];
+    return addedTea[teaGrade];
+  }
 );
 
 export const { setCurrentUser } = userSlice.actions;

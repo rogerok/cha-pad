@@ -18,10 +18,11 @@ import TeaCategory from "./components/tea-category/tea-category.component";
  */
 import Layout from "./components/layout/layout-component";
 import SpinnerComponent from "./components/spinner/spinner.component";
-import CardCollection from "./components/card-collection/card-collection.component";
+/* import CardCollection from "./components/card-collection/card-collection.component";
+ */ import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
 
-const SignInAndSignUpPage = React.lazy(
-  () => import("./pages/sign-in-and-sign-up/sign-in-and-sign-up.component")
+const CardCollection = React.lazy(
+  () => import("./components/card-collection/card-collection.component")
 );
 const Posts = React.lazy(() => import("./components/posts/posts-component"));
 const TeaPad = React.lazy(() => import("./pages/tea-pad/tea-pad.component"));

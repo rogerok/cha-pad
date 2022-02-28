@@ -3,16 +3,16 @@ import {
   selectAddedPostsByUsers,
   selectTeatLibraryPostsError,
   selectTeatLibraryPostsLoading,
-} from "./../redux/tea-library/teaLibrarySlice";
+} from "../redux/tea-library/teaLibrarySlice";
 import {
   selectAddedPostsByUser,
   selectUserPostsError,
   selectUserPostsLoading,
-} from "./../redux/user/userSlice";
+} from "../redux/user/userSlice";
 import { useAppSelector } from "./redux.hooks";
-import { useState, useEffect } from "react";
+
 import { fetchAddedPostsByUsers } from "../redux/tea-library/teaLibrarySlice";
-import { fetchUserPosts } from "./../redux/user/userSlice";
+import { fetchUserPosts } from "../redux/user/userSlice";
 
 interface IFetchData {
   wouldTaste?: Boolean;
@@ -29,8 +29,6 @@ interface IUseFetchPosts {
 }
 
 const useFetchPosts = (): IUseFetchPosts => {
-  // const [fetchData, setFetchData] = useState<IFetchData | null>(null);
-
   const userId = useAppSelector(
     (state) => state.user.currentUser?.id
   ) as string;
@@ -52,24 +50,6 @@ const useFetchPosts = (): IUseFetchPosts => {
     ? selectUserPostsLoading
     : selectTeatLibraryPostsLoading;
 
-  /*   useEffect(() => {
-    const setData = () => {
-      if (isUserPosts) {
-        setFetchData({
-          teaGrade,
-          wouldTaste: path.includes("would-taste-tea"),
-          userId: isUserPosts ? (userId as string) : "",
-        });
-      }
-      if (!isUserPosts) {
-        setFetchData({
-          teaGrade,
-        });
-      }
-    };
-    setData();
-  }, []); */
-
   const fetchData = isUserPosts
     ? {
         teaGrade,
@@ -78,7 +58,6 @@ const useFetchPosts = (): IUseFetchPosts => {
       }
     : { teaGrade };
 
-  console.log(fetchData);
   return { dispatcher, selectPosts, selectError, selectLoading, fetchData };
 };
 

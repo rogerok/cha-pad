@@ -10,26 +10,20 @@ export const CardListItem = styled.li`
   max-width: 300px;
   border: 1px solid white;
   margin-bottom: 30px;
-
-  /*   :last-child {
-    margin-right: auto;
-    margin-left: 30px;
-  } */
 `;
 
 export const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 250px;
   border: 1px solid black;
 
   img {
     display: block;
     margin: 30px auto;
-    max-width: 90%;
-    height: 90%;
+    max-width: 100%;
     object-fit: cover;
+    aspect-ratio: 1/1;
   }
 `;
 
