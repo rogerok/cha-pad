@@ -6,10 +6,9 @@ import CustomLink from "../custom-link/custom-link.component";
 
 import { CardListItem, ImageContainer, Description } from "./card-item.styles";
 
-type CardItemProps = ITeaDataForInterfaces;
+interface CardItemProps extends ITeaDataForInterfaces {}
 
 const CardItem: FC<CardItemProps> = ({
-  action,
   name,
   imageUrl,
   grade,
@@ -22,7 +21,7 @@ const CardItem: FC<CardItemProps> = ({
         <img src={imageUrl} alt={grade} />
       </ImageContainer>
       <Description>{description}</Description>
-      <CustomLink to={routeName} state={name || action || null}>
+      <CustomLink to={routeName} state={name || null}>
         перейти
       </CustomLink>
     </CardListItem>

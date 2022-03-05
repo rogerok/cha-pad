@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
@@ -15,19 +15,26 @@ const Posts: FC = () => {
 
   const teaGrade: string = useLocation().state;
 
-  const { dispatcher, selectPosts, selectError, selectLoading, fetchData } =
-    useFetchPosts();
+  const {
+    dispatcher,
+    selectPosts,
+    selectError,
+    selectLoading,
+    fetchData,
+    defaultImage,
+  } = useFetchPosts();
 
   const isLoading = useAppSelector(selectLoading as any);
   const isRejected = useAppSelector(selectError as any);
+  const addedPosts: ITea[] = useAppSelector((state) =>
+    selectPosts(state, teaGrade)
+  );
+
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     dispatch(dispatcher(fetchData));
   }, []);
-
-  const addedPosts: ITea[] = useAppSelector((state) =>
-    selectPosts(state, teaGrade)
-  );
 
   if (isRejected) return <div> {isRejected} </div>;
   console.log(addedPosts);
@@ -37,7 +44,15 @@ const Posts: FC = () => {
       {isLoading ? (
         <SpinnerComponent />
       ) : (
-        addedPosts.map((item) => <Post key={item.id} {...item} />)
+        addedPosts.map((item) => (
+          <Post
+            key={item.id}
+            {...item}
+            defaultImage={defaultImage}
+            showModal={showModal}
+            setShowModal={setShowModal}
+          />
+        ))
       )}
     </WrapperComponent>
   );

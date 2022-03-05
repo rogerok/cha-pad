@@ -1,6 +1,7 @@
 import firebase from "firebase";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDg3I1Tiwqc3RscSebYyIVKvM_EtW4B4Sg",
@@ -16,11 +17,14 @@ firebase.initializeApp(firebaseConfig);
 
 export const firestore = firebase.firestore();
 
-export const createUserProfileDocument = async (userAuth, additionalData) => {
+export const createUserProfileDocument = async (
+  userAuth: { displayName: string; email: string; uid: string },
+  additionalData?: {}
+) => {
   const userRef = firestore.doc(`users/${userAuth.uid}`);
   const snapshot = await userRef.get();
 
-  if (!snapshot.exist) {
+  if (!snapshot.exists) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
     try {
@@ -30,16 +34,39 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         email,
         createdAt,
       });
-    } catch (err) {
+    } catch (err: any) {
       console.log("creating profile error ", err.message);
     }
   }
   return userRef;
 };
 
+export const uploadPhotoToStore = async (
+  teaPhoto: { image: File | null },
+  teaGrade: string
+) => {
+  if (!teaPhoto.image) return;
+  const storageRef = firebaseStorage.ref(
+    `images/tea/${teaGrade}/${teaPhoto.image?.name}`
+  );
+
+  await storageRef.put(teaPhoto.image as File).on(
+    "state_changed",
+    (snapshot) => {
+      let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log(percentage);
+    },
+    (err) => {
+      throw new Error("Что-то пошло не так...");
+    }
+  );
+  return await storageRef.getDownloadURL();
+};
+
 export const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const firebaseStorage = firebase.storage();
 
 export default firebase;

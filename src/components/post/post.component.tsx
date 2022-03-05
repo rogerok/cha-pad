@@ -8,18 +8,27 @@ import {
   ImageWrapper,
   ReviewWrapper,
 } from "./post.styles";
+interface IPosts extends ITea {
+  defaultImage: string;
+  showModal: boolean;
+  setShowModal: Function;
+}
 
-const Post: FC<ITea> = ({ teaName, teaReview, addedBy, date }) => {
+const Post: FC<IPosts> = ({
+  teaName,
+  teaReview,
+  addedBy,
+  date,
+  teaPhotoUrl,
+  defaultImage,
+}) => {
   const postedDate = new Date(+date!).toISOString().slice(0, 10);
   return (
     <PostArticle style={{ border: "1px solid white" }}>
       <PostHeader>{teaName}</PostHeader>
       <ReviewWrapper>
         <ImageWrapper>
-          <img
-            src="https://cdn11.bigcommerce.com/s-8466dwhhql/images/stencil/2048x2048/products/1155/1274/LightOolong__33181.1590092556.jpg?c=1"
-            alt="tea posted by user"
-          />
+          <img src={teaPhotoUrl ?? defaultImage} alt="tea posted by user" />
         </ImageWrapper>
         <TeaReview>
           <p>{teaReview}</p>

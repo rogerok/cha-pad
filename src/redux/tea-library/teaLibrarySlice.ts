@@ -5,7 +5,7 @@ import {
   createAsyncThunk,
 } from "@reduxjs/toolkit";
 
-import { firestore } from "../../firebase/firebase.utils";
+import { firestore, uploadPhotoToStore } from "../../firebase/firebase.utils";
 import { ITeaPadDataForInterfaces } from "./../../ts/types";
 import {
   ITeaDataForInterfaces,
@@ -111,6 +111,14 @@ const initialState: TeaLibraryState = {
         "Габа чай — чай, прошедший ферментацию в анаэробных условиях (без доступа кислорода), вследствие чего в нём образовалось повышенное содержание гамма-аминомасляной кислоты.",
       imageUrl: "https://sc04.alicdn.com/kf/HTB18xUiFhSYBuNjSsphq6zGvVXaa.jpg",
     },
+    withoutGrade: {
+      name: "withoutGrade",
+      id: "8",
+      grade: "Без сорта",
+      routeName: "without-grade",
+      description: "Чай без указания сорта",
+      imageUrl: "https://m.media-amazon.com/images/I/71iWjD-2BoL._SL1280_.jpg",
+    },
   },
   teaPadUiData: [
     {
@@ -171,9 +179,19 @@ export const fetchAddedPostsByUsers = createAsyncThunk(
 
 export const addNewPost = createAsyncThunk(
   "teaLibrary/addNewPost",
-  async (data: ITea, { rejectWithValue }) => {
+  async (
+    { data, teaPhoto }: { data: ITea; teaPhoto: { image: File | null } },
+    { rejectWithValue }
+  ) => {
     try {
-      const response = await firestore
+      console.log(teaPhoto);
+      const teaPhotoUrl = await uploadPhotoToStore(
+        teaPhoto,
+        data.teaGrade
+      ).then((url) => url);
+      console.log(teaPhotoUrl);
+
+      firestore
         .collection(`teaLibrary`)
         .doc(`addedTeaByUsers`)
         .collection(data.teaGrade)
@@ -181,8 +199,8 @@ export const addNewPost = createAsyncThunk(
         .set({
           ...data,
           date: Date.now(),
+          teaPhotoUrl,
         });
-      console.log(response);
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -223,8 +241,9 @@ export const teaLibrarySlice = createSlice({
     [addNewPost.rejected.type]: setError,
   },
 });
-const selectTeaLibrary = (state: { teaLibrary: TeaLibraryState }) =>
-  state.teaLibrary;
+const selectTeaLibrary = (state: {
+  teaLibrary: TeaLibraryState;
+}): TeaLibraryState => state.teaLibrary;
 
 export const selectTeaUiData = (state: TeaLibraryState) => state.teaPadUiData;
 
@@ -246,15 +265,15 @@ export const selectTeaCollection = createSelector(
 
 export const selectUiData = createSelector(
   [selectTeaLibrary],
-  (uiData) => uiData.teaPadUiData
+  (uiData): ITeaPadDataForInterfaces[] => uiData.teaPadUiData
 );
 
 export const selectTeaGradesName = createSelector([selectTeaGrades], (grades) =>
   Object.keys(grades).map((gradeItem) => {
     return {
-      gradeValue: gradeItem,
-      gradeName:
-        grades[gradeItem as keyof ITeaData<ITeaDataForInterfaces>]?.grade,
+      gradeValue: gradeItem as string,
+      gradeName: grades[gradeItem as keyof ITeaData<ITeaDataForInterfaces>]
+        ?.grade as string,
     };
   })
 );
@@ -279,4 +298,13 @@ export const selectAddedPostsByUsers = createSelector(
       (item) => addedTea[teaGrade][item]
     )
 );
+
+export const selectDefaultImage = createSelector(
+  selectTeaGrades,
+  (_: any, teaGrade: string) => teaGrade,
+  (teaCollection, teaGrade) =>
+    teaCollection[teaGrade as keyof ITeaData<ITeaDataForInterfaces>]
+      ?.imageUrl as string
+);
+
 export default teaLibrarySlice.reducer;

@@ -5,7 +5,6 @@ export interface ITeaDataForInterfaces {
   routeName: string;
   description: string;
   imageUrl: string;
-  action?: string;
 }
 
 export interface ITeaPadDataForInterfaces {
@@ -17,6 +16,8 @@ export interface ITeaPadDataForInterfaces {
 }
 
 export interface ITea {
+  teaPhoto?: File | null;
+  teaPhotoUrl?: string;
   teaName: string;
   teaGrade: string;
   teaAge: string;

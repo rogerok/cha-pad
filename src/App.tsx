@@ -91,6 +91,7 @@ const App: FC = () => {
     const unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         //createUserProfileDocument returns user reference object
+        //@ts-ignore
         const userRef = await createUserProfileDocument(userAuth);
         //if user logged in we add event listener and update our app state, if something was changed in our user database
         userRef.onSnapshot((snapshot) => {

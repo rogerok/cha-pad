@@ -1,7 +1,9 @@
 import React, { FC, useState } from "react";
 import { v4 as uuidGenerator } from "uuid";
-
+import { useNavigate } from "react-router";
 import { useAppSelector, useAppDispatch } from "../../hooks/redux.hooks";
+import useCompressPhoto from "../../hooks/useCompressPhoto.hook";
+
 import {
   selectTeaGradesName,
   addNewPost,
@@ -11,11 +13,7 @@ import {
   selectCurrentUser,
 } from "../../redux/user/userSlice";
 
-import { firestore } from "../../firebase/firebase.utils";
-
 import { ITea } from "../../ts/types";
-
-import { useNavigate } from "react-router";
 
 import FormInput from "../form-input/form-input.component";
 import FormWrapper from "../form-wrapper/form-wrapper.component";
@@ -26,13 +24,19 @@ import CustomButton from "../custom-button/custom-button.component";
 
 import { CheckboxContainer } from "./add-tea.styles";
 
-const AddTea: FC = () => {
-  const userName = useAppSelector(selectCurrentUser)?.displayName ?? "";
+interface IPhoto {
+  image: File | null;
+}
 
-  const userId: string | undefined =
-    useAppSelector(selectCurrentUser)?.id ?? "";
-  //@ts-ignore
+const AddTea: FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const userName = useAppSelector(selectCurrentUser)?.displayName ?? "";
+  const userId: string = useAppSelector(selectCurrentUser)?.id ?? "";
   const teaGradesName = useAppSelector(selectTeaGradesName);
+  const { teaPhoto, handleFileInputChange, handlePhotoSubmit } =
+    useCompressPhoto();
 
   const [teaData, setTeaData] = useState<ITea>({
     addedBy: userName,
@@ -45,9 +49,9 @@ const AddTea: FC = () => {
     userId,
   });
 
-  const dispatch = useAppDispatch();
-
-  const navigate = useNavigate();
+  /*   const [teaPhoto, setTeaPhoto] = useState<IPhoto>({
+    image: null,
+  }); */
 
   const goBack = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
@@ -67,6 +71,14 @@ const AddTea: FC = () => {
     });
   };
 
+  /*   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files)
+      setTeaPhoto({
+        image: (files as FileList)[0],
+      });
+  }; */
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -77,8 +89,9 @@ const AddTea: FC = () => {
       userId,
     };
 
-    dispatch(addNewPost(data));
+    dispatch(addNewPost({ data, teaPhoto }));
     dispatch(addTeaDataToUserProfile({ data, userId }));
+
     setTeaData({
       addedBy: userName,
       teaName: "",
@@ -89,6 +102,10 @@ const AddTea: FC = () => {
       id: "",
       userId,
     });
+    handlePhotoSubmit();
+    /*     setTeaPhoto({
+      image: null,
+    }); */
   };
 
   return (
@@ -118,7 +135,6 @@ const AddTea: FC = () => {
             name="teaGrade"
             form="add-tea-form"
             label="Выберите сорт чая"
-            //@ts-ignore
             options={teaGradesName}
             onChange={handleChange}
             id={"tea-grade"}
@@ -136,6 +152,14 @@ const AddTea: FC = () => {
             />
             <label htmlFor="would-taste"></label>
           </CheckboxContainer>
+          <FormInput
+            name="teaPhoto"
+            type="file"
+            id="tea-photo"
+            label="Добавьте фото чая"
+            onChange={handleFileInputChange}
+            accept={"image/*"}
+          />
 
           <TextArea
             name="teaReview"

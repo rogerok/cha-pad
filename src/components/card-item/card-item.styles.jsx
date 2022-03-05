@@ -7,21 +7,27 @@ export const CardListItem = styled.li`
   align-items: space-around;
   padding: 30px;
   margin-right: 30px;
-  max-width: 300px;
+  width: 30%;
   border: 1px solid white;
   margin-bottom: 30px;
+  :nth-child(3n + 3) {
+    margin-right: auto;
+  }
+  :last-child {
+    margin-right: auto;
+  }
 `;
 
 export const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
+  border: 2px solid grey;
 
   img {
     display: block;
     margin: 30px auto;
-    max-width: 100%;
+    max-width: 90%;
     object-fit: cover;
     aspect-ratio: 1/1;
   }

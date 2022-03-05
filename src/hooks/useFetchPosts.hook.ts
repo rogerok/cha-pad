@@ -1,3 +1,4 @@
+import { selectDefaultImage } from "./../redux/tea-library/teaLibrarySlice";
 import { useLocation } from "react-router-dom";
 import {
   selectAddedPostsByUsers,
@@ -26,6 +27,7 @@ interface IUseFetchPosts {
   selectError: Function;
   selectLoading: Function;
   fetchData?: IFetchData | null;
+  defaultImage: string;
 }
 
 const useFetchPosts = (): IUseFetchPosts => {
@@ -34,6 +36,9 @@ const useFetchPosts = (): IUseFetchPosts => {
   ) as string;
   const path = useLocation().pathname;
   const teaGrade = useLocation().state;
+  const defaultImage = useAppSelector((state) =>
+    selectDefaultImage(state, teaGrade)
+  );
 
   const isUserPosts = !path.includes("tea-library");
 
@@ -58,7 +63,14 @@ const useFetchPosts = (): IUseFetchPosts => {
       }
     : { teaGrade };
 
-  return { dispatcher, selectPosts, selectError, selectLoading, fetchData };
+  return {
+    dispatcher,
+    selectPosts,
+    selectError,
+    selectLoading,
+    fetchData,
+    defaultImage,
+  };
 };
 
 export default useFetchPosts;

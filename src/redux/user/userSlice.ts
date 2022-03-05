@@ -100,12 +100,11 @@ export const fetchUserPosts = createAsyncThunk(
       /*       if (gradeData.empty)
         return new Error("Вы еще не добавляли чай этого cорта"); */
       const data = gradeData.docs.map((doc) => doc.data());
-      /*       if (!data.length)
-       return new Error("Вы еще не добавляли чай этого cорта МАССИВ ПУСТОЙ");
-      console.log(teaGrade, "ssdss");  */
       return {
         grade: teaGrade,
-        posts: data,
+        posts: wouldTaste
+          ? data.filter((item) => item.wouldTaste === true)
+          : data.filter((item) => !item.wouldTaste),
       };
     } catch (error: any) {
       rejectWithValue(error.message);
