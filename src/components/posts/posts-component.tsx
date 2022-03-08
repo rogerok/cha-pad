@@ -25,11 +25,9 @@ const Posts: FC = () => {
     defaultImage,
   } = useFetchPosts();
 
-  const isLoading = useAppSelector(selectLoading as any);
-  const isRejected = useAppSelector(selectError as any);
-  const addedPosts: ITea[] = useAppSelector((state) =>
-    selectPosts(state, teaGrade)
-  );
+  const isLoading = useAppSelector(selectLoading);
+  const isRejected = useAppSelector(selectError);
+  const addedPosts = useAppSelector((state) => selectPosts(state, teaGrade));
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -49,7 +47,7 @@ const Posts: FC = () => {
       {isLoading ? (
         <SpinnerComponent />
       ) : (
-        addedPosts.map((item) => (
+        addedPosts.map((item: ITea) => (
           <Post
             key={item.id}
             {...item}

@@ -8,7 +8,8 @@ import {
   ImageWrapper,
   ReviewWrapper,
 } from "./post.styles";
-interface IPosts extends ITea {
+
+export interface IPosts extends ITea {
   defaultImage: string;
   selectedImage: string | null;
   setSelectedImage: Function;

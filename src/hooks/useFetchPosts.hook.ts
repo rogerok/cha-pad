@@ -1,3 +1,6 @@
+import { Action, OutputSelector, Selector } from "@reduxjs/toolkit";
+import { ThunkAction } from "redux-thunk";
+import { RootState } from "./../redux/store";
 import { selectDefaultImage } from "./../redux/tea-library/teaLibrarySlice";
 import { useLocation } from "react-router-dom";
 import {
@@ -10,22 +13,26 @@ import {
   selectUserPostsError,
   selectUserPostsLoading,
 } from "../redux/user/userSlice";
-import { useAppSelector } from "./redux.hooks";
+import { AppThunk, useAppSelector } from "./redux.hooks";
 
 import { fetchAddedPostsByUsers } from "../redux/tea-library/teaLibrarySlice";
 import { fetchUserPosts } from "../redux/user/userSlice";
+import { ITea } from "../ts/types";
+import { Dispatch } from "react";
 
 interface IFetchData {
-  wouldTaste?: Boolean;
+  wouldTaste?: boolean;
   teaGrade?: string;
   userId?: string;
 }
 
 interface IUseFetchPosts {
-  dispatcher: Function;
-  selectPosts: Function;
-  selectError: Function;
-  selectLoading: Function;
+  //have to fix any
+  dispatcher: any;
+  //have to fix any
+  selectPosts: (state: RootState, teaGrade: string) => any;
+  selectError: Selector<RootState, boolean>;
+  selectLoading: Selector<RootState, boolean>;
   fetchData?: IFetchData | null;
   defaultImage: string;
 }

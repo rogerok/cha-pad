@@ -11,7 +11,7 @@ import { IUser, ITea } from "./../../ts/types";
 
 interface User {
   currentUser: IUser | null;
-  loading: Boolean;
+  loading: boolean;
   error: any;
   addedTea: Record<string, { [key: string]: ITea }[]>;
 }

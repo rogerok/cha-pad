@@ -16,6 +16,7 @@ export interface ITeaPadDataForInterfaces {
 }
 
 export interface ITea {
+  [x: string]: any;
   teaPhoto?: File | null;
   teaPhotoUrl?: string;
   teaName: string;
