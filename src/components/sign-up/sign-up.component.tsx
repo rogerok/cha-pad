@@ -26,6 +26,7 @@ const SignUp = () => {
           password
         );
         console.log(user);
+
         //@ts-ignore
         await createUserProfileDocument({
           ...user,

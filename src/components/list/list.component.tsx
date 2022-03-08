@@ -1,14 +1,10 @@
-import React, {FC} from 'react'
+import React, { FC } from "react";
 
 interface ListProps<T> {
-    items: T[];
-    renderItem: (item: T) => React.ReactNode
+  items: T[];
+  renderItem: (item: T) => React.ReactNode;
 }
 
 export default function List<T>(props: ListProps<T>) {
-    return (
-        <React.Fragment>
-            {props.items.map(props.renderItem)}
-        </React.Fragment>
-    )
+  return <React.Fragment>{props.items.map(props.renderItem)}</React.Fragment>;
 }

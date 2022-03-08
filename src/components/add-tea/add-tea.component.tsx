@@ -28,8 +28,8 @@ const AddTea: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const userName = useAppSelector(selectCurrentUser)?.displayName ?? "";
-  const userId: string = useAppSelector(selectCurrentUser)?.id ?? "";
+  const userName = useAppSelector(selectCurrentUser)!.displayName;
+  const userId = useAppSelector(selectCurrentUser)!.id;
   const teaGradesName = useAppSelector(selectTeaGradesName);
   const { teaPhoto, handleFileInputChange, handlePhotoSubmit } =
     useCompressPhoto();
@@ -47,7 +47,7 @@ const AddTea: FC = () => {
     userId,
   });
 
-  const goBack = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  const goBack = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     navigate(-1);
   };

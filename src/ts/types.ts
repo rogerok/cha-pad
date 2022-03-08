@@ -1,7 +1,7 @@
 export interface ITeaDataForInterfaces {
-  name?: string;
+  name: string;
   id?: string;
-  grade?: string;
+  grade: string;
   routeName: string;
   description: string;
   imageUrl: string;

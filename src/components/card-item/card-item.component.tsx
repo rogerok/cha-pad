@@ -6,7 +6,10 @@ import CustomLink from "../custom-link/custom-link.component";
 
 import { CardListItem, ImageContainer, Description } from "./card-item.styles";
 
-interface CardItemProps extends ITeaDataForInterfaces {}
+interface CardItemProps extends Omit<ITeaDataForInterfaces, "name" | "grade"> {
+  name?: string;
+  grade?: string;
+}
 
 const CardItem: FC<CardItemProps> = ({
   name,
