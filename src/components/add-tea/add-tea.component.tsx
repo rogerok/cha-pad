@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useRef, useState } from "react";
 import { v4 as uuidGenerator } from "uuid";
 import { useNavigate } from "react-router";
 import { useAppSelector, useAppDispatch } from "../../hooks/redux.hooks";
@@ -24,10 +24,6 @@ import CustomButton from "../custom-button/custom-button.component";
 
 import { CheckboxContainer } from "./add-tea.styles";
 
-interface IPhoto {
-  image: File | null;
-}
-
 const AddTea: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -37,6 +33,8 @@ const AddTea: FC = () => {
   const teaGradesName = useAppSelector(selectTeaGradesName);
   const { teaPhoto, handleFileInputChange, handlePhotoSubmit } =
     useCompressPhoto();
+
+  const photoRef = useRef<HTMLInputElement | null | string>(null);
 
   const [teaData, setTeaData] = useState<ITea>({
     addedBy: userName,
@@ -48,10 +46,6 @@ const AddTea: FC = () => {
     id: "",
     userId,
   });
-
-  /*   const [teaPhoto, setTeaPhoto] = useState<IPhoto>({
-    image: null,
-  }); */
 
   const goBack = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
@@ -70,14 +64,6 @@ const AddTea: FC = () => {
       [name]: name === "wouldTaste" ? !teaData.wouldTaste : value,
     });
   };
-
-  /*   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files)
-      setTeaPhoto({
-        image: (files as FileList)[0],
-      });
-  }; */
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -102,10 +88,8 @@ const AddTea: FC = () => {
       id: "",
       userId,
     });
+    photoRef.current = "";
     handlePhotoSubmit();
-    /*     setTeaPhoto({
-      image: null,
-    }); */
   };
 
   return (
@@ -159,6 +143,7 @@ const AddTea: FC = () => {
             label="Добавьте фото чая"
             onChange={handleFileInputChange}
             accept={"image/*"}
+            ref={photoRef}
           />
 
           <TextArea

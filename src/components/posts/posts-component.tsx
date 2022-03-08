@@ -9,6 +9,7 @@ import { ITea } from "../../ts/types";
 import WrapperComponent from "../wrapper/wrapper.component";
 import SpinnerComponent from "../spinner/spinner.component";
 import Post from "../post/post.component";
+import Modal from "../modal/modal.component";
 
 const Posts: FC = () => {
   const dispatch = useAppDispatch();
@@ -30,7 +31,7 @@ const Posts: FC = () => {
     selectPosts(state, teaGrade)
   );
 
-  const [showModal, setShowModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     dispatch(dispatcher(fetchData));
@@ -41,6 +42,10 @@ const Posts: FC = () => {
 
   return (
     <WrapperComponent>
+      <Modal
+        selectedImage={selectedImage!}
+        setSelectedImage={setSelectedImage}
+      />
       {isLoading ? (
         <SpinnerComponent />
       ) : (
@@ -49,8 +54,8 @@ const Posts: FC = () => {
             key={item.id}
             {...item}
             defaultImage={defaultImage}
-            showModal={showModal}
-            setShowModal={setShowModal}
+            selectedImage={selectedImage}
+            setSelectedImage={setSelectedImage}
           />
         ))
       )}

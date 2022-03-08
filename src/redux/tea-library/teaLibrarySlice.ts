@@ -229,9 +229,7 @@ export const teaLibrarySlice = createSlice({
       action: PayloadAction<ITea[]>
     ) => {
       action.payload.forEach((item) => {
-        state.addedTeaByUsers[item.teaGrade as keyof TAddedTea][
-          item.id as string
-        ] = item;
+        state.addedTeaByUsers[item.teaGrade as keyof TAddedTea][item.id] = item;
       });
       state.loading = false;
       state.error = null;
@@ -271,9 +269,9 @@ export const selectUiData = createSelector(
 export const selectTeaGradesName = createSelector([selectTeaGrades], (grades) =>
   Object.keys(grades).map((gradeItem) => {
     return {
-      gradeValue: gradeItem as string,
-      gradeName: grades[gradeItem as keyof ITeaData<ITeaDataForInterfaces>]
-        ?.grade as string,
+      gradeValue: gradeItem,
+      gradeName:
+        grades[gradeItem as keyof ITeaData<ITeaDataForInterfaces>]!.grade,
     };
   })
 );
@@ -303,8 +301,7 @@ export const selectDefaultImage = createSelector(
   selectTeaGrades,
   (_: any, teaGrade: string) => teaGrade,
   (teaCollection, teaGrade) =>
-    teaCollection[teaGrade as keyof ITeaData<ITeaDataForInterfaces>]
-      ?.imageUrl as string
+    teaCollection[teaGrade as keyof ITeaData<ITeaDataForInterfaces>]?.imageUrl
 );
 
 export default teaLibrarySlice.reducer;

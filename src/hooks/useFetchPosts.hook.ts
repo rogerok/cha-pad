@@ -31,14 +31,11 @@ interface IUseFetchPosts {
 }
 
 const useFetchPosts = (): IUseFetchPosts => {
-  const userId = useAppSelector(
-    (state) => state.user.currentUser?.id
-  ) as string;
+  const userId = useAppSelector((state) => state.user.currentUser!.id);
   const path = useLocation().pathname;
   const teaGrade = useLocation().state;
-  const defaultImage = useAppSelector((state) =>
-    selectDefaultImage(state, teaGrade)
-  );
+  const defaultImage =
+    useAppSelector((state) => selectDefaultImage(state, teaGrade)) ?? "";
 
   const isUserPosts = !path.includes("tea-library");
 
@@ -59,7 +56,7 @@ const useFetchPosts = (): IUseFetchPosts => {
     ? {
         teaGrade,
         wouldTaste: path.includes("would-taste-tea"),
-        userId: isUserPosts ? (userId as string) : "",
+        userId: isUserPosts ? userId : "",
       }
     : { teaGrade };
 

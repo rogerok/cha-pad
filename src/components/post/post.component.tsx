@@ -10,8 +10,8 @@ import {
 } from "./post.styles";
 interface IPosts extends ITea {
   defaultImage: string;
-  showModal: boolean;
-  setShowModal: Function;
+  selectedImage: string | null;
+  setSelectedImage: Function;
 }
 
 const Post: FC<IPosts> = ({
@@ -21,14 +21,17 @@ const Post: FC<IPosts> = ({
   date,
   teaPhotoUrl,
   defaultImage,
+  selectedImage,
+  setSelectedImage,
 }) => {
   const postedDate = new Date(+date!).toISOString().slice(0, 10);
+  const photoUrl = teaPhotoUrl ?? defaultImage;
   return (
     <PostArticle style={{ border: "1px solid white" }}>
       <PostHeader>{teaName}</PostHeader>
       <ReviewWrapper>
-        <ImageWrapper>
-          <img src={teaPhotoUrl ?? defaultImage} alt="tea posted by user" />
+        <ImageWrapper onClick={() => setSelectedImage(photoUrl)}>
+          <img src={photoUrl} alt="tea posted by user" />
         </ImageWrapper>
         <TeaReview>
           <p>{teaReview}</p>
