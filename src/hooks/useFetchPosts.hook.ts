@@ -1,4 +1,9 @@
-import { Action, OutputSelector, Selector } from "@reduxjs/toolkit";
+import {
+  Action,
+  AsyncThunkAction,
+  OutputSelector,
+  Selector,
+} from "@reduxjs/toolkit";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "./../redux/store";
 import { selectDefaultImage } from "./../redux/tea-library/teaLibrarySlice";
@@ -38,7 +43,7 @@ interface IUseFetchPosts {
 }
 
 const useFetchPosts = (): IUseFetchPosts => {
-  const userId = useAppSelector((state) => state.user.currentUser!.id);
+  const userId = useAppSelector((state) => state.user.currentUser?.id) ?? "";
   const path = useLocation().pathname;
   const teaGrade = useLocation().state;
   const defaultImage =
@@ -59,7 +64,7 @@ const useFetchPosts = (): IUseFetchPosts => {
     ? selectUserPostsLoading
     : selectTeatLibraryPostsLoading;
 
-  const fetchData = isUserPosts
+  const fetchData: IFetchData = isUserPosts
     ? {
         teaGrade,
         wouldTaste: path.includes("would-taste-tea"),

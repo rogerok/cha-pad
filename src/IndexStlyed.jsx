@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-import bgImage from "./img/background-image.jpg";
 
 const IndexStyled = createGlobalStyle`
   a {
@@ -22,24 +21,6 @@ const IndexStyled = createGlobalStyle`
     color: inherit;
   }
 
-  /* @keyframes bgScroll {
-  0% {
-    background-position: 0px 0px;
-  }
-  100% {
-    background-position: 0px -1707px;
-  }
-}*/
-
-  .main-bg {
-    /*animation: bgScroll 20s linear infinite;*/
-    margin: 0 auto;
-    padding: 0 50px;
-    color: white;
-    background: #232526 url(${bgImage}) repeat-y top right;
-    background-size: contain;
-  }
-
 
   body {
     margin: 0;
@@ -50,7 +31,7 @@ const IndexStyled = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     color: #fdfdfdeb;
     font-weight: normal;
-    font-size: 18px;
+    font-size: 18px;  
   }
 
   code {

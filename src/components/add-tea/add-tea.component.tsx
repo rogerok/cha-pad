@@ -23,13 +23,14 @@ import WrapperComponent from "../wrapper/wrapper.component";
 import CustomButton from "../custom-button/custom-button.component";
 
 import { CheckboxContainer } from "./add-tea.styles";
+import StarRating from "../star-rating/star-rating.component";
 
 const AddTea: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const userName = useAppSelector(selectCurrentUser)!.displayName;
-  const userId = useAppSelector(selectCurrentUser)!.id;
+  const userName = useAppSelector(selectCurrentUser)?.displayName ?? "";
+  const userId = useAppSelector(selectCurrentUser)?.id ?? "";
   const teaGradesName = useAppSelector(selectTeaGradesName);
   const { teaPhoto, handleFileInputChange, handlePhotoSubmit } =
     useCompressPhoto();
@@ -143,8 +144,8 @@ const AddTea: FC = () => {
             label="Добавьте фото чая"
             onChange={handleFileInputChange}
             accept={"image/*"}
-            ref={photoRef}
           />
+          <StarRating />
 
           <TextArea
             name="teaReview"
@@ -153,7 +154,6 @@ const AddTea: FC = () => {
             onChange={handleChange}
             value={teaData.teaReview}
           />
-
           <div
             className=""
             style={{

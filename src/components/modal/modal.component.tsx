@@ -1,11 +1,12 @@
 import React, { FC, useRef } from "react";
+import { ModalLayout, TeaPhoto, CloseModalButton } from "./modal.styles";
 
-interface IModal {
+interface IModalProps {
   selectedImage: string;
   setSelectedImage: Function;
 }
 
-const Modal: FC<IModal> = ({ selectedImage, setSelectedImage }) => {
+const Modal: FC<IModalProps> = ({ selectedImage, setSelectedImage }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   const handleClick = (e: React.MouseEvent) => {
@@ -15,9 +16,10 @@ const Modal: FC<IModal> = ({ selectedImage, setSelectedImage }) => {
   };
 
   return (
-    <div ref={modalRef} onClick={handleClick}>
-      <img src={selectedImage} alt="" />
-    </div>
+    <ModalLayout ref={modalRef} onClick={handleClick}>
+      <TeaPhoto src={selectedImage} alt="" />
+      <CloseModalButton onClick={() => setSelectedImage(null)} />
+    </ModalLayout>
   );
 };
 

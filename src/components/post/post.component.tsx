@@ -27,6 +27,7 @@ const Post: FC<IPosts> = ({
 }) => {
   const postedDate = new Date(+date!).toISOString().slice(0, 10);
   const photoUrl = teaPhotoUrl ?? defaultImage;
+
   return (
     <PostArticle style={{ border: "1px solid white" }}>
       <PostHeader>{teaName}</PostHeader>

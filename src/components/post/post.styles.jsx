@@ -14,14 +14,18 @@ export const PostHeader = styled.h2`
 export const ReviewWrapper = styled.div`
   display: flex;
   justify-content: space-around;
+  align-self: flex-start;
 `;
 export const ImageWrapper = styled.div`
-  width: 25%;
+  width: 30%;
   height: 300px;
-  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   img {
     max-width: 100%;
-    max-height: auto;
+    max-height: 300px;
+    aspect-ratio: 7/6;
   }
 `;
 

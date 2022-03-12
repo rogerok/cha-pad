@@ -9,7 +9,8 @@ import { ITea } from "../../ts/types";
 import WrapperComponent from "../wrapper/wrapper.component";
 import SpinnerComponent from "../spinner/spinner.component";
 import Post from "../post/post.component";
-import Modal from "../modal/modal.component";
+
+const Modal = React.lazy(() => import("../modal/modal.component"));
 
 const Posts: FC = () => {
   const dispatch = useAppDispatch();
@@ -40,10 +41,12 @@ const Posts: FC = () => {
 
   return (
     <WrapperComponent>
-      <Modal
-        selectedImage={selectedImage!}
-        setSelectedImage={setSelectedImage}
-      />
+      {selectedImage && (
+        <Modal
+          selectedImage={selectedImage!}
+          setSelectedImage={setSelectedImage}
+        />
+      )}
       {isLoading ? (
         <SpinnerComponent />
       ) : (

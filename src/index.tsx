@@ -4,21 +4,18 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 
 import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { store, persistor } from "./redux/store";
+import { store } from "./redux/store";
 
 import App from "./App";
-import IndexStyled from "./IndexStyled";
+import IndexStyled from "./IndexStlyed";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      {/*       <PersistGate loading={null} persistor={persistor}> */}
       <IndexStyled />
       <BrowserRouter>
         <App />
       </BrowserRouter>
-      {/*       </PersistGate> */}
     </Provider>
   </React.StrictMode>,
 
