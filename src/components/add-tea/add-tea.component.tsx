@@ -32,6 +32,7 @@ const AddTea: FC = () => {
   const userName = useAppSelector(selectCurrentUser)?.displayName ?? "";
   const userId = useAppSelector(selectCurrentUser)?.id ?? "";
   const teaGradesName = useAppSelector(selectTeaGradesName);
+
   const { teaPhoto, handleFileInputChange, handlePhotoSubmit } =
     useCompressPhoto();
 
@@ -46,6 +47,7 @@ const AddTea: FC = () => {
     wouldTaste: false,
     id: "",
     userId,
+    rating: null,
   });
 
   const goBack = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -88,6 +90,7 @@ const AddTea: FC = () => {
       wouldTaste: false,
       id: "",
       userId,
+      rating: null,
     });
     photoRef.current = "";
     handlePhotoSubmit();
@@ -145,7 +148,7 @@ const AddTea: FC = () => {
             onChange={handleFileInputChange}
             accept={"image/*"}
           />
-          <StarRating />
+          <StarRating onChange={handleChange} />
 
           <TextArea
             name="teaReview"
@@ -155,7 +158,6 @@ const AddTea: FC = () => {
             value={teaData.teaReview}
           />
           <div
-            className=""
             style={{
               display: "flex",
               justifyContent: "space-between",

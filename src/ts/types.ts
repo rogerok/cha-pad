@@ -16,7 +16,6 @@ export interface ITeaPadDataForInterfaces {
 }
 
 export interface ITea {
-  [x: string]: any;
   teaPhoto?: File | null;
   teaPhotoUrl?: string;
   teaName: string;
@@ -28,6 +27,7 @@ export interface ITea {
   addedBy: string;
   id: string;
   userId: string;
+  rating: number | null;
 }
 
 export interface IUser {

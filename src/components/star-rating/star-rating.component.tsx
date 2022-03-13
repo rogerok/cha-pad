@@ -23,7 +23,11 @@ const StarIcon = ({
   );
 };
 
-const StarRating: FC = () => {
+const StarRating = ({
+  onChange,
+}: {
+  onChange: ReactEventHandler;
+}): JSX.Element => {
   const [rating, setRating] = useState<number | null>(null);
   const [hover, setHover] = useState<number | null>(null);
   const [ratingDuplicate, setRatingDuplicate] = useState<number | null>(null);
@@ -44,6 +48,13 @@ const StarRating: FC = () => {
 
   return (
     <div>
+      <p
+        style={{
+          marginBottom: "1rem",
+        }}
+      >
+        Оцените чай
+      </p>
       {[...Array(5)].map((_, id) => {
         const ratingValue = id + 1;
         const showEmptyIcon =
