@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import Rating from "../star-rating/rating.component";
 import { ITea } from "../../ts/types";
 
 import {
@@ -22,8 +23,8 @@ const Post: FC<IPosts> = ({
   date,
   teaPhotoUrl,
   defaultImage,
-  selectedImage,
   setSelectedImage,
+  rating,
 }) => {
   const postedDate = new Date(+date!).toISOString().slice(0, 10);
   const photoUrl = teaPhotoUrl ?? defaultImage;
@@ -37,6 +38,7 @@ const Post: FC<IPosts> = ({
         </ImageWrapper>
         <TeaReview>
           <p>{teaReview}</p>
+          <Rating ratingValue={rating!} />
           <footer>
             <p>Добавил: {addedBy}</p>
             <p>

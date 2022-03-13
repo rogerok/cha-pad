@@ -77,7 +77,6 @@ const AddTea: FC = () => {
       id: uuid,
       userId,
     };
-
     dispatch(addNewPost({ data, teaPhoto }));
     dispatch(addTeaDataToUserProfile({ data, userId }));
 
@@ -148,7 +147,7 @@ const AddTea: FC = () => {
             onChange={handleFileInputChange}
             accept={"image/*"}
           />
-          <StarRating onChange={handleChange} />
+          <StarRating value={teaData.rating!} onChange={handleChange} />
 
           <TextArea
             name="teaReview"

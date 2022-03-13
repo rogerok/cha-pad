@@ -25,15 +25,17 @@ const StarIcon = ({
 
 const StarRating = ({
   onChange,
+  value,
 }: {
   onChange: ReactEventHandler;
+  value: number;
 }): JSX.Element => {
   const [rating, setRating] = useState<number | null>(null);
   const [hover, setHover] = useState<number | null>(null);
   const [ratingDuplicate, setRatingDuplicate] = useState<number | null>(null);
 
-  const handleClick = (ratingValue: number) => {
-    setRating(ratingValue);
+  const handleClick = (e: React.ChangeEvent, ratingValue: number) => {
+    onChange(e);
     setRatingDuplicate(ratingValue);
   };
 
@@ -66,8 +68,8 @@ const StarRating = ({
               name="rating"
               type="radio"
               id={`${id}`}
-              value={ratingValue}
-              onClick={(e: React.ChangeEvent) => handleClick(ratingValue)}
+              value={value}
+              onChange={(e: React.ChangeEvent) => handleClick(e, ratingValue)}
             />
             <StarIcon
               showEmptyIcon={showEmptyIcon}
