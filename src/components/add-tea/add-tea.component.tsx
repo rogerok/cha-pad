@@ -1,4 +1,13 @@
+<<<<<<< Updated upstream
 import React, { FC } from "react";
+=======
+import React, { FC, useRef, useState } from "react";
+import { v4 as uuidGenerator } from "uuid";
+import { useNavigate } from "react-router";
+import { useAppSelector, useAppDispatch } from "../../hooks/redux.hooks";
+import useCompressPhoto from "../../hooks/useCompressPhoto.hook";
+import useStarRating from "../../hooks/useStarRating.hooks";
+>>>>>>> Stashed changes
 
 //hooks
 import { useNavigate } from "react-router";
@@ -22,6 +31,41 @@ import { CheckboxContainer } from "./add-tea.styles";
 
 const AddTea: FC = () => {
   const navigate = useNavigate();
+<<<<<<< Updated upstream
+=======
+
+  const userName = useAppSelector(selectCurrentUser)?.displayName ?? "";
+  const userId = useAppSelector(selectCurrentUser)?.id ?? "";
+  const teaGradesName = useAppSelector(selectTeaGradesName);
+  const photoRef = useRef<HTMLInputElement | null | string>(null);
+
+  const { teaPhoto, handleFileInputChange, handlePhotoSubmit } =
+    useCompressPhoto();
+
+  const {
+    starRating,
+    setStarRating,
+    hover,
+    setHover,
+    ratingDuplicate,
+    setRatingDuplicate,
+  } = useStarRating();
+
+  const rating = useStarRating();
+
+  const [teaData, setTeaData] = useState<ITea>({
+    addedBy: userName,
+    teaName: "",
+    teaAge: "",
+    teaGrade: "",
+    teaReview: "",
+    wouldTaste: false,
+    id: "",
+    userId,
+    rating: null,
+  });
+
+>>>>>>> Stashed changes
   const goBack = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     navigate(-1);
@@ -35,7 +79,38 @@ const AddTea: FC = () => {
     teaGradesName,
   } = useAddTea();
 
+<<<<<<< Updated upstream
   const isLoading = useAppSelector(selectPostsLoading);
+=======
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const uuid: string = uuidGenerator();
+    const data = {
+      ...teaData,
+      id: uuid,
+      userId,
+      starRating,
+    };
+    dispatch(addNewPost({ data, teaPhoto }));
+    dispatch(addTeaDataToUserProfile({ data, userId }));
+
+    setTeaData({
+      addedBy: userName,
+      teaName: "",
+      teaAge: "",
+      teaGrade: "",
+      teaReview: "",
+      wouldTaste: false,
+      id: "",
+      userId,
+      rating: null,
+    });
+    setStarRating(null);
+    photoRef.current = "";
+    handlePhotoSubmit();
+  };
+>>>>>>> Stashed changes
 
   return (
     <WrapperComponent>
@@ -89,7 +164,11 @@ const AddTea: FC = () => {
             onChange={handleFileInputChange}
             accept={"image/*"}
           />
-          <StarRating value={teaData.rating!} onChange={handleChange} />
+          <StarRating
+            value={teaData.rating!}
+            onChange={handleChange}
+            utils={rating}
+          />
 
           <TextArea
             name="teaReview"

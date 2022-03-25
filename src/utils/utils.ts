@@ -1,6 +1,3 @@
-import userSlice from "../redux/user/userSlice";
-import teaLibrarySlice from "../redux/tea-library/teaLibrarySlice";
-
 export const convertPathnameToCamelCase = (string: string): string => {
   const arrWithoutDash = string
     .toLowerCase()
