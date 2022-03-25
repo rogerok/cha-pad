@@ -1,13 +1,15 @@
 import React, { FC, useState } from "react";
 
+//utils
 import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
 
+//components
 import FormInput from "../form-input/form-input.component";
 import FormWrapper from "../form-wrapper/form-wrapper.component";
 import CustomButton from "../custom-button/custom-button.component";
 
-import { CustomButtonsWrapper } from "./sign-in.styles";
-import { Title } from "./sign-in.styles";
+//styles
+import { CustomButtonsWrapper, Title } from "./sign-in.styles";
 
 interface FormData {
   email: string;
@@ -20,21 +22,6 @@ const SignIn: FC = () => {
     password: "",
   });
 
-  /*   const fromPage = location.state?.from?.pathname || "/";
-  const location = useLocation();
-  const navigate = useNavigate();
-    const [isLogged, setIsLogged] = useState(false);
-  const googleSignIn = async () => {
-    try {
-      await signInWithGoogle().additionalUserInfo?.profile;
-      setIsLogged(true);
-    } catch (err) {
-      console.log(err);
-    }
-  if (isLogged) navigate("/");
-    setIsLogged(false);
-  };
- */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -48,12 +35,9 @@ const SignIn: FC = () => {
     try {
       await auth.signInWithEmailAndPassword(formData.email, formData.password);
       setFormData({ email: "", password: "" });
-      /*       setIsLogged(true); */
     } catch (err: any) {
       alert(err.message);
     }
-    /*     if (isLogged) navigate("/");
-    setIsLogged(false); */
   };
 
   return (

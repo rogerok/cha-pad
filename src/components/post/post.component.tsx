@@ -1,7 +1,10 @@
 import React, { FC } from "react";
-import Rating from "../star-rating/rating.component";
+
 import { ITea } from "../../ts/types";
 
+import Rating from "../star-rating/rating.component";
+
+//styles
 import {
   PostArticle,
   PostHeader,
@@ -26,8 +29,8 @@ const Post: FC<IPosts> = ({
   setSelectedImage,
   rating,
 }) => {
-  const postedDate = new Date(+date!).toISOString().slice(0, 10);
-  const photoUrl = teaPhotoUrl ?? defaultImage;
+  //const postedDate = new Date(+date!).toISOString().slice(0, 10);
+  const photoUrl = teaPhotoUrl ? teaPhotoUrl : defaultImage;
 
   return (
     <PostArticle style={{ border: "1px solid white" }}>
@@ -40,10 +43,8 @@ const Post: FC<IPosts> = ({
           <p>{teaReview}</p>
           <Rating ratingValue={rating!} />
           <footer>
-            <p>Добавил: {addedBy}</p>
-            <p>
-              <time>{postedDate}</time>
-            </p>
+            <p style={{ marginBottom: "2rem" }}>Добавил: {addedBy}</p>
+            <p>{/* <time>{postedDate}</time> */}</p>
           </footer>
         </TeaReview>
       </ReviewWrapper>

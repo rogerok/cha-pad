@@ -1,11 +1,15 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
+
+//hooks
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
-
 import useFetchPosts from "../../hooks/useFetchPosts.hook";
+
+//types
 import { ITea } from "../../ts/types";
 
+//components
 import WrapperComponent from "../wrapper/wrapper.component";
 import SpinnerComponent from "../spinner/spinner.component";
 import Post from "../post/post.component";

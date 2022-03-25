@@ -46,14 +46,13 @@ export interface ITeaData<T> {
   lightOolong: T;
   darkOolong: T;
   gabaTea: T;
-  withoutGrade?: T;
+  withoutGrade: T;
 }
-
-export type TAddedTea = ITeaData<addedTea>;
-
-type addedTea = {
+export type addedTea = {
   [key: string]: ITea;
 };
+export type TAddedTea = ITeaData<addedTea>;
+export interface IAddedTea extends ITeaData<addedTea> {}
 
 export type TeaDataByUsers = ITeaData<ITea[]>;
 

@@ -1,99 +1,41 @@
-import React, { FC, useRef, useState } from "react";
-import { v4 as uuidGenerator } from "uuid";
+import React, { FC } from "react";
+
+//hooks
 import { useNavigate } from "react-router";
-import { useAppSelector, useAppDispatch } from "../../hooks/redux.hooks";
-import useCompressPhoto from "../../hooks/useCompressPhoto.hook";
+import { useAppSelector } from "../../hooks/redux.hooks";
+import useAddTea from "../../hooks/useAddTea.hook";
 
-import {
-  selectTeaGradesName,
-  addNewPost,
-} from "../../redux/tea-library/teaLibrarySlice";
-import {
-  addTeaDataToUserProfile,
-  selectCurrentUser,
-} from "../../redux/user/userSlice";
+import { selectPostsLoading } from "../../redux/posts/postsSlice";
 
-import { ITea } from "../../ts/types";
-
+//components
 import FormInput from "../form-input/form-input.component";
 import FormWrapper from "../form-wrapper/form-wrapper.component";
 import Select from "../select/select.component";
 import TextArea from "../text-area/text-area.component";
 import WrapperComponent from "../wrapper/wrapper.component";
 import CustomButton from "../custom-button/custom-button.component";
-
-import { CheckboxContainer } from "./add-tea.styles";
 import StarRating from "../star-rating/star-rating.component";
+import SpinnerComponent from "../spinner/spinner.component";
+
+//styles
+import { CheckboxContainer } from "./add-tea.styles";
 
 const AddTea: FC = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  const userName = useAppSelector(selectCurrentUser)?.displayName ?? "";
-  const userId = useAppSelector(selectCurrentUser)?.id ?? "";
-  const teaGradesName = useAppSelector(selectTeaGradesName);
-
-  const { teaPhoto, handleFileInputChange, handlePhotoSubmit } =
-    useCompressPhoto();
-
-  const photoRef = useRef<HTMLInputElement | null | string>(null);
-
-  const [teaData, setTeaData] = useState<ITea>({
-    addedBy: userName,
-    teaName: "",
-    teaAge: "",
-    teaGrade: "",
-    teaReview: "",
-    wouldTaste: false,
-    id: "",
-    userId,
-    rating: null,
-  });
-
   const goBack = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     navigate(-1);
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ): void => {
-    const { name, value } = e.target;
+  const {
+    handleChange,
+    handleFileInputChange,
+    handleSubmit,
+    teaData,
+    teaGradesName,
+  } = useAddTea();
 
-    setTeaData({
-      ...teaData,
-      [name]: name === "wouldTaste" ? !teaData.wouldTaste : value,
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const uuid: string = uuidGenerator();
-    const data = {
-      ...teaData,
-      id: uuid,
-      userId,
-    };
-    dispatch(addNewPost({ data, teaPhoto }));
-    dispatch(addTeaDataToUserProfile({ data, userId }));
-
-    setTeaData({
-      addedBy: userName,
-      teaName: "",
-      teaAge: "",
-      teaGrade: "",
-      teaReview: "",
-      wouldTaste: false,
-      id: "",
-      userId,
-      rating: null,
-    });
-    photoRef.current = "";
-    handlePhotoSubmit();
-  };
+  const isLoading = useAppSelector(selectPostsLoading);
 
   return (
     <WrapperComponent>

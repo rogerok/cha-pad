@@ -1,29 +1,19 @@
-import {
-  Action,
-  AsyncThunkAction,
-  OutputSelector,
-  Selector,
-} from "@reduxjs/toolkit";
-import { ThunkAction } from "redux-thunk";
+import { Selector } from "@reduxjs/toolkit";
 import { RootState } from "./../redux/store";
-import { selectDefaultImage } from "./../redux/tea-library/teaLibrarySlice";
-import { useLocation } from "react-router-dom";
-import {
-  selectAddedPostsByUsers,
-  selectTeatLibraryPostsError,
-  selectTeatLibraryPostsLoading,
-} from "../redux/tea-library/teaLibrarySlice";
-import {
-  selectAddedPostsByUser,
-  selectUserPostsError,
-  selectUserPostsLoading,
-} from "../redux/user/userSlice";
-import { AppThunk, useAppSelector } from "./redux.hooks";
 
-import { fetchAddedPostsByUsers } from "../redux/tea-library/teaLibrarySlice";
-import { fetchUserPosts } from "../redux/user/userSlice";
-import { ITea } from "../ts/types";
-import { Dispatch } from "react";
+import { useLocation } from "react-router-dom";
+
+import { selectDefaultImage } from "./../redux/tea-library/teaLibrarySlice";
+import {
+  fetchAddedPostsByUsers,
+  fetchUserPosts,
+  selectAddedPostsByUsers,
+  selectAddedPostsByUser,
+  selectPostsError,
+  selectPostsLoading,
+} from "../redux/posts/postsSlice";
+
+import { useAppSelector } from "./redux.hooks";
 
 interface IFetchData {
   wouldTaste?: boolean;
@@ -57,12 +47,9 @@ const useFetchPosts = (): IUseFetchPosts => {
     ? selectAddedPostsByUser
     : selectAddedPostsByUsers;
 
-  const selectError = isUserPosts
-    ? selectUserPostsError
-    : selectTeatLibraryPostsError;
-  const selectLoading = isUserPosts
-    ? selectUserPostsLoading
-    : selectTeatLibraryPostsLoading;
+  const selectError = selectPostsError;
+
+  const selectLoading = selectPostsLoading;
 
   const fetchData: IFetchData = isUserPosts
     ? {

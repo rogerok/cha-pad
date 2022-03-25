@@ -1,37 +1,25 @@
-import {
-  createSlice,
-  createSelector,
-  PayloadAction,
-  createAsyncThunk,
-} from "@reduxjs/toolkit";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
 
+<<<<<<< HEAD
 import { firestore } from "../../firebase/firebase.utils";
 import firebase from "firebase/app";
 import { IUser, ITea } from "./../../ts/types";
+=======
+import { IUser } from "./../../ts/types";
+>>>>>>> c2f31b8 (created posts slice, refactored user slice and tea library slice, added comments to code)
 
 interface User {
   currentUser: IUser | null;
   loading: boolean;
   error: any;
-  addedTea: Record<string, { [key: string]: ITea }[]>;
 }
 const initialState: User = {
   currentUser: null,
   loading: false,
   error: null,
-  addedTea: {
-    darkOolong: [],
-    greenTea: [],
-    gabaTea: [],
-    lightOolong: [],
-    redTea: [],
-    shengPuerh: [],
-    shuPuerh: [],
-    whiteTea: [],
-    withoutGrade: [],
-  },
 };
 
+<<<<<<< HEAD
 const setError = (state: User, action: any) => {
   state.loading = false;
   state.error = action.payload;
@@ -112,6 +100,8 @@ export const fetchUserPosts = createAsyncThunk(
   }
 );
 
+=======
+>>>>>>> c2f31b8 (created posts slice, refactored user slice and tea library slice, added comments to code)
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -120,6 +110,7 @@ const userSlice = createSlice({
       state.currentUser = action.payload;
     },
   },
+<<<<<<< HEAD
   extraReducers: {
     [addTeaDataToUserProfile.pending.type]: setLoading,
     [addTeaDataToUserProfile.rejected.type]: setError,
@@ -136,6 +127,8 @@ const userSlice = createSlice({
       state.error = null;
     },
   },
+=======
+>>>>>>> c2f31b8 (created posts slice, refactored user slice and tea library slice, added comments to code)
 });
 
 const selectUser = (state: { user: User }) => state.user;
@@ -143,25 +136,6 @@ const selectUser = (state: { user: User }) => state.user;
 export const selectCurrentUser = createSelector(
   [selectUser],
   (user) => user.currentUser
-);
-const selectAddedTea = createSelector([selectUser], (user) => user.addedTea);
-
-export const selectUserPostsError = createSelector(
-  [selectUser],
-  (user) => user.error
-);
-export const selectUserPostsLoading = createSelector(
-  [selectUser],
-  (user) => user.loading
-);
-
-export const selectAddedPostsByUser = createSelector(
-  selectAddedTea,
-  (_: any, teaGrade: string) => teaGrade,
-  (addedTea, teaGrade) => {
-    if (!addedTea[teaGrade].length) return [];
-    return addedTea[teaGrade];
-  }
 );
 
 export const { setCurrentUser } = userSlice.actions;

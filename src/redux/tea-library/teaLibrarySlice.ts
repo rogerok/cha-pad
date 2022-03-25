@@ -1,17 +1,9 @@
-import {
-  createSlice,
-  createSelector,
-  PayloadAction,
-  createAsyncThunk,
-} from "@reduxjs/toolkit";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
 
-import { firestore, uploadPhotoToStore } from "../../firebase/firebase.utils";
-import { ITeaPadDataForInterfaces } from "./../../ts/types";
 import {
   ITeaDataForInterfaces,
-  ITea,
+  ITeaPadDataForInterfaces,
   ITeaData,
-  TAddedTea,
 } from "./../../ts/types";
 
 interface TeaLibraryState {
@@ -19,12 +11,6 @@ interface TeaLibraryState {
   error: any;
   teaGrades: ITeaData<ITeaDataForInterfaces>;
   teaPadUiData: ITeaPadDataForInterfaces[];
-  addedTeaByUsers: {
-    [key: string]: {
-      [key: string]: ITea;
-    };
-  };
-  /*   addedTeaByUsers: TAddedTea; */
 }
 
 const initialState: TeaLibraryState = {
@@ -145,100 +131,14 @@ const initialState: TeaLibraryState = {
       imageUrl: "https://m.media-amazon.com/images/I/71iWjD-2BoL._SL1280_.jpg",
     },
   ],
-
-  addedTeaByUsers: {
-    shengPuerh: {},
-    shuPuerh: {},
-    whiteTea: {},
-    redTea: {},
-    lightOolong: {},
-    darkOolong: {},
-    greenTea: {},
-    gabaTea: {},
-    withoutGrade: {},
-  },
-};
-
-export const fetchAddedPostsByUsers = createAsyncThunk(
-  "teaLibrary/fetchPostsData",
-  async ({ teaGrade }: { teaGrade: string }, { rejectWithValue }) => {
-    try {
-      const response = await firestore
-        .collection("teaLibrary")
-        .doc("addedTeaByUsers")
-        .collection(teaGrade)
-        .get();
-      if (response.empty)
-        throw new Error("Вы еще не добавляли чай этого сорта");
-      return response.docs.map((doc) => doc.data());
-    } catch (error: any) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-export const addNewPost = createAsyncThunk(
-  "teaLibrary/addNewPost",
-  async (
-    { data, teaPhoto }: { data: ITea; teaPhoto: { image: File | null } },
-    { rejectWithValue }
-  ) => {
-    try {
-      console.log(teaPhoto);
-      const teaPhotoUrl = await uploadPhotoToStore(
-        teaPhoto,
-        data.teaGrade
-      ).then((url) => url);
-      console.log(teaPhotoUrl);
-
-      firestore
-        .collection(`teaLibrary`)
-        .doc(`addedTeaByUsers`)
-        .collection(data.teaGrade)
-        .doc(data.id)
-        .set({
-          ...data,
-          date: Date.now(),
-          teaPhotoUrl,
-        });
-    } catch (error: any) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-const setError = (state: TeaLibraryState, action: PayloadAction<ITea>) => {
-  state.loading = false;
-  state.error = action.payload;
-};
-const setLoading = (state: TeaLibraryState, action: PayloadAction<ITea>) => {
-  state.loading = true;
-  state.error = null;
 };
 
 export const teaLibrarySlice = createSlice({
   name: "teaLibrary",
   initialState,
   reducers: {},
-  extraReducers: {
-    [fetchAddedPostsByUsers.pending.type]: setLoading,
-    [fetchAddedPostsByUsers.rejected.type]: setError,
-
-    [fetchAddedPostsByUsers.fulfilled.type]: (
-      state: TeaLibraryState,
-      action: PayloadAction<ITea[]>
-    ) => {
-      action.payload.forEach((item) => {
-        state.addedTeaByUsers[item.teaGrade as keyof TAddedTea][item.id] = item;
-      });
-      state.loading = false;
-      state.error = null;
-    },
-
-    [addNewPost.pending.type]: setLoading,
-    [addNewPost.rejected.type]: setError,
-  },
 });
+
 const selectTeaLibrary = (state: {
   teaLibrary: TeaLibraryState;
 }): TeaLibraryState => state.teaLibrary;
@@ -274,27 +174,6 @@ export const selectTeaGradesName = createSelector([selectTeaGrades], (grades) =>
         grades[gradeItem as keyof ITeaData<ITeaDataForInterfaces>]!.grade,
     };
   })
-);
-export const selectAddedTea = createSelector(
-  [selectTeaLibrary],
-  (teaLibrary) => teaLibrary.addedTeaByUsers
-);
-export const selectTeatLibraryPostsError = createSelector(
-  [selectTeaLibrary],
-  (teaLibrary) => teaLibrary.error
-);
-export const selectTeatLibraryPostsLoading = createSelector(
-  [selectTeaLibrary],
-  (teaLibrary) => teaLibrary.loading
-);
-
-export const selectAddedPostsByUsers = createSelector(
-  selectAddedTea,
-  (_: any, teaGrade: string) => teaGrade,
-  (addedTea, teaGrade) =>
-    Object.keys(addedTea[teaGrade] ?? {}).map(
-      (item) => addedTea[teaGrade][item]
-    )
 );
 
 export const selectDefaultImage = createSelector(

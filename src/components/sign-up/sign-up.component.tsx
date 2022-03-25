@@ -1,16 +1,22 @@
 import React, { FC } from "react";
 
+//hooks
+import useForm from "../../hooks/useForm.hook";
+
+//utils
+import { validateData } from "../../utils/validateData";
+import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
+
+//types
 import { IValidateUserData } from "../../ts/types";
 
+//components
 import CustomButton from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.component";
 import FormWrapper from "../form-wrapper/form-wrapper.component";
 
-import useForm from "../../hooks/useForm.hook";
-import { validateData } from "../../utils/validateData";
-
+//styles
 import { Title } from "./sign-up.styles";
-import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 import { Spinner } from "../spinner/spinner.styles";
 
 const SignUp = () => {

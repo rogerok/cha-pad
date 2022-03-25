@@ -1,9 +1,10 @@
 import React, { FC } from "react";
 
-import { ITeaDataForInterfaces } from "../../ts/types";
+import { useAppSelector } from "../../hooks/redux.hooks";
 
 import { selectTeaCollection } from "../../redux/tea-library/teaLibrarySlice";
-import { useAppSelector } from "../../hooks/redux.hooks";
+
+import { ITeaDataForInterfaces } from "../../ts/types";
 
 import CardCollection from "../card-collection/card-collection.component";
 

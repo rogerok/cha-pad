@@ -1,5 +1,7 @@
 import React, { FC, useRef } from "react";
+
 import useDisableByScroll from "../../hooks/useDisableByScroll";
+
 import { ModalLayout, TeaPhoto, CloseModalButton } from "./modal.styles";
 
 interface IModalProps {

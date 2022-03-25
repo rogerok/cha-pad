@@ -1,9 +1,11 @@
 import React, { FC } from "react";
 
+//types
 import { ITeaDataForInterfaces } from "../../ts/types";
-
+//components
 import CustomLink from "../custom-link/custom-link.component";
 
+//styles
 import { CardListItem, ImageContainer, Description } from "./card-item.styles";
 
 interface CardItemProps extends Omit<ITeaDataForInterfaces, "name" | "grade"> {
