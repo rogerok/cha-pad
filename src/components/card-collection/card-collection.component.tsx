@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { useLocation } from "react-router-dom";
 
 //types
 import {
@@ -8,6 +9,7 @@ import {
 
 //components
 import CardItem from "../card-item/card-item.component";
+import Title from "../../components/title/title.component";
 import WrapperComponent from "../wrapper/wrapper.component";
 
 //styles
@@ -18,14 +20,22 @@ interface CardCollectionProps {
 }
 
 const CardCollection: FC<CardCollectionProps> = ({ teaCollection }) => {
+  const path = useLocation().pathname;
+
   return (
-    <WrapperComponent>
-      <CollectionOverviewList>
-        {teaCollection.map(({ id, ...otherProps }) => (
-          <CardItem key={id} {...otherProps} />
-        ))}
-      </CollectionOverviewList>
-    </WrapperComponent>
+    <>
+      {path.includes("would-taste-tea") && (
+        <Title>Чай который хочу попробовать</Title>
+      )}
+      {path.includes("tasted-tea") && <Title>Чай который попробовал</Title>}
+      <WrapperComponent>
+        <CollectionOverviewList>
+          {teaCollection.map(({ id, ...otherProps }) => (
+            <CardItem key={id} {...otherProps} />
+          ))}
+        </CollectionOverviewList>
+      </WrapperComponent>
+    </>
   );
 };
 

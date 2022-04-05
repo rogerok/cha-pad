@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import { ITea } from "../../ts/types";
 
 import Rating from "../star-rating/rating.component";
+import LazyImage from "../lazy-image/lazy-image.component";
 
 //styles
 import {
@@ -29,22 +30,30 @@ const Post: FC<IPosts> = ({
   setSelectedImage,
   rating,
 }) => {
-  //const postedDate = new Date(+date!).toISOString().slice(0, 10);
+  const postedDate = new Date(+date!).toISOString().slice(0, 10);
   const photoUrl = teaPhotoUrl ? teaPhotoUrl : defaultImage;
+
+  const handleSelectedImage = () => {
+    if (teaPhotoUrl) setSelectedImage(photoUrl);
+  };
 
   return (
     <PostArticle style={{ border: "1px solid white" }}>
       <PostHeader>{teaName}</PostHeader>
       <ReviewWrapper>
-        <ImageWrapper onClick={() => setSelectedImage(photoUrl)}>
-          <img src={photoUrl} alt="tea posted by user" />
+        <ImageWrapper onClick={() => handleSelectedImage()}>
+          <LazyImage src={photoUrl!} placeholder={defaultImage} />
         </ImageWrapper>
         <TeaReview>
-          <p>{teaReview}</p>
-          <Rating ratingValue={rating!} />
+          <p style={{ marginBottom: "auto" }}>{teaReview}</p>
+          <p style={{ margin: "2rem 0" }}>
+            {rating ? <Rating ratingValue={rating!} /> : "без оценки"}
+          </p>
           <footer>
             <p style={{ marginBottom: "2rem" }}>Добавил: {addedBy}</p>
-            <p>{/* <time>{postedDate}</time> */}</p>
+            <p>
+              <time>{postedDate}</time>
+            </p>
           </footer>
         </TeaReview>
       </ReviewWrapper>

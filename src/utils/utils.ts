@@ -1,3 +1,5 @@
+import { PayloadAction } from "@reduxjs/toolkit";
+
 export const convertPathnameToCamelCase = (string: string): string => {
   const arrWithoutDash = string
     .toLowerCase()
@@ -8,4 +10,19 @@ export const convertPathnameToCamelCase = (string: string): string => {
     if (word) return word[0].toUpperCase() + word.slice(1);
   });
   return cameled.join("");
+};
+
+export const setError = (state: any, action: any /* PayloadAction */) => {
+  state.loading = false;
+  state.error = action.payload;
+};
+
+export const setLoading = (state: any, action: any /* PayloadAction */) => {
+  state.loading = true;
+  state.error = false;
+};
+
+export const setFullfiled = (state: any, action: any /* PayloadAction */) => {
+  state.loading = false;
+  state.error = false;
 };

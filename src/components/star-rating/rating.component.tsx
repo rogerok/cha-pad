@@ -2,20 +2,24 @@ import React from "react";
 import { StarEmpty, StarFilled } from "./star-rating.styles";
 
 const Rating = ({ ratingValue }: { ratingValue: number }) => {
-  return !ratingValue ? (
-    <p>без оценки</p>
-  ) : (
-    <div className="">
-      {[...Array(5)].map((star, id) => {
-        const showEmptyicon = ratingValue <= id;
+  return (
+    <>
+      {!ratingValue ? (
+        <span>без оценки</span>
+      ) : (
+        <div className="">
+          {[...Array(5)].map((_, id) => {
+            const showEmptyicon = ratingValue <= id;
 
-        return showEmptyicon ? (
-          <StarEmpty size={50} color={"white"} />
-        ) : (
-          <StarFilled size={50} color={"black"} />
-        );
-      })}
-    </div>
+            return showEmptyicon ? (
+              <StarEmpty key={id} size={50} color={"white"} />
+            ) : (
+              <StarFilled key={id} size={50} color={"grey"} />
+            );
+          })}
+        </div>
+      )}
+    </>
   );
 };
 

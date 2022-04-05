@@ -10,5 +10,6 @@ export const LayoutContainer = styled.main`
   min-width: 100%;
   background: #232526 url(${background}) repeat-y top right;
   background-size: auto;
+  font-weight: 400;
   color: white;
 `;

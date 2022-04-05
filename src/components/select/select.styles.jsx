@@ -6,6 +6,7 @@ export const SelectContainer = styled.select`
   padding: 15px;
   border: 1px solid white;
   background-color: transparent;
+  cursor: pointer;
   color: white;
   &:focus {
     outline: 5px solid black;

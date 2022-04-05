@@ -45,7 +45,13 @@ const useAddTea = () => {
       //if event happened on  would taste checkbox, then set value to opposite
       [name]: name === "wouldTaste" ? !teaData.wouldTaste : value,
     });
-    console.log(teaData);
+  };
+
+  const handleStarRatingChange = (starRating: number | null) => {
+    setTeaData({
+      ...teaData,
+      rating: starRating,
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -82,6 +88,7 @@ const useAddTea = () => {
     handleSubmit,
     teaData,
     teaGradesName,
+    handleStarRatingChange,
   };
 };
 

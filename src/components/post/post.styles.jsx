@@ -5,6 +5,7 @@ export const PostArticle = styled.article`
   padding-top: 2rem;
   padding-bottom: 2rem;
   margin-bottom: 2rem;
+  text-shadow: 1px 1px grey;
 `;
 
 export const PostHeader = styled.h2`
@@ -18,22 +19,20 @@ export const ReviewWrapper = styled.div`
 `;
 export const ImageWrapper = styled.div`
   width: 30%;
-  height: 300px;
+  aspect-ratio: 3/2;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  img {
-    max-width: 100%;
-    max-height: 300px;
-    aspect-ratio: 7/6;
-  }
+  filter: brightness(0.7);
+  cursor: pointer;
 `;
 
 export const TeaReview = styled.div`
   width: 60%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
+  font-size: 1.5rem;
 `;
 
 export const ReviewFooter = styled.footer`

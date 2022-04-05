@@ -1,4 +1,7 @@
-import React, { FC, ReactEventHandler, useState } from "react";
+import React, { FC, ReactEventHandler } from "react";
+
+import useStarRating from "../../hooks/useStarRating";
+
 import {
   StarRatingInput,
   StarFilled,
@@ -7,21 +10,19 @@ import {
 } from "./star-rating.styles";
 
 interface StarRatingProps {
-  onChange: ReactEventHandler;
   value: number;
-  utils: { [key: string]: any };
+  handleRatingChange: (starRating: number | null) => void;
 }
 
-const StarIcon = ({
-  showEmptyIcon,
-  ...props
-}: {
+interface StarIconProps {
   showEmptyIcon: boolean;
   color: string;
   size: number;
   onMouseEnter: ReactEventHandler<MouseEvent>;
   onMouseLeave: ReactEventHandler<MouseEvent>;
-}) => {
+}
+
+const StarIcon: FC<StarIconProps> = ({ showEmptyIcon, ...props }) => {
   return (
     <Star>
       {showEmptyIcon ? <StarEmpty {...props} /> : <StarFilled {...props} />}
@@ -29,7 +30,7 @@ const StarIcon = ({
   );
 };
 
-const StarRating: FC<StarRatingProps> = ({ utils }) => {
+const StarRating: FC<StarRatingProps> = ({ handleRatingChange }) => {
   const {
     starRating,
     setStarRating,
@@ -37,10 +38,11 @@ const StarRating: FC<StarRatingProps> = ({ utils }) => {
     setHover,
     ratingDuplicate,
     setRatingDuplicate,
-  } = utils;
+  } = useStarRating();
 
   const handleClick = (e: React.ChangeEvent, ratingValue: number) => {
     setStarRating(ratingValue);
+    handleRatingChange(ratingValue);
     setRatingDuplicate(ratingValue);
   };
 
@@ -48,6 +50,7 @@ const StarRating: FC<StarRatingProps> = ({ utils }) => {
     setStarRating(null);
     setHover(ratingValue);
   };
+
   const handleMouseLeave = () => {
     setHover(null);
     setStarRating(ratingDuplicate);
@@ -74,13 +77,13 @@ const StarRating: FC<StarRatingProps> = ({ utils }) => {
               name="rating"
               type="radio"
               id={`${id}`}
-              value={starRating}
+              value={ratingValue}
               onChange={(e: React.ChangeEvent) => handleClick(e, ratingValue)}
             />
             <StarIcon
               showEmptyIcon={showEmptyIcon}
               size={50}
-              color={ratingValue <= (starRating! || hover!) ? "black" : "white"}
+              color={ratingValue <= (starRating! || hover!) ? "grey" : "white"}
               onMouseEnter={() => handleMouseEnter(ratingValue)}
               onMouseLeave={() => handleMouseLeave()}
             />
@@ -92,20 +95,3 @@ const StarRating: FC<StarRatingProps> = ({ utils }) => {
 };
 
 export default StarRating;
-
-/*   const [rating, setRating] = useState<number | null>(null);
-  const [hover, setHover] = useState<number | null>(null);
-  const [ratingDuplicate, setRatingDuplicate] = useState<number | null>(null); */
-/*   const handleClick = (e: React.ChangeEvent, ratingValue: number) => {
-    setRating(ratingValue);
-    setRatingDuplicate(ratingValue);
-  };
-
-  const handleMouseEnter = (ratingValue: number) => {
-    setRating(null);
-    setHover(ratingValue);
-  };
-  const handleMouseLeave = () => {
-    setHover(null);
-    setRating(ratingDuplicate);
-  }; */

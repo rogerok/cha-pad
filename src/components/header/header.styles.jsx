@@ -15,15 +15,6 @@ const navOptionsStyles = css`
   }
 `;
 
-export const HeaderContainer = styled.header`
-  margin: 0 auto;
-  padding: 20px;
-  display: flex;
-  align-self: center;
-  max-width: 100%;
-  border-bottom: 1px solid white;
-`;
-
 export const Nav = styled.nav`
   display: flex;
   align-content: center;
@@ -33,4 +24,12 @@ export const Nav = styled.nav`
 
 export const NavOption = styled(NavLink)`
   ${navOptionsStyles}
+`;
+export const HeaderContainer = styled.header`
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  align-self: center;
+  max-width: 100%;
+  border-bottom: 1px solid white;
 `;

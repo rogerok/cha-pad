@@ -41,7 +41,6 @@ const Posts: FC = () => {
   }, []);
 
   if (isRejected) return <div> {isRejected} </div>;
-  console.log(addedPosts);
 
   return (
     <WrapperComponent>

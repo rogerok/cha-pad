@@ -20,7 +20,15 @@ const IndexStyled = createGlobalStyle`
   a:active {
     color: inherit;
   }
-
+img {
+  display: block
+}
+h1,h2,h3,h4,h5,h6 {
+  font-weight: 700;
+}
+ul {
+  list-style-type: none;
+}
 
   body {
     margin: 0;
@@ -29,7 +37,8 @@ const IndexStyled = createGlobalStyle`
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #fdfdfdeb;
+    /* color: #fdfdfdeb; */
+    color: grey;
     font-weight: normal;
     font-size: 18px;  
   }

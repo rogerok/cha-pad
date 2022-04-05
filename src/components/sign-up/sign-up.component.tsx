@@ -14,9 +14,9 @@ import { IValidateUserData } from "../../ts/types";
 import CustomButton from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.component";
 import FormWrapper from "../form-wrapper/form-wrapper.component";
+import Title from "../title/title.component";
 
 //styles
-import { Title } from "./sign-up.styles";
 import { Spinner } from "../spinner/spinner.styles";
 
 const SignUp = () => {

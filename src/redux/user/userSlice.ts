@@ -1,12 +1,8 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
 
-<<<<<<< HEAD
 import { firestore } from "../../firebase/firebase.utils";
 import firebase from "firebase/app";
 import { IUser, ITea } from "./../../ts/types";
-=======
-import { IUser } from "./../../ts/types";
->>>>>>> c2f31b8 (created posts slice, refactored user slice and tea library slice, added comments to code)
 
 interface User {
   currentUser: IUser | null;
@@ -19,7 +15,6 @@ const initialState: User = {
   error: null,
 };
 
-<<<<<<< HEAD
 const setError = (state: User, action: any) => {
   state.loading = false;
   state.error = action.payload;
@@ -29,7 +24,7 @@ const setLoading = (state: User, action: any) => {
   state.error = null;
 };
 
-export const addTeaDataToUserProfile = createAsyncThunk(
+/* export const addTeaDataToUserProfile = createAsyncThunk(
   "user/addTeaDataToUserProfile",
   async (
     { data, userId }: { data: ITea; userId: string },
@@ -65,9 +60,9 @@ export const addTeaDataToUserProfile = createAsyncThunk(
       rejectWithValue(error.message);
     }
   }
-);
+); */
 
-export const fetchUserPosts = createAsyncThunk(
+/* export const fetchUserPosts = createAsyncThunk(
   //if respons with data is empty, error won't be throwhen and error will crush
   "user/fetchUserPosts",
   async (
@@ -87,7 +82,7 @@ export const fetchUserPosts = createAsyncThunk(
       const gradeData = await gradeDocRef.where("userId", "==", userId).get();
       /*       if (gradeData.empty)
         return new Error("Вы еще не добавляли чай этого cорта"); */
-      const data = gradeData.docs.map((doc) => doc.data());
+/*      const data = gradeData.docs.map((doc) => doc.data());
       return {
         grade: teaGrade,
         posts: wouldTaste
@@ -98,10 +93,8 @@ export const fetchUserPosts = createAsyncThunk(
       rejectWithValue(error.message);
     }
   }
-);
+); */
 
-=======
->>>>>>> c2f31b8 (created posts slice, refactored user slice and tea library slice, added comments to code)
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -110,8 +103,7 @@ const userSlice = createSlice({
       state.currentUser = action.payload;
     },
   },
-<<<<<<< HEAD
-  extraReducers: {
+  /*   extraReducers: {
     [addTeaDataToUserProfile.pending.type]: setLoading,
     [addTeaDataToUserProfile.rejected.type]: setError,
 
@@ -126,9 +118,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
-  },
-=======
->>>>>>> c2f31b8 (created posts slice, refactored user slice and tea library slice, added comments to code)
+  }, */
 });
 
 const selectUser = (state: { user: User }) => state.user;

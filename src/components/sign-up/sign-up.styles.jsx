@@ -10,12 +10,6 @@ export const SignUpFormWrapper = styled.div`
   border: 1px solid white;
 `;
 
-export const Title = styled.h2`
-  margin-bottom: 30px;
-  font-size: 24px;
-  color: #fdfdfdeb;
-`;
-
 export const CustomButtonsWrapper = styled.div`
   width: 100%;
   display: flex;

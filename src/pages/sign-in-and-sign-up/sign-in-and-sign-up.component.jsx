@@ -8,6 +8,7 @@ import SignUp from "../../components/sign-up/sign-up.component";
 import { SignInAndSignUpSection } from "./sign-in-and-sign-up.styles";
 import WrapperComponent from "./../../components/wrapper/wrapper.component";
 import { useLocation, useNavigate } from "react-router-dom";
+import Title from "../../components/title/title.component";
 
 const SignInAndSignUpPage = () => {
   const currentUser = useAppSelector(selectCurrentUser);
@@ -23,6 +24,7 @@ const SignInAndSignUpPage = () => {
 
   return (
     <WrapperComponent>
+      <Title>Войдите или зарегистрируйтесь</Title>
       <SignInAndSignUpSection>
         <SignIn />
         <SignUp />

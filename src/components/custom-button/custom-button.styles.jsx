@@ -5,6 +5,7 @@ const customButtonStyles = css`
   color: white;
   border: 1px solid gray;
   transition: 0.2s linear;
+  cursor: pointer;
   &:hover {
     padding: 15px;
     background-color: transparent;

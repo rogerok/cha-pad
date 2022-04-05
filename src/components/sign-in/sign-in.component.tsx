@@ -9,7 +9,8 @@ import FormWrapper from "../form-wrapper/form-wrapper.component";
 import CustomButton from "../custom-button/custom-button.component";
 
 //styles
-import { CustomButtonsWrapper, Title } from "./sign-in.styles";
+import { CustomButtonsWrapper } from "./sign-in.styles";
+import Title from "../../components/title/title.component";
 
 interface FormData {
   email: string;
