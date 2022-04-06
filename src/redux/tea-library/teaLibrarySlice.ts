@@ -25,7 +25,7 @@ const initialState: TeaLibraryState = {
       description:
         "Шен пуэр – классический китайский чай, созданный путем постферментации.",
       imageUrl:
-        "https://cdn.shopify.com/s/files/1/0046/1380/0029/products/BaoTangRawPuer2_2000x.jpg?v=1598465826",
+        "https://firebasestorage.googleapis.com/v0/b/tea-pad.appspot.com/o/assets%2Fshen-puerh.webp?alt=media&token=e94e910c-1014-47c1-9a1d-40b5b98006a2",
     },
     shuPuerh: {
       name: "shuPuerh",
@@ -35,7 +35,7 @@ const initialState: TeaLibraryState = {
       description:
         "Шу пуэр — искусственно состаренный пуэр, имитирующий выдержанный Шен.",
       imageUrl:
-        "https://rishi-tea.com/product/image/medium/oashuputc125-rp_puer-tea-cake-organic-loose-leaf-puer-tea.jpg",
+        "https://firebasestorage.googleapis.com/v0/b/tea-pad.appspot.com/o/assets%2Fshu-puerh.jpg?alt=media&token=4eae0fd1-5303-4261-bf09-ea367532af66",
     },
     whiteTea: {
       name: "whiteTea",
@@ -55,7 +55,7 @@ const initialState: TeaLibraryState = {
       description:
         "Красный чай (Хун Ча) – это чай, полученный из листьев куста Caméllia sinénsis путем сильной ферментации. Такой чай дает насыщенный красновато-коричневый отвар.",
       imageUrl:
-        "https://cdn.shopify.com/s/files/1/0046/1380/0029/products/GushuHongCha2_600x.jpg?v=1598479909",
+        "https://firebasestorage.googleapis.com/v0/b/tea-pad.appspot.com/o/assets%2Fred-tea.webp?alt=media&token=62d71eee-2d5a-4975-8341-b711ff001029",
     },
     lightOolong: {
       name: "lightOolong",
@@ -66,7 +66,7 @@ const initialState: TeaLibraryState = {
       description:
         "Светлый улун — это полуферментированный чай, который занимает промежуточное положение между красным и зелёным чаем. Это место он получил благодаря технологии производства, при которой обработке подвергаются не весь лист, а только его края и часть поверхности.",
       imageUrl:
-        "https://cdn11.bigcommerce.com/s-8466dwhhql/images/stencil/2048x2048/products/1155/1274/LightOolong__33181.1590092556.jpg?c=1",
+        "https://firebasestorage.googleapis.com/v0/b/tea-pad.appspot.com/o/assets%2Flight-oolong.webp?alt=media&token=1b457302-9503-460d-bc6d-b2cb0ab5df64",
     },
     darkOolong: {
       name: "darkOolong",
@@ -76,7 +76,7 @@ const initialState: TeaLibraryState = {
       description:
         "Темные улуны - сильноферментированная разновидность улунов, их еще называют красными. На финальном этапе темные улуны проходят процедуру медленного томления на древесном угле.",
       imageUrl:
-        "https://cdn.webshopapp.com/shops/85422/files/333764223/image.jpg",
+        "https://firebasestorage.googleapis.com/v0/b/tea-pad.appspot.com/o/assets%2Fdark-oolong-min.jpg?alt=media&token=f84f0e0f-d21e-42e8-85fd-bbcc3360211c",
     },
     greenTea: {
       name: "greenTea",
@@ -86,7 +86,8 @@ const initialState: TeaLibraryState = {
       routeName: "green-tea",
       description:
         "Зелёный чай — чай, подвергнутый минимальной ферментации.Зелёный чай предварительно часто фиксируется паром температуры 170—180 °C; окисление продолжается не более двух дней, после чего обычно прекращается нагревом.",
-      imageUrl: "https://m.media-amazon.com/images/I/71iWjD-2BoL._SL1280_.jpg",
+      imageUrl:
+        "https://firebasestorage.googleapis.com/v0/b/tea-pad.appspot.com/o/assets%2Fgreen-tea-min.jpg?alt=media&token=6a44bfe6-c73c-4f40-ad6e-06b6bb813516",
     },
     gabaTea: {
       name: "gabaTea",
@@ -95,7 +96,8 @@ const initialState: TeaLibraryState = {
       routeName: "gaba-tea",
       description:
         "Габа чай — чай, прошедший ферментацию в анаэробных условиях (без доступа кислорода), вследствие чего в нём образовалось повышенное содержание гамма-аминомасляной кислоты.",
-      imageUrl: "https://sc04.alicdn.com/kf/HTB18xUiFhSYBuNjSsphq6zGvVXaa.jpg",
+      imageUrl:
+        "https://firebasestorage.googleapis.com/v0/b/tea-pad.appspot.com/o/assets%2Fgaba-tea-min.jpg?alt=media&token=75749e2b-d0e7-466f-8de1-d61c261afca8",
     },
     withoutGrade: {
       name: "withoutGrade",
@@ -103,7 +105,8 @@ const initialState: TeaLibraryState = {
       grade: "Без сорта",
       routeName: "without-grade",
       description: "Чай без указания сорта",
-      imageUrl: "https://m.media-amazon.com/images/I/71iWjD-2BoL._SL1280_.jpg",
+      imageUrl:
+        "https://firebasestorage.googleapis.com/v0/b/tea-pad.appspot.com/o/assets%2Fwithout-grade-min.jpg?alt=media&token=f70f4bb1-515c-4f19-85b0-0b7c3114cd57",
     },
   },
   teaPadUiData: [
@@ -113,7 +116,7 @@ const initialState: TeaLibraryState = {
       description: "Добавить чай",
       routeName: "add-tea",
       imageUrl:
-        "https://cdn11.bigcommerce.com/s-8466dwhhql/images/stencil/2048x2048/products/1155/1274/LightOolong__33181.1590092556.jpg?c=1",
+        "https://firebasestorage.googleapis.com/v0/b/tea-pad.appspot.com/o/assets%2Fgaba-tea-min.jpg?alt=media&token=75749e2b-d0e7-466f-8de1-d61c261afca8",
     },
     {
       action: "tastedTea",
@@ -121,14 +124,15 @@ const initialState: TeaLibraryState = {
       routeName: "tasted-tea",
       description: "Попробовал чай",
       imageUrl:
-        "https://cdn.shopify.com/s/files/1/0046/1380/0029/products/BaoTangRawPuer2_2000x.jpg?v=1598465826",
+        "https://firebasestorage.googleapis.com/v0/b/tea-pad.appspot.com/o/assets%2Fshen-puerh.webp?alt=media&token=e94e910c-1014-47c1-9a1d-40b5b98006a2",
     },
     {
       action: "wouldTaste",
       id: "2",
       routeName: "would-taste-tea",
       description: "Хочу попробовать",
-      imageUrl: "https://m.media-amazon.com/images/I/71iWjD-2BoL._SL1280_.jpg",
+      imageUrl:
+        "https://firebasestorage.googleapis.com/v0/b/tea-pad.appspot.com/o/assets%2Fred-tea.webp?alt=media&token=62d71eee-2d5a-4975-8341-b711ff001029",
     },
   ],
 };

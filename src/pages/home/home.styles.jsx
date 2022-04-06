@@ -65,7 +65,7 @@ export const Gallery = styled.section`
   grid-template-rows: repeat(5, 5vw);
   grid-gap: 1rem;
   position: relative;
-  transition: ;
+  transition: ${loadingAnimation} 1s ease-in-out;
 `;
 
 export const Overlay = styled(BsFillCircleFill)`
@@ -82,7 +82,7 @@ export const Overlay = styled(BsFillCircleFill)`
   font-size: 25vw;
   text-align: center;
   color: #b70909;
-  transition: ${loadingAnimation} 2s ease-in-out;
+  transition: ${loadingAnimation} 1s ease-in-out;
 `;
 
 export const GalleryItem = styled.figure`

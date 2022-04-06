@@ -2,11 +2,7 @@ import React, { FC } from "react";
 
 //hooks
 import { useNavigate } from "react-router";
-import { useAppSelector } from "../../hooks/redux.hooks";
 import useAddTea from "../../hooks/useAddTea.hook";
-import useStarRating from "../../hooks/useStarRating";
-
-import { selectPostsLoading } from "../../redux/posts/postsSlice";
 
 //components
 import FormInput from "../form-input/form-input.component";
@@ -32,12 +28,11 @@ const AddTea: FC = () => {
     handleChange,
     handleFileInputChange,
     handleSubmit,
+    handleStarRatingChange,
     teaData,
     teaGradesName,
-    handleStarRatingChange,
+    isLoading,
   } = useAddTea();
-
-  const isLoading = useAppSelector(selectPostsLoading);
 
   return isLoading ? (
     <SpinnerComponent />
@@ -95,7 +90,6 @@ const AddTea: FC = () => {
           />
           <StarRating
             value={teaData.rating!}
-            //onChange={handleChange}
             handleRatingChange={handleStarRatingChange}
           />
 
@@ -112,8 +106,12 @@ const AddTea: FC = () => {
               justifyContent: "space-between",
             }}
           >
-            <CustomButton type="submit">Добавить</CustomButton>
-            <CustomButton onClick={goBack}>Назад</CustomButton>
+            <CustomButton primary type="submit">
+              Добавить
+            </CustomButton>
+            <CustomButton primary onClick={goBack}>
+              Назад
+            </CustomButton>
           </div>
         </form>
       </FormWrapper>

@@ -1,4 +1,4 @@
-import React, { useEffect, FC, Suspense } from "react";
+import React, { useEffect, FC, Suspense, useState } from "react";
 import { useAppDispatch } from "./hooks/redux.hooks";
 
 import { useRoutes } from "react-router-dom";
@@ -8,23 +8,11 @@ import { setCurrentUser } from "./redux/user/userSlice";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import RequireAuth from "./hoc/RequireAuth.hoc";
 
-/* import Layout from "./components/layout/layout-component";
-import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
-import Posts from "./components/posts/posts-component";
-import TeaPad from "./pages/tea-pad/tea-pad.component";
-import TeaLibrary from "./pages/tea-library/tea-library.component";
-import AddTea from "./components/add-tea/add-tea.component";
-import TeaCategory from "./components/tea-category/tea-category.component";
- */
 import Layout from "./components/layout/layout-component";
 import SpinnerComponent from "./components/spinner/spinner.component";
-/* import CardCollection from "./components/card-collection/card-collection.component";
- */ import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
+import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
 import Home from "./pages/home/home.component";
 
-const CardCollection = React.lazy(
-  () => import("./components/card-collection/card-collection.component")
-);
 const Posts = React.lazy(() => import("./components/posts/posts-component"));
 const TeaPad = React.lazy(() => import("./pages/tea-pad/tea-pad.component"));
 const TeaLibrary = React.lazy(
@@ -88,13 +76,17 @@ const routes = [
 const App: FC = () => {
   const dispatch = useAppDispatch();
   const elements = useRoutes(routes);
+  const [isLoading, setLoading] = useState<boolean>();
 
   useEffect(() => {
+    setLoading(true);
+
     const unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         //createUserProfileDocument returns user reference object
         //@ts-ignore
         const userRef = await createUserProfileDocument(userAuth);
+        setLoading(false);
         //if user logged in we add event listener and update our app state, if something was changed in our user database
         userRef.onSnapshot((snapshot) => {
           dispatch(
@@ -112,7 +104,9 @@ const App: FC = () => {
     return unsubscribeFromAuth;
   }, []);
 
-  return (
+  return isLoading ? (
+    <SpinnerComponent />
+  ) : (
     <Suspense fallback={<SpinnerComponent />}>
       <React.Fragment>{elements}</React.Fragment>
     </Suspense>

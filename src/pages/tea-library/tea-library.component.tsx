@@ -11,7 +11,7 @@ interface TeaLibraryData {
 const TeaLibrary: FC<TeaLibraryData> = () => {
   return (
     <>
-      <Title>Чай добавленный пользователями</Title>
+      <Title>Чай, добавленный пользователями</Title>
       <TeaCategory teaCollection={[]} />
     </>
   );

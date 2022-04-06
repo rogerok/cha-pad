@@ -14,7 +14,6 @@ const SignInAndSignUpPage = () => {
   const currentUser = useAppSelector(selectCurrentUser);
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location);
 
   useEffect(() => {
     if (currentUser && location.state?.from.pathname)

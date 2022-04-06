@@ -68,6 +68,7 @@ const SignIn: FC = () => {
               e.preventDefault();
               signInWithGoogle();
             }}
+            primary
             isGoogleButton
           >
             Войти с Google

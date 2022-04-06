@@ -97,7 +97,7 @@ const SignUp = () => {
         >
           {errors.confirmPasswordError && <p>{errors.confirmPasswordError}</p>}
         </FormInput>
-        <CustomButton>Зарегистрироваться</CustomButton>
+        <CustomButton primary>Зарегистрироваться</CustomButton>
       </form>
     </FormWrapper>
   );

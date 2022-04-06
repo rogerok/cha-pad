@@ -1,12 +1,10 @@
 import React, { FC, InputHTMLAttributes } from "react";
+import { ITeaGrades } from "../../ts/types";
 
 import { SelectContainer, SelectOption } from "./select.styles";
 
 interface SelectProps extends InputHTMLAttributes<HTMLSelectElement> {
-  options: {
-    gradeValue: string;
-    gradeName: string;
-  }[];
+  options: ITeaGrades[];
   label: string;
 }
 

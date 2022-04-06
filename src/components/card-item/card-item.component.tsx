@@ -4,6 +4,7 @@ import React, { FC } from "react";
 import { ITeaDataForInterfaces } from "../../ts/types";
 //components
 import CustomLink from "../custom-link/custom-link.component";
+import LazyImage from "../lazy-image/lazy-image.component";
 
 //styles
 import { CardListItem, ImageContainer, Description } from "./card-item.styles";
@@ -23,7 +24,8 @@ const CardItem: FC<CardItemProps> = ({
   return (
     <CardListItem>
       <ImageContainer>
-        <img src={imageUrl} alt={grade} />
+        {/* <img src={imageUrl} alt={grade} /> */}
+        <LazyImage src={imageUrl} alt={grade} isCardImage />
       </ImageContainer>
       <Description>{description}</Description>
       <CustomLink to={routeName} state={name || null}>

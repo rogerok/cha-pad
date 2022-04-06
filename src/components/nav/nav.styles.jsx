@@ -12,7 +12,7 @@ const navOptionsStyles = css`
     color: #f5f5f5c5;
   }
   &.active {
-    color: #8b8b8beb;
+    color: #201e1f;
   }
 `;
 
@@ -21,16 +21,7 @@ const toHomeLinkStyles = css`
   top: 50%;
   left: 0;
   transform: translateY(-50%);
-  font-size: 70px;
-
-  &.active {
-    color: #fdfdfdeb;
-  }
 `;
-
-const getHomeLinkStyles = (props) => {
-  return props.isHomeLink ? toHomeLinkStyles : "";
-};
 
 export const NavContainer = styled.nav`
   position: relative;
@@ -44,7 +35,14 @@ export const NavContainer = styled.nav`
 
 export const NavOption = styled(NavLink)`
   ${navOptionsStyles};
-  ${getHomeLinkStyles}
+`;
+
+export const NavToHomeOption = styled(NavLink)`
+  ${toHomeLinkStyles}
+  ${navOptionsStyles}
+  svg {
+    font-size: 5rem;
+  }
 `;
 
 /* export const HomeIcon = styled(GiTeapotLeaves)`

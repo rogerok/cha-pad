@@ -8,7 +8,9 @@ export const LayoutContainer = styled.main`
   min-height: 100vh;
   max-width: 1370px;
   min-width: 100%;
-  background: #232526 url(${background}) repeat-y top right;
+  //background: #232526 url(${background}) repeat-y top right;
+  //background-color: #a1938f;
+  background-color: #8b8b8b;
   background-size: auto;
   font-weight: 400;
   color: white;

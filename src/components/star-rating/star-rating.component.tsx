@@ -83,7 +83,7 @@ const StarRating: FC<StarRatingProps> = ({ handleRatingChange }) => {
             <StarIcon
               showEmptyIcon={showEmptyIcon}
               size={50}
-              color={ratingValue <= (starRating! || hover!) ? "grey" : "white"}
+              color={ratingValue <= (starRating! || hover!) ? "black" : "white"}
               onMouseEnter={() => handleMouseEnter(ratingValue)}
               onMouseLeave={() => handleMouseLeave()}
             />

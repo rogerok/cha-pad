@@ -1,4 +1,3 @@
-import { Selector } from "@reduxjs/toolkit";
 import { RootState } from "./../redux/store";
 
 import { useLocation } from "react-router-dom";
@@ -26,31 +25,33 @@ interface IUseFetchPosts {
   dispatcher: any;
   //have to fix any
   selectPosts: (state: RootState, teaGrade: string) => any;
-  selectError: Selector<RootState, boolean>;
-  selectLoading: Selector<RootState, boolean>;
   fetchData?: IFetchData | null;
   defaultImage: string;
+  error: any;
+  isLoading: boolean;
 }
 
 const useFetchPosts = (): IUseFetchPosts => {
-  const userId = useAppSelector((state) => state.user.currentUser?.id) ?? "";
   const path = useLocation().pathname;
   const teaGrade = useLocation().state;
+
   const defaultImage =
     useAppSelector((state) => selectDefaultImage(state, teaGrade)) ?? "";
+  const userId = useAppSelector((state) => state.user.currentUser?.id) ?? "";
+  const error = useAppSelector(selectPostsError);
+  const isLoading = useAppSelector(selectPostsLoading);
 
+  //if path doesn't include 'tea-library' then isUserPost'll come true
   const isUserPosts = !path.includes("tea-library");
 
   const dispatcher = isUserPosts ? fetchUserPosts : fetchAddedPostsByUsers;
 
+  //if user came from tea-pad, then we'll select added posts by user, otherwise  - added posts by users
   const selectPosts = isUserPosts
     ? selectAddedPostsByUser
     : selectAddedPostsByUsers;
 
-  const selectError = selectPostsError;
-
-  const selectLoading = selectPostsLoading;
-
+  //data for dispatcher in posts component
   const fetchData: IFetchData = isUserPosts
     ? {
         teaGrade,
@@ -62,8 +63,8 @@ const useFetchPosts = (): IUseFetchPosts => {
   return {
     dispatcher,
     selectPosts,
-    selectError,
-    selectLoading,
+    error,
+    isLoading,
     fetchData,
     defaultImage,
   };

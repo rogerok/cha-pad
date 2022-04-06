@@ -56,6 +56,11 @@ export interface IAddedTea extends ITeaData<addedTea> {}
 
 export type TeaDataByUsers = ITeaData<ITea[]>;
 
+export interface ITeaGrades {
+  gradeValue: string;
+  gradeName: string;
+}
+
 export interface IValidateUserData {
   displayName: string;
   email: string;

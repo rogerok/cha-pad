@@ -17,18 +17,29 @@ const googleSignInButtonStyles = css`
   background-color: #4285f4;
   color: #ffffff;
 `;
+const paginationButtonStyles = css`
+  width: 3rem;
+`;
+
+const primaryButtonStyles = css`
+  min-width: 40%;
+  max-width: 45%;
+`;
 
 const getButtonsStyles = (props) => {
-  return props.isGoogleButton ? googleSignInButtonStyles : "";
+  /*   return props.isGoogleButton ? googleSignInButtonStyles : ""; */
+  if (props.isGoogleButton) return googleSignInButtonStyles;
+  if (props.isPaginationButton) return paginationButtonStyles;
+  if (props.primary) return primaryButtonStyles;
+  return "";
 };
 
 export const CustomButtonContainer = styled.button`
-  padding: 15px;
+  padding: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 40%;
-  max-width: 45%;
+
   ${customButtonStyles};
   ${getButtonsStyles}
 `;

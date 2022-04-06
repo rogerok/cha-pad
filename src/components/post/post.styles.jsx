@@ -32,6 +32,8 @@ export const TeaReview = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  padding: 2rem;
+  border: 1px solid lightgrey;
   font-size: 1.5rem;
 `;
 

@@ -81,7 +81,6 @@ export const addNewPost = createAsyncThunk(
         .collection(data.teaGrade)
         .doc(data.id);
 
-      console.log(teaPhoto);
       //if user uploaded photo then add it to database
       if (teaPhoto.image !== null) {
         await uploadPhotoToStore(teaPhoto, data.teaGrade).then((url) =>
@@ -209,7 +208,6 @@ const postsSlice = createSlice({
       state: IPostsState,
       action: PayloadAction<ITea[]>
     ) => {
-      console.log(action.payload);
       action.payload.forEach((item) => {
         state.addedPostsByUser[item.teaGrade as keyof TAddedTea][item.id] =
           item;

@@ -5,42 +5,41 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hooks";
 import useFetchPosts from "../../hooks/useFetchPosts.hook";
+import usePagination from "../../hooks/usePagination.hook";
 
 //types
 import { ITea } from "../../ts/types";
 
 //components
-import WrapperComponent from "../wrapper/wrapper.component";
-import SpinnerComponent from "../spinner/spinner.component";
+import Pagination from "../pagination/pagination.component";
 import Post from "../post/post.component";
+import SpinnerComponent from "../spinner/spinner.component";
+import WrapperComponent from "../wrapper/wrapper.component";
 
 const Modal = React.lazy(() => import("../modal/modal.component"));
 
 const Posts: FC = () => {
   const dispatch = useAppDispatch();
-
   const teaGrade: string = useLocation().state;
 
-  const {
-    dispatcher,
-    selectPosts,
-    selectError,
-    selectLoading,
-    fetchData,
-    defaultImage,
-  } = useFetchPosts();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const isLoading = useAppSelector(selectLoading);
-  const isRejected = useAppSelector(selectError);
+  const { dispatcher, selectPosts, isLoading, error, fetchData, defaultImage } =
+    useFetchPosts();
+
   const addedPosts = useAppSelector((state) => selectPosts(state, teaGrade));
 
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const { setCurrentPage, currentPosts, handleClick, pageNumbers } =
+    usePagination({
+      addedPosts,
+      postsPerPage: 5,
+    });
 
   useEffect(() => {
     dispatch(dispatcher(fetchData));
   }, []);
 
-  if (isRejected) return <div> {isRejected} </div>;
+  if (error) return <div> {error} </div>;
 
   return (
     <WrapperComponent>
@@ -53,7 +52,7 @@ const Posts: FC = () => {
       {isLoading ? (
         <SpinnerComponent />
       ) : (
-        addedPosts.map((item: ITea) => (
+        currentPosts.map((item: ITea) => (
           <Post
             key={item.id}
             {...item}
@@ -63,6 +62,11 @@ const Posts: FC = () => {
           />
         ))
       )}
+      <Pagination
+        pageNumbers={pageNumbers}
+        setCurrentPage={setCurrentPage}
+        handleClick={handleClick}
+      />
     </WrapperComponent>
   );
 };

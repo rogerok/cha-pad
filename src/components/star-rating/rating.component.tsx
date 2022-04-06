@@ -5,19 +5,19 @@ const Rating = ({ ratingValue }: { ratingValue: number }) => {
   return (
     <>
       {!ratingValue ? (
-        <span>без оценки</span>
+        <p>без оценки</p>
       ) : (
-        <div className="">
+        <>
           {[...Array(5)].map((_, id) => {
             const showEmptyicon = ratingValue <= id;
 
             return showEmptyicon ? (
               <StarEmpty key={id} size={50} color={"white"} />
             ) : (
-              <StarFilled key={id} size={50} color={"grey"} />
+              <StarFilled key={id} size={50} color={"black"} />
             );
           })}
-        </div>
+        </>
       )}
     </>
   );

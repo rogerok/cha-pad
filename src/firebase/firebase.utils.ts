@@ -11,18 +11,13 @@ const firebaseConfig = {
   messagingSenderId: "734993224812",
   appId: "1:734993224812:web:9713eed813cdf86e8b7449",
   measurementId: "G-0PEKN2Y33W",
-  /*   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: process.env.REACT_APP_FIREBASE_MEASURMENT_ID, */
 };
 
 firebase.initializeApp(firebaseConfig);
 
 export const firestore = firebase.firestore();
+
+export const unsubscribeFromAuth = () => {};
 
 export const createUserProfileDocument = async (
   userAuth: { displayName: string; email: string; uid: string },
@@ -64,7 +59,7 @@ export const uploadPhotoToStore = async (
       console.log(percentage);
     },
     (err) => {
-      throw new Error("Что-то пошло не так...");
+      throw new Error(`Что-то пошло не так ${err.message} `);
     }
   );
   return await storageRef.getDownloadURL();

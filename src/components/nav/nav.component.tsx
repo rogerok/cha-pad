@@ -5,17 +5,17 @@ import { auth } from "../../firebase/firebase.utils";
 
 import { ROUTES } from "../../routes/routes";
 import { GiTeapotLeaves } from "react-icons/gi";
-import { NavContainer, NavOption } from "./nav.styles";
+import { NavContainer, NavOption, NavToHomeOption } from "./nav.styles";
 
 const Nav = () => {
   const currentUser = useSelector(selectCurrentUser);
 
   return (
     <NavContainer>
-      <NavOption to="/" isHomeLink>
+      <NavToHomeOption to="/">
         <GiTeapotLeaves />
-      </NavOption>
-      <NavOption to={ROUTES.TEA_LIBRARY}>Виды чая</NavOption>
+      </NavToHomeOption>
+      <NavOption to={ROUTES.TEA_LIBRARY}>Чайная лента</NavOption>
       <NavOption to={ROUTES.TEA_PAD}>Мой дневник</NavOption>
 
       {currentUser ? (
