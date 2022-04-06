@@ -76,7 +76,7 @@ const routes = [
 const App: FC = () => {
   const dispatch = useAppDispatch();
   const elements = useRoutes(routes);
-  const [isLoading, setLoading] = useState<boolean>();
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setLoading(true);
@@ -86,7 +86,7 @@ const App: FC = () => {
         //createUserProfileDocument returns user reference object
         //@ts-ignore
         const userRef = await createUserProfileDocument(userAuth);
-        setLoading(false);
+
         //if user logged in we add event listener and update our app state, if something was changed in our user database
         userRef.onSnapshot((snapshot) => {
           dispatch(
@@ -100,7 +100,9 @@ const App: FC = () => {
         //userAuth will be null, if user log out
         dispatch(setCurrentUser(userAuth));
       }
+      setLoading(false);
     });
+
     return unsubscribeFromAuth;
   }, []);
 
