@@ -2,7 +2,7 @@
   "name": "cha-box",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://rogerok.github.io/cha-pad",
+  "homepage": "https://rogerok.github.io/",
   "dependencies": {
     "@types/jest": "^27.0.3",
     "@types/node": "^16.11.12",
