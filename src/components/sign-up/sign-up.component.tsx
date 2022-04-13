@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 
 //hooks
 import useForm from "../../hooks/useForm.hook";
@@ -32,7 +32,6 @@ const SignUp = () => {
           password
         );
         console.log(user);
-
         //@ts-ignore
         await createUserProfileDocument({
           ...user,

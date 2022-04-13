@@ -5,8 +5,7 @@ import teaLibraryReducer from "./tea-library/teaLibrarySlice";
 import postsReducer from "./posts/postsSlice";
 
 import { configureStore } from "@reduxjs/toolkit";
-import storage from "redux-persist/lib/storage";
-import { persistStore, persistReducer } from "redux-persist";
+import { persistStore } from "redux-persist";
 import { combineReducers } from "redux";
 
 const reducers = combineReducers({

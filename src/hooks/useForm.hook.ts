@@ -1,4 +1,3 @@
-import { validateData } from "./../utils/validateData";
 import { IValidateUserData, IValidationErrors } from "./../ts/types";
 import { useState, useEffect } from "react";
 

@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
 import { NavLink } from "react-router-dom";
-import { GiTeapotLeaves } from "react-icons/gi";
 
 const navOptionsStyles = css`
   padding: 2rem;

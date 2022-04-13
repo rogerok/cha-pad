@@ -62,13 +62,15 @@ const SignIn: FC = () => {
           onChange={handleChange}
         />
         <CustomButtonsWrapper>
-          <CustomButton type="submit">Войти</CustomButton>
+          <CustomButton primary type="submit">
+            Войти
+          </CustomButton>
           <CustomButton
+            primary
             onClick={(e) => {
               e.preventDefault();
               signInWithGoogle();
             }}
-            primary
             isGoogleButton
           >
             Войти с Google

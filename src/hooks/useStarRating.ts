@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const useStarRating = () => {
   const [starRating, setStarRating] = useState<number | null>(null);
