@@ -24,7 +24,6 @@ const CardItem: FC<CardItemProps> = ({
   return (
     <CardListItem>
       <ImageContainer>
-        {/* <img src={imageUrl} alt={grade} /> */}
         <LazyImage src={imageUrl} alt={grade} isCardImage />
       </ImageContainer>
       <Description>{description}</Description>

@@ -13,8 +13,6 @@ const loadingAnimation = keyframes`
 const cardImageStyles = css`
   margin: 2rem auto;
   display: block;
-  /*  width: 90%; */
-  /*  min-height: 268px; */
   padding: 1rem;
   object-fit: cover;
   aspect-ratio: 1/1;

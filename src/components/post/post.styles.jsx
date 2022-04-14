@@ -40,3 +40,7 @@ export const TeaReview = styled.div`
 export const ReviewFooter = styled.footer`
   align-self: flex-end;
 `;
+
+export const AddedBy = styled.p`
+  margin-bottom: 2rem;
+`;

@@ -43,7 +43,3 @@ export const NavToHomeOption = styled(NavLink)`
     font-size: 5rem;
   }
 `;
-
-/* export const HomeIcon = styled(GiTeapotLeaves)`
-  font-size: 50px;
-`; */

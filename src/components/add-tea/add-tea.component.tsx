@@ -15,7 +15,7 @@ import StarRating from "../star-rating/star-rating.component";
 import SpinnerComponent from "../spinner/spinner.component";
 
 //styles
-import { CheckboxContainer } from "./add-tea.styles";
+import { CheckboxContainer, ButtonsContainer } from "./add-tea.styles";
 
 const AddTea: FC = () => {
   const navigate = useNavigate();
@@ -100,19 +100,14 @@ const AddTea: FC = () => {
             onChange={handleChange}
             value={teaData.teaReview}
           />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
+          <ButtonsContainer>
             <CustomButton primary type="submit">
               Добавить
             </CustomButton>
             <CustomButton primary onClick={goBack}>
               Назад
             </CustomButton>
-          </div>
+          </ButtonsContainer>
         </form>
       </FormWrapper>
     </WrapperComponent>

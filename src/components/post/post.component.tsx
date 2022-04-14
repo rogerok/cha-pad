@@ -12,6 +12,7 @@ import {
   TeaReview,
   ImageWrapper,
   ReviewWrapper,
+  AddedBy,
 } from "./post.styles";
 
 export interface IPosts extends ITea {
@@ -42,7 +43,7 @@ const Post: FC<IPosts> = ({
       <PostHeader>{teaName}</PostHeader>
       <ReviewWrapper>
         <ImageWrapper onClick={() => handleSelectedImage()}>
-          <LazyImage src={photoUrl!} placeholder={defaultImage} />
+          <LazyImage src={photoUrl!} placeholder={defaultImage} alt={teaName} />
         </ImageWrapper>
         <TeaReview>
           <p style={{ marginBottom: "auto" }}>{teaReview}</p>
@@ -50,7 +51,7 @@ const Post: FC<IPosts> = ({
             {rating ? <Rating ratingValue={rating!} /> : "без оценки"}
           </p>
           <footer>
-            <p style={{ marginBottom: "2rem" }}>Добавил: {addedBy}</p>
+            <AddedBy>Добавил: {addedBy}</AddedBy>
             <p>
               <time>{postedDate}</time>
             </p>

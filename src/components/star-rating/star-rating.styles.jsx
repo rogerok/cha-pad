@@ -18,14 +18,10 @@ export const StarRatingInput = styled.input.attrs({ type: "radio" })`
 `;
 
 export const StarFilled = styled(IoMdStar)`
-  /*   cursor: pointer; */
-  /*   transition: color cubic-bezier(0.075, 0.82, 0.165, 1); */
   color: black;
   transition: inherit;
 `;
 export const StarEmpty = styled(IoMdStarOutline)`
-  /*   cursor: pointer;
-  transition: color cubic-bezier(0.19, 1, 0.22, 1); */
   color: white;
   transition: inherit;
 `;

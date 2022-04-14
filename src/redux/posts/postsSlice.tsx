@@ -83,11 +83,11 @@ export const addNewPost = createAsyncThunk(
 
       //if user uploaded photo then add it to database
       if (teaPhoto.image !== null) {
-        await uploadPhotoToStore(teaPhoto, data.teaGrade).then((url) =>
+        uploadPhotoToStore(teaPhoto, data.teaGrade).then((url) =>
           docRef.set({
             ...data,
             date: Date.now(),
-            teaPhotoUrl: url,
+            teaPhotoUrl: url ?? "",
           })
         );
       } else {

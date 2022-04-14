@@ -23,15 +23,6 @@ export const ImageContainer = styled.div`
   justify-content: center;
   align-items: center;
   border: 2px solid grey;
-
-  /*   img {
-    display: block;
-    margin: 30px auto;
-    width: 100%;
-    padding: 0 1rem;
-    object-fit: cover;
-    aspect-ratio: 1/1;
-  } */
 `;
 
 export const Description = styled.p`

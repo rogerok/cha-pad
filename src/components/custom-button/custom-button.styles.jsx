@@ -27,7 +27,6 @@ const primaryButtonStyles = css`
 `;
 
 const getButtonsStyles = (props) => {
-  /*   return props.isGoogleButton ? googleSignInButtonStyles : ""; */
   if (props.isGoogleButton) return googleSignInButtonStyles;
   if (props.isPaginationButton) return paginationButtonStyles;
   if (props.primary) return primaryButtonStyles;
