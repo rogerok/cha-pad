@@ -1,14 +1,7 @@
 import React from "react";
 
 //hooks
-import useForm from "../../hooks/useForm.hook";
-
-//utils
-import { validateData } from "../../utils/validateData";
-import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
-
-//types
-import { IValidateUserData } from "../../ts/types";
+import useForm from "../../hooks/useSignUpForm.hook";
 
 //components
 import CustomButton from "../custom-button/custom-button.component";
@@ -20,34 +13,13 @@ import Title from "../title/title.component";
 import { Spinner } from "../spinner/spinner.styles";
 
 const SignUp = () => {
-  const signUpWithEmailAndPassword = async (
-    userData: IValidateUserData
-  ): Promise<void> => {
-    if (Object.values(userData).every(Boolean)) {
-      const { displayName, email, password } = userData;
+  const { userData, handleChange, handleSubmit, validationErrors, isLoading } =
+    useForm();
 
-      try {
-        const { user } = await auth.createUserWithEmailAndPassword(
-          email,
-          password
-        );
-        console.log(user);
-        //@ts-ignore
-        await createUserProfileDocument({
-          ...user,
-          displayName,
-        });
-      } catch (error: any) {
-        console.log(error.message);
-      }
-    }
-  };
-
-  const { userData, handleChange, handleSubmit, errors, isSubmitting } =
-    useForm(validateData, signUpWithEmailAndPassword);
-
-  return isSubmitting ? (
-    <Spinner />
+  return isLoading ? (
+    <FormWrapper>
+      <Spinner style={{ margin: "auto" }} />
+    </FormWrapper>
   ) : (
     <FormWrapper>
       <form onSubmit={handleSubmit}>
@@ -61,7 +33,9 @@ const SignUp = () => {
           value={userData.displayName}
           required
         >
-          {errors.displayNameError && <p>{errors.displayNameError}</p>}
+          {validationErrors.displayNameError && (
+            <p>{validationErrors.displayNameError}</p>
+          )}
         </FormInput>
         <FormInput
           name="email"
@@ -72,7 +46,7 @@ const SignUp = () => {
           value={userData.email}
           required
         >
-          {errors.emailError && <p>{errors.emailError}</p>}
+          {validationErrors.emailError && <p>{validationErrors.emailError}</p>}
         </FormInput>
         <FormInput
           name="password"
@@ -83,7 +57,9 @@ const SignUp = () => {
           value={userData.password}
           required
         >
-          {errors.passwordError && <p>{errors.passwordError}</p>}
+          {validationErrors.passwordError && (
+            <p>{validationErrors.passwordError}</p>
+          )}
         </FormInput>
         <FormInput
           name="confirmPassword"
@@ -94,7 +70,9 @@ const SignUp = () => {
           value={userData.confirmPassword}
           required
         >
-          {errors.confirmPasswordError && <p>{errors.confirmPasswordError}</p>}
+          {validationErrors.confirmPasswordError && (
+            <p>{validationErrors.confirmPasswordError}</p>
+          )}
         </FormInput>
         <CustomButton primary>Зарегистрироваться</CustomButton>
       </form>

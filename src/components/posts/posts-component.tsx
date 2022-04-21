@@ -37,7 +37,7 @@ const Posts: FC = () => {
 
   useEffect(() => {
     dispatch(dispatcher(fetchData));
-  }, []);
+  }, [dispatcher]);
 
   if (error) return <div> {error} </div>;
 

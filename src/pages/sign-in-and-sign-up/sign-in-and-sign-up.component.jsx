@@ -16,10 +16,11 @@ const SignInAndSignUpPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (currentUser && location.state?.from.pathname)
+    if (currentUser && location.state?.from.pathname) {
       navigate(location.state.from.pathname);
+    }
     if (location.state === null && currentUser) navigate("/");
-  }, [currentUser]);
+  }, [currentUser, location]);
 
   return (
     <WrapperComponent>

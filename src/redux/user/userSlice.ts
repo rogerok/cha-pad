@@ -1,6 +1,12 @@
-import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { setError, setFullfiled, setLoading } from "./../../utils/utils";
+import {
+  createSlice,
+  createSelector,
+  createAsyncThunk,
+} from "@reduxjs/toolkit";
+import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 
-import { IUser } from "./../../ts/types";
+import { IUser, IValidateUserData } from "./../../ts/types";
 
 interface User {
   currentUser: IUser | null;
@@ -13,6 +19,26 @@ const initialState: User = {
   error: null,
 };
 
+export const signUpWithEmailAndPassword = createAsyncThunk(
+  "user/signUpWithEmailAndPassword",
+  async (userData: IValidateUserData, { rejectWithValue }) => {
+    const { displayName, email, password } = userData;
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      //@ts-ignore
+      await createUserProfileDocument({
+        ...user,
+        displayName,
+      });
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -21,6 +47,11 @@ const userSlice = createSlice({
       state.currentUser = action.payload;
     },
   },
+  extraReducers: {
+    [signUpWithEmailAndPassword.pending.type]: setLoading,
+    [signUpWithEmailAndPassword.rejected.type]: setError,
+    [signUpWithEmailAndPassword.fulfilled.type]: setFullfiled,
+  },
 });
 
 const selectUser = (state: { user: User }) => state.user;
@@ -28,6 +59,15 @@ const selectUser = (state: { user: User }) => state.user;
 export const selectCurrentUser = createSelector(
   [selectUser],
   (user) => user.currentUser
+);
+
+export const selectUserLoading = createSelector(
+  [selectUser],
+  (user) => user.loading
+);
+export const selectUserError = createSelector(
+  [selectUser],
+  (user) => user.error
 );
 
 export const { setCurrentUser } = userSlice.actions;

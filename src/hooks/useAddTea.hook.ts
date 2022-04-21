@@ -19,7 +19,7 @@ type FormChangeEvent = React.ChangeEvent<
   HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
 >;
 
-interface IUseAddTea {
+interface IuseAddTea {
   handleChange: (e: FormChangeEvent) => void;
   handleFileInputChange: ChangeEventHandler<HTMLInputElement>;
   handleSubmit: FormEventHandler<HTMLFormElement>;
@@ -29,7 +29,7 @@ interface IUseAddTea {
   isLoading: boolean;
 }
 
-const useAddTea = (): IUseAddTea => {
+const useAddTea = (): IuseAddTea => {
   const dispatch = useAppDispatch();
 
   const userName = useAppSelector(selectCurrentUser)?.displayName ?? "";
@@ -55,18 +55,18 @@ const useAddTea = (): IUseAddTea => {
   const handleChange = (e: FormChangeEvent): void => {
     const { name, value } = e.target;
 
-    setTeaData({
+    setTeaData((teaData) => ({
       ...teaData,
       //if event happened on  would taste checkbox, then set value to opposite
       [name]: name === "wouldTaste" ? !teaData.wouldTaste : value,
-    });
+    }));
   };
 
   const handleStarRatingChange = (starRating: number | null) => {
-    setTeaData({
+    setTeaData((teaData) => ({
       ...teaData,
       rating: starRating,
-    });
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

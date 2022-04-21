@@ -105,7 +105,6 @@ const App: FC = () => {
 
     return unsubscribeFromAuth;
   }, []);
-
   return isLoading ? (
     <SpinnerComponent />
   ) : (
