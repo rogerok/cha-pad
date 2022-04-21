@@ -1,17 +1,22 @@
 import React, { useEffect } from "react";
-
-import { selectCurrentUser } from "../../redux/user/userSlice";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../hooks/redux.hooks";
+
+import {
+  selectCurrentUser,
+  selectUserLoading,
+} from "../../redux/user/userSlice";
 
 import SignIn from "../../components/sign-in/sign-in.component";
 import SignUp from "../../components/sign-up/sign-up.component";
-import { SignInAndSignUpSection } from "./sign-in-and-sign-up.styles";
+import SpinnerComponent from "../../components/spinner/spinner.component";
 import WrapperComponent from "./../../components/wrapper/wrapper.component";
-import { useLocation, useNavigate } from "react-router-dom";
 import Title from "../../components/title/title.component";
+import { SignInAndSignUpSection } from "./sign-in-and-sign-up.styles";
 
 const SignInAndSignUpPage = () => {
   const currentUser = useAppSelector(selectCurrentUser);
+  const isLoading = useAppSelector(selectUserLoading);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -22,7 +27,9 @@ const SignInAndSignUpPage = () => {
     if (location.state === null && currentUser) navigate("/");
   }, [currentUser, location]);
 
-  return (
+  return isLoading ? (
+    <SpinnerComponent style={{ margin: "auto" }} />
+  ) : (
     <WrapperComponent>
       <Title>Войдите или зарегистрируйтесь</Title>
       <SignInAndSignUpSection>

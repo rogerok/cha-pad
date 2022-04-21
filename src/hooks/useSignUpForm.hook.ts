@@ -15,13 +15,11 @@ interface IuseForm {
   userData: IValidateUserData;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: FormEventHandler<HTMLFormElement>;
-  isLoading: boolean;
   validationErrors: IValidationErrors;
 }
 
 const useSignInForm = (): IuseForm => {
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector(selectUserLoading);
   const [userData, setUserData] = useState<IValidateUserData>({
     displayName: "",
     email: "",
@@ -70,7 +68,6 @@ const useSignInForm = (): IuseForm => {
     handleChange,
     handleSubmit,
     validationErrors,
-    isLoading,
   };
 };
 

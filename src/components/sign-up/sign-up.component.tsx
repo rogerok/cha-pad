@@ -9,18 +9,10 @@ import FormInput from "../form-input/form-input.component";
 import FormWrapper from "../form-wrapper/form-wrapper.component";
 import Title from "../title/title.component";
 
-//styles
-import { Spinner } from "../spinner/spinner.styles";
-
 const SignUp = () => {
-  const { userData, handleChange, handleSubmit, validationErrors, isLoading } =
-    useForm();
+  const { userData, handleChange, handleSubmit, validationErrors } = useForm();
 
-  return isLoading ? (
-    <FormWrapper>
-      <Spinner style={{ margin: "auto" }} />
-    </FormWrapper>
-  ) : (
+  return (
     <FormWrapper>
       <form onSubmit={handleSubmit}>
         <Title>Зарегистрироваться</Title>

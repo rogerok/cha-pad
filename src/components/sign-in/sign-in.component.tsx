@@ -11,6 +11,8 @@ import CustomButton from "../custom-button/custom-button.component";
 //styles
 import { CustomButtonsWrapper } from "./sign-in.styles";
 import Title from "../../components/title/title.component";
+import { useAppDispatch } from "../../hooks/redux.hooks";
+import { signInWithEmailAndPassword } from "../../redux/user/userSlice";
 
 interface FormData {
   email: string;
@@ -18,6 +20,7 @@ interface FormData {
 }
 
 const SignIn: FC = () => {
+  const dispatch = useAppDispatch();
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -25,20 +28,14 @@ const SignIn: FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((formData) => ({ ...formData, [name]: value }));
   };
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void | null> => {
     e.preventDefault();
-
-    try {
-      await auth.signInWithEmailAndPassword(formData.email, formData.password);
-      setFormData({ email: "", password: "" });
-    } catch (err: any) {
-      alert(err.message);
-    }
+    dispatch(signInWithEmailAndPassword(formData));
   };
 
   return (

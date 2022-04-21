@@ -39,6 +39,20 @@ export const signUpWithEmailAndPassword = createAsyncThunk(
   }
 );
 
+export const signInWithEmailAndPassword = createAsyncThunk(
+  "user/signInWithEmailAndPassword",
+  async (
+    { email, password }: { email: string; password: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -51,6 +65,10 @@ const userSlice = createSlice({
     [signUpWithEmailAndPassword.pending.type]: setLoading,
     [signUpWithEmailAndPassword.rejected.type]: setError,
     [signUpWithEmailAndPassword.fulfilled.type]: setFullfiled,
+
+    [signInWithEmailAndPassword.pending.type]: setLoading,
+    [signInWithEmailAndPassword.rejected.type]: setError,
+    [signInWithEmailAndPassword.fulfilled.type]: setFullfiled,
   },
 });
 
