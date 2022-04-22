@@ -6,7 +6,7 @@ import { ROUTES } from "./routes/routes";
 import { setCurrentUser } from "./redux/user/userSlice";
 
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
-import RequireAuth from "./hoc/RequireAuth.hoc";
+import AuthorizedRoute from "./components/authorized-route/authorized-route.component";
 
 import Layout from "./components/layout/layout-component";
 import SpinnerComponent from "./components/spinner/spinner.component";
@@ -46,9 +46,9 @@ const routes = [
       {
         path: ROUTES.TEA_PAD,
         element: (
-          <RequireAuth>
+          <AuthorizedRoute>
             <TeaPad uiData={[]} />
-          </RequireAuth>
+          </AuthorizedRoute>
         ),
       },
       { path: ROUTES.ADD_TEA, element: <AddTea /> },

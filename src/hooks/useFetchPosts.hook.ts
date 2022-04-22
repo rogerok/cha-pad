@@ -1,6 +1,7 @@
+import { ROUTES } from "./../routes/routes";
 import { RootState } from "./../redux/store";
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useMatch } from "react-router-dom";
 
 import { selectDefaultImage } from "./../redux/tea-library/teaLibrarySlice";
 import {
@@ -42,7 +43,7 @@ const useFetchPosts = (): IUseFetchPosts => {
   const isLoading = useAppSelector(selectPostsLoading);
 
   //if path doesn't include 'tea-library' then isUserPost'll come true
-  const isUserPosts = !path.includes("tea-library");
+  const isUserPosts = Boolean(useMatch(ROUTES.TASTED_TEA_COLLECTION));
 
   const dispatcher = isUserPosts ? fetchUserPosts : fetchAddedPostsByUsers;
 
