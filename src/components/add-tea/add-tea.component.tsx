@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import useAddTea from "../../hooks/useAddTea.hook";
 
 //components
+import Checkbox from "../checkbox/checkbox.component";
 import FormInput from "../form-input/form-input.component";
 import FormWrapper from "../form-wrapper/form-wrapper.component";
 import Select from "../select/select.component";
@@ -15,7 +16,7 @@ import StarRating from "../star-rating/star-rating.component";
 import SpinnerComponent from "../spinner/spinner.component";
 
 //styles
-import { CheckboxContainer, ButtonsContainer } from "./add-tea.styles";
+import { ButtonsContainer } from "./add-tea.styles";
 
 const AddTea: FC = () => {
   const navigate = useNavigate();
@@ -69,17 +70,16 @@ const AddTea: FC = () => {
             value={teaData.teaGrade}
             required
           />
-          <CheckboxContainer>
-            <p>Xочу попробовать</p>
-            <input
-              name="wouldTaste"
-              type="checkbox"
-              id="would-taste"
-              onChange={handleChange}
-              checked={teaData.wouldTaste}
-            />
-            <label htmlFor="would-taste"></label>
-          </CheckboxContainer>
+
+          <Checkbox
+            name="wouldTaste"
+            type="checkbox"
+            id="would-taste"
+            onChange={handleChange}
+            checked={teaData.wouldTaste}
+          >
+            <p>Хочу попробовать</p>
+          </Checkbox>
           <FormInput
             name="teaPhoto"
             type="file"

@@ -7,4 +7,4 @@ const TextArea: FC<TextAreaProps> = ({ onChange, ...props }) => {
   return <TextAreaComponent onChange={onChange} {...props}></TextAreaComponent>;
 };
 
-export default TextArea;
+export default React.memo(TextArea);

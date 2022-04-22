@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useState } from "react";
+import React, { ChangeEventHandler, useCallback, useState } from "react";
 import Compressor from "compressorjs";
 
 interface CompressedPhoto {
@@ -15,7 +15,7 @@ const useCompressPhoto = (): CompressedPhoto => {
     image: null,
   });
 
-  const handleFileInputChange = async (
+  /*   const handleFileInputChange = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const photo = e.target.files as FileList;
@@ -31,7 +31,26 @@ const useCompressPhoto = (): CompressedPhoto => {
         },
         error: (error) => console.log(error.message),
       });
-  };
+  }; */
+
+  const handleFileInputChange = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const photo = e.target.files as FileList;
+      if (!photo[0]) return;
+      console.log(photo[0]);
+      if (photo[0].size < 500000) setTeaPhoto({ image: photo[0] });
+      if (photo[0].size > 500000)
+        await new Compressor(photo[0], {
+          quality: 0.6,
+          success: (result) => {
+            console.log(result);
+            setTeaPhoto({ image: result as File });
+          },
+          error: (error) => console.log(error.message),
+        });
+    },
+    []
+  );
 
   const handlePhotoSubmit = () => setTeaPhoto({ image: null });
 

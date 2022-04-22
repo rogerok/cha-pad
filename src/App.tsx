@@ -1,13 +1,17 @@
 import React, { useEffect, FC, Suspense, useState } from "react";
-import { useAppDispatch } from "./hooks/redux.hooks";
-
+//routing
 import { useRoutes } from "react-router-dom";
 import { ROUTES } from "./routes/routes";
+
+// state managing
+import { useAppDispatch } from "./hooks/redux.hooks";
 import { setCurrentUser } from "./redux/user/userSlice";
 
+//firebase auth
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
-import AuthorizedRoute from "./components/authorized-route/authorized-route.component";
 
+//components
+import AuthorizedRoute from "./components/authorized-route/authorized-route.component";
 import Layout from "./components/layout/layout-component";
 import SpinnerComponent from "./components/spinner/spinner.component";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";

@@ -1,4 +1,9 @@
-import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
+import React, {
+  ChangeEventHandler,
+  FormEventHandler,
+  useCallback,
+  useState,
+} from "react";
 import { v4 as uuidGenerator } from "uuid"; //for generating unique id of post
 
 import { useAppSelector, useAppDispatch } from "./redux.hooks";
@@ -52,7 +57,7 @@ const useAddTea = (): IuseAddTea => {
     rating: null,
   });
 
-  const handleChange = (e: FormChangeEvent): void => {
+  const handleChange = useCallback((e: FormChangeEvent): void => {
     const { name, value } = e.target;
 
     setTeaData((teaData) => ({
@@ -60,14 +65,14 @@ const useAddTea = (): IuseAddTea => {
       //if event happened on  would taste checkbox, then set value to opposite
       [name]: name === "wouldTaste" ? !teaData.wouldTaste : value,
     }));
-  };
+  }, []);
 
-  const handleStarRatingChange = (starRating: number | null) => {
+  const handleStarRatingChange = useCallback((starRating: number | null) => {
     setTeaData((teaData) => ({
       ...teaData,
       rating: starRating,
     }));
-  };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

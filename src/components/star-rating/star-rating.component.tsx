@@ -94,4 +94,4 @@ const StarRating: FC<StarRatingProps> = ({ handleRatingChange }) => {
   );
 };
 
-export default StarRating;
+export default React.memo(StarRating);

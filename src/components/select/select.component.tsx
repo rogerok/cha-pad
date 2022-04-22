@@ -31,4 +31,4 @@ const Select: FC<SelectProps> = ({
     </React.Fragment>
   );
 };
-export default Select;
+export default React.memo(Select);
