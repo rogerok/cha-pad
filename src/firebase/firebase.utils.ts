@@ -1,6 +1,5 @@
 //import firebase from "firebase";
 import firebase from "firebase/app";
-
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
@@ -21,8 +20,10 @@ export const firestore = firebase.firestore();
 
 export const unsubscribeFromAuth = () => {};
 
+type User = firebase.User;
+
 export const createUserProfileDocument = async (
-  userAuth: { displayName: string; email: string; uid: string },
+  userAuth: User,
   additionalData?: {}
 ) => {
   const userRef = firestore.doc(`users/${userAuth.uid}`);
