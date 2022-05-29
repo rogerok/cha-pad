@@ -16,6 +16,9 @@ export const ReviewWrapper = styled.div`
   display: flex;
   justify-content: space-around;
   align-self: flex-start;
+  @media screen and (max-width: 480px) {
+    display: block;
+  }
 `;
 export const ImageWrapper = styled.div`
   width: 30%;
@@ -25,6 +28,10 @@ export const ImageWrapper = styled.div`
   justify-content: center;
   filter: brightness(0.7);
   cursor: pointer;
+  @media screen and (max-width: 480px) {
+    margin-bottom: 1rem;
+    width: 100%;
+  }
 `;
 
 export const TeaReview = styled.div`
@@ -35,6 +42,9 @@ export const TeaReview = styled.div`
   padding: 2rem;
   border: 1px solid lightgrey;
   font-size: 1.5rem;
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
 `;
 
 export const ReviewFooter = styled.footer`

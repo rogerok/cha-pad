@@ -8,4 +8,7 @@ export const CollectionOverviewList = styled.ul`
   justify-content: space-around;
   align-items: space-between;
   list-style-type: none;
+  @media screen and (max-width: 480px) {
+    display: block;
+  }
 `;

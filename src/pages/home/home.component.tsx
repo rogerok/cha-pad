@@ -1,12 +1,12 @@
 import React, { FC } from "react";
 import WrapperComponent from "../../components/wrapper/wrapper.component";
+import Title from "../../components/title/title.component";
 
 import image1 from "../../img/homepage-grid/1.jpg";
 import image2 from "../../img/homepage-grid/2.jpg";
 import image3 from "../../img/homepage-grid/3.jpg";
 import image4 from "../../img/homepage-grid/4.jpg";
 import { Gallery, GalleryItem, Image, Overlay } from "./home.styles";
-import Title from "../../components/title/title.component";
 
 const images = [image1, image2, image3, image4];
 

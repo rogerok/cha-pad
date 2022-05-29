@@ -10,4 +10,8 @@ export const LayoutContainer = styled.main`
   background-size: auto;
   font-weight: 400;
   color: white;
+  @media screen {
+    padding: 0 1rem;
+    max-width: 100%;
+  }
 `;

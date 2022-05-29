@@ -16,6 +16,10 @@ export const CardListItem = styled.li`
   :last-child {
     margin-right: auto;
   }
+  @media screen and (max-width: 480px) {
+    width: 100%;
+    padding: 1rem;
+  }
 `;
 
 export const ImageContainer = styled.div`
@@ -23,6 +27,11 @@ export const ImageContainer = styled.div`
   justify-content: center;
   align-items: center;
   border: 2px solid grey;
+  @media screen and (max-width: 480px) {
+    display: block;
+    width: 100%;
+    border: none;
+  }
 `;
 
 export const Description = styled.p`

@@ -1,18 +1,19 @@
 import React, { FC, useState } from "react";
 
+import { useAppDispatch } from "../../hooks/redux.hooks";
+import { signInWithEmailAndPassword } from "../../redux/user/userSlice";
+
 //utils
-import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
+import { signInWithGoogle } from "../../firebase/firebase.utils";
 
 //components
 import FormInput from "../form-input/form-input.component";
 import FormWrapper from "../form-wrapper/form-wrapper.component";
 import CustomButton from "../custom-button/custom-button.component";
+import Title from "../../components/title/title.component";
 
 //styles
 import { CustomButtonsWrapper } from "./sign-in.styles";
-import Title from "../../components/title/title.component";
-import { useAppDispatch } from "../../hooks/redux.hooks";
-import { signInWithEmailAndPassword } from "../../redux/user/userSlice";
 
 interface FormData {
   email: string;

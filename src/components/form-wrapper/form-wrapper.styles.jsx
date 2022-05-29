@@ -8,4 +8,9 @@ export const FormWrapperContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   border: 1px solid white;
+  @media screen and (max-width: 480px) {
+    margin-top: 1rem;
+    padding: 1rem;
+    width: 100%;
+  }
 `;

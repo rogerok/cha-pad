@@ -6,12 +6,24 @@ const GalleryItemStyles1 = css`
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 3;
+  @media screen and (max-width: 480px) {
+    grid-column-start: 1;
+    grid-column-end: 6;
+    grid-row-start: 1;
+    grid-row-end: 4;
+  }
 `;
 const GalleryItemStyles2 = css`
   grid-column-start: 3;
   grid-column-end: 5;
   grid-row-start: 1;
   grid-row-end: 3;
+  @media screen and (max-width: 480px) {
+    grid-column-start: 1;
+    grid-column-end: 9;
+    grid-row-start: 9;
+    grid-row-end: 5;
+  }
 `;
 const GalleryItemStyles3 = css`
   grid-column-start: 5;
@@ -24,6 +36,14 @@ const GalleryItemStyles4 = css`
   grid-column-end: 5;
   grid-row-start: 3;
   grid-row-end: 6;
+
+  @media screen and (max-width: 480px) {
+    /*     grid-column-start: 1;
+    grid-column-end: 6;
+    grid-row-start: 3;
+    grid-row-end: 6; */
+    display: none;
+  }
 `;
 const GalleryItemStyles5 = css`
   grid-column-start: 1;
@@ -66,6 +86,9 @@ export const Gallery = styled.section`
   grid-gap: 1rem;
   position: relative;
   transition: ${loadingAnimation} 1s ease-in-out;
+  @media screen and (max-width: 480px) {
+    display: block;
+  }
 `;
 
 export const Overlay = styled(BsFillCircleFill)`

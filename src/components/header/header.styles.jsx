@@ -1,35 +1,15 @@
-import styled, { css } from "styled-components";
-import { NavLink } from "react-router-dom";
+import styled from "styled-components";
 
-const navOptionsStyles = css`
-  padding: 30px;
-  cursor: pointer;
-  color: #fdfdfdeb;
-  font-size: 20px;
-  text-decoration: none;
-  &:hover {
-    color: #f5f5f5c5;
-  }
-  &.active {
-    color: #8b8b8beb;
-  }
-`;
-
-export const Nav = styled.nav`
-  display: flex;
-  align-content: center;
-  margin-left: auto;
-  padding: 0 100px;
-`;
-
-export const NavOption = styled(NavLink)`
-  ${navOptionsStyles}
-`;
 export const HeaderContainer = styled.header`
+  padding: 2rem;
   margin: 0 auto;
-  padding: 20px;
-  display: flex;
+  /*   display: flex;
   align-self: center;
+  justify-content: center; */
   max-width: 100%;
   border-bottom: 1px solid white;
+  @media screen and (max-width: 480px) {
+    padding: 1rem;
+    min-height: 10vh;
+  }
 `;
