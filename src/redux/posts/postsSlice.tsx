@@ -59,7 +59,7 @@ export const fetchAddedPostsByUsers = createAsyncThunk(
         .get();
 
       if (response.empty)
-        throw new Error("Вы еще не добавляли чай этого сорта");
+        throw new Error("Чай этого сорта еще не был добавлен");
 
       return response.docs
         .map((doc) => doc.data())
