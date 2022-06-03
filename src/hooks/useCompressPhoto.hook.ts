@@ -25,7 +25,6 @@ const useCompressPhoto = (): CompressedPhoto => {
         await new Compressor(photo[0], {
           quality: 0.6,
           success: (result) => {
-            console.log(result);
             setTeaPhoto({ image: result as File });
           },
           error: (error) => console.log(error.message),

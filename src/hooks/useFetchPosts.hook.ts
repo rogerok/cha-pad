@@ -35,6 +35,7 @@ interface IUseFetchPosts {
 const useFetchPosts = (): IUseFetchPosts => {
   const path = useLocation().pathname;
   const teaGrade = useLocation().state;
+  console.log(path);
 
   const defaultImage =
     useAppSelector((state) => selectDefaultImage(state, teaGrade)) ?? "";
@@ -42,8 +43,10 @@ const useFetchPosts = (): IUseFetchPosts => {
   const error = useAppSelector(selectPostsError);
   const isLoading = useAppSelector(selectPostsLoading);
 
-  //if path doesn't include 'tea-library' then isUserPost'll come true
-  const isUserPosts = Boolean(useMatch(ROUTES.TASTED_TEA_COLLECTION));
+  //if path  includes 'tea-library' then isUserPost'll come false
+  const isUserPosts = !Boolean(useMatch(ROUTES.TEA_LIBRARY_COLLECTIONS));
+
+  console.log(isUserPosts);
 
   const dispatcher = isUserPosts ? fetchUserPosts : fetchAddedPostsByUsers;
 

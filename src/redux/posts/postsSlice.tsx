@@ -5,7 +5,7 @@ import {
   createAsyncThunk,
 } from "@reduxjs/toolkit";
 import firebase from "firebase";
-import { firestore, uploadPhotoToStore } from "../../firebase/firebase.utils";
+import { firebaseStorage, firestore } from "../../firebase/firebase.utils";
 
 //types
 import { IAddedTea, ITea, TAddedTea } from "../../ts/types";
@@ -61,7 +61,9 @@ export const fetchAddedPostsByUsers = createAsyncThunk(
       if (response.empty)
         throw new Error("Вы еще не добавляли чай этого сорта");
 
-      return response.docs.map((doc) => doc.data());
+      return response.docs
+        .map((doc) => doc.data())
+        .sort((a, b) => b.date - a.date);
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -83,12 +85,30 @@ export const addNewPost = createAsyncThunk(
 
       //if user uploaded photo then add it to database
       if (teaPhoto.image !== null) {
-        uploadPhotoToStore(teaPhoto, data.teaGrade).then((url) =>
-          docRef.set({
-            ...data,
-            date: Date.now(),
-            teaPhotoUrl: url ?? "",
-          })
+        const uploadTask = firebaseStorage
+          .ref(`images/tea/${data.teaGrade}/${teaPhoto.image?.name}`)
+          .put(teaPhoto.image);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            let percentage =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log(percentage);
+          },
+          (err) => {
+            throw new Error(`Что-то пошло не так ${err.message} `);
+          },
+          () => {
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              docRef.set({
+                ...data,
+                date: Date.now(),
+                teaPhotoUrl: downloadURL,
+              });
+              console.log(downloadURL);
+            });
+          }
         );
       } else {
         // if user didn't add photo then set data without photo url
@@ -163,7 +183,10 @@ export const fetchUserPosts = createAsyncThunk(
       if (gradeData.empty)
         throw new Error("Вы еще не добавляли чай этого cорта");
 
-      const data = gradeData.docs.map((doc) => doc.data());
+      const data = gradeData.docs
+        .map((doc) => doc.data())
+        .sort((a, b) => b.date - a.date);
+      /*      const sortedByDate = data.sort((a, b) => b.date - a.date); */
 
       return wouldTaste
         ? data.filter((item) => item.wouldTaste === true)
