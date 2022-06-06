@@ -9,6 +9,7 @@ import { setCurrentUser } from "./redux/user/userSlice";
 
 //firebase auth
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import { User } from "./firebase/firebase.utils";
 
 //components
 import AuthorizedRoute from "./components/authorized-route/authorized-route.component";

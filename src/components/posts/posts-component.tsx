@@ -11,11 +11,12 @@ import usePagination from "../../hooks/usePagination.hook";
 import { ITea } from "../../ts/types";
 
 //components
-import Pagination from "../pagination/pagination.component";
 import Post from "../post/post.component";
 import SpinnerComponent from "../spinner/spinner.component";
 import WrapperComponent from "../wrapper/wrapper.component";
-
+const Pagination = React.lazy(
+  () => import("../pagination/pagination.component")
+);
 const Modal = React.lazy(() => import("../modal/modal.component"));
 
 const Posts: FC = () => {

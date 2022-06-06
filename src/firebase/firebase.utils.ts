@@ -1,4 +1,3 @@
-//import firebase from "firebase";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
@@ -20,7 +19,7 @@ export const firestore = firebase.firestore();
 
 export const unsubscribeFromAuth = () => {};
 
-type User = firebase.User;
+export type User = firebase.User;
 
 export const createUserProfileDocument = async (
   userAuth: User,

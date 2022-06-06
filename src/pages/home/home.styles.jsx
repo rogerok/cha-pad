@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
-import { BsFillCircleFill } from "react-icons/bs";
+import { BsFillCircleFill } from "@react-icons/all-files/bs/BsFillCircleFill";
 
 const GalleryItemStyles1 = css`
   grid-column-start: 1;

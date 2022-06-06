@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-import { IoMdStar, IoMdStarOutline } from "react-icons/io";
+import { IoMdStarOutline } from "@react-icons/all-files/io/IoMdStarOutline";
+import { IoMdStar } from "@react-icons/all-files/io/IoMdStar";
 
 export const StarRatingWrapper = styled.div``;
 

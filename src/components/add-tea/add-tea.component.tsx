@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, lazy } from "react";
 
 //hooks
 import { useNavigate } from "react-router";
@@ -13,10 +13,10 @@ import TextArea from "../text-area/text-area.component";
 import WrapperComponent from "../wrapper/wrapper.component";
 import CustomButton from "../custom-button/custom-button.component";
 import StarRating from "../star-rating/star-rating.component";
-import SpinnerComponent from "../spinner/spinner.component";
 
 //styles
 import { ButtonsContainer } from "./add-tea.styles";
+const SpinnerComponent = lazy(() => import("../spinner/spinner.component"));
 
 const AddTea: FC = () => {
   const navigate = useNavigate();

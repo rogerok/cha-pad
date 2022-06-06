@@ -7,8 +7,9 @@ import useDisableByScroll from "../../hooks/useDisableByScroll";
 
 import { ROUTES } from "../../routes/routes";
 
-import { GiTeapotLeaves, GiHamburgerMenu } from "react-icons/gi";
-import { CgClose } from "react-icons/cg";
+import { GiTeapotLeaves } from "@react-icons/all-files/gi/GiTeapotLeaves";
+import { GiHamburgerMenu } from "@react-icons/all-files/gi/GiHamburgerMenu";
+import { CgClose } from "@react-icons/all-files/cg/CgClose";
 
 import {
   NavContainer,

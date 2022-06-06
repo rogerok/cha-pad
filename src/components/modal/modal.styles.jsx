@@ -1,5 +1,6 @@
 import styled, { keyframes } from "styled-components";
-import { AiOutlineClose } from "react-icons/ai";
+/* import { AiOutlineClose } from "react-icons/ai"; */
+import { AiOutlineClose } from "@react-icons/all-files/ai/AiOutlineClose";
 
 const loadingAnimation = keyframes`
     0% {
