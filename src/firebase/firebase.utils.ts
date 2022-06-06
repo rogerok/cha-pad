@@ -66,8 +66,6 @@ export const uploadPhotoToStore = async (
       throw new Error(`Что-то пошло не так ${err.message} `);
     },
     () => {
-      // Handle successful uploads on complete
-      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
         photoUrl = downloadURL;
       });
@@ -75,21 +73,6 @@ export const uploadPhotoToStore = async (
   );
   console.log(photoUrl);
   return photoUrl;
-  /*   const storageRef = firebaseStorage.ref(
-    `images/tea/${teaGrade}/${teaPhoto.image?.name}`
-  );
- */
-  /*   await storageRef.put(teaPhoto.image as File).on(
-    "state_changed",
-    (snapshot) => {
-      let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log(percentage);
-    },
-    (err) => {
-      throw new Error(`Что-то пошло не так ${err.message} `);
-    }
-  ); */
-  /*   return await storageRef.getDownloadURL(); */
 };
 
 export const auth = firebase.auth();

@@ -16,14 +16,10 @@ const navOptionsStyles = css`
 `;
 
 const logoStyles = css`
-  position: absolute;
-  /*   top: 0; */
-  left: 0;
+  display: inline-flex;
+  align-self: center;
+  margin-right: auto;
   padding: 0;
-  @media screen and (max-width: 480px) {
-    /*     transform: translateY(30%); */
-    top: 0;
-  }
 `;
 
 export const NavContainer = styled.div`
@@ -31,8 +27,6 @@ export const NavContainer = styled.div`
   display: flex;
   align-content: center;
   justify-content: flex-end;
-  padding: 0 2rem;
-  margin-right: auto;
   .react-icons {
     vertical-align: middle;
     font-size: 5rem;
@@ -41,24 +35,19 @@ export const NavContainer = styled.div`
       font-size: 3.5rem;
     }
   }
-  @media screen and (max-width: 480px) {
-    padding: 0 1rem;
-  }
 `;
 
 export const NavList = styled.ul`
   display: flex;
   align-items: center;
-  padding-right: 3rem;
   transition: transform 0.3s ease-in-out;
   @media screen and (max-width: 480px) {
     position: absolute;
     top: 0;
     left: 0;
     z-index: 2;
-    padding-right: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     overflow: hidden;
     display: ${(props) => (props.open ? "flex" : "none")};
     flex-direction: column;

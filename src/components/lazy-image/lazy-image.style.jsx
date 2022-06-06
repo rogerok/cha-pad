@@ -16,7 +16,8 @@ const cardImageStyles = css`
   padding: 1rem;
   object-fit: cover;
   aspect-ratio: 1/1;
-  animation: ${loadingAnimation} 1s ease-in-out;
+  will-change: opacity;
+  animation: ${loadingAnimation} 0.5s ease-in-out;
 `;
 
 const getCardImageStyles = (props) => {

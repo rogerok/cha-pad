@@ -3,7 +3,10 @@ import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/userSlice";
 import { auth } from "../../firebase/firebase.utils";
 
+import useDisableByScroll from "../../hooks/useDisableByScroll";
+
 import { ROUTES } from "../../routes/routes";
+
 import { GiTeapotLeaves, GiHamburgerMenu } from "react-icons/gi";
 import { CgClose } from "react-icons/cg";
 
@@ -14,7 +17,6 @@ import {
   Logo,
   BurgerButton,
 } from "./nav.styles";
-import useDisableByScroll from "../../hooks/useDisableByScroll";
 
 const Nav = () => {
   const currentUser = useSelector(selectCurrentUser);
