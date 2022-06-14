@@ -9,7 +9,7 @@ import { setCurrentUser } from "./redux/user/userSlice";
 
 //firebase auth
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
-import { User } from "./firebase/firebase.utils";
+import { nanoid } from "@reduxjs/toolkit";
 
 //components
 import AuthorizedRoute from "./components/authorized-route/authorized-route.component";
@@ -17,6 +17,8 @@ import Layout from "./components/layout/layout-component";
 import SpinnerComponent from "./components/spinner/spinner.component";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
 import Home from "./pages/home/home.component";
+
+console.log(nanoid());
 
 const Posts = React.lazy(() => import("./components/posts/posts-component"));
 const TeaPad = React.lazy(() => import("./pages/tea-pad/tea-pad.component"));

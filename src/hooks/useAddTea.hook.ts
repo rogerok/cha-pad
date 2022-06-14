@@ -4,7 +4,8 @@ import React, {
   useCallback,
   useState,
 } from "react";
-import { v4 as uuidGenerator } from "uuid"; //for generating unique id of post
+
+import { nanoid } from "@reduxjs/toolkit"; //for generating unique id of post
 
 import { useAppSelector, useAppDispatch } from "./redux.hooks";
 import useCompressPhoto from "./useCompressPhoto.hook"; //for getting compressed photo from file input
@@ -78,7 +79,7 @@ const useAddTea = (): IuseAddTea => {
     e.preventDefault();
 
     //generating unique id and add post id to uer profile
-    const uuid: string = uuidGenerator();
+    const uuid: string = nanoid();
     const data = {
       ...teaData,
       id: uuid,
