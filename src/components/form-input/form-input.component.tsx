@@ -21,6 +21,4 @@ const FormInput: FC<FormInputProps> = (
   );
 };
 
-//const FormInput = React.memo(FormInputWithoutMemo);
-
 export default React.memo(FormInput);

@@ -30,7 +30,6 @@ export const NavContainer = styled.div`
   .react-icons {
     vertical-align: middle;
     font-size: 5rem;
-
     @media screen and (max-width: 480px) {
       font-size: 3.5rem;
     }
@@ -48,13 +47,14 @@ export const NavList = styled.ul`
     z-index: 2;
     width: 100%;
     height: 100vh;
-    overflow: hidden;
-    display: ${(props) => (props.open ? "flex" : "none")};
+    display: ${(props) => (props.open ? "flex" : "")};
     flex-direction: column;
     justify-content: flex-start;
+    padding-top: 5rem;
+    overflow: hidden;
     background-color: black;
     text-align: center;
-    transform: ${({ open }) => (open ? "translateX(0)" : "translateX(-100%)")};
+    transform: ${({ open }) => (open ? "translate(0)" : "translate(-100%)")};
   }
 `;
 
@@ -62,6 +62,7 @@ export const NavOption = styled(NavLink)`
   ${navOptionsStyles};
   @media screen and (max-width: 480px) {
     display: block;
+
     &.active {
       color: #a8a4a6;
     }

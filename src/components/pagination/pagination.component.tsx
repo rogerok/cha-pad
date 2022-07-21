@@ -1,8 +1,13 @@
 import React, { FC } from "react";
 
 import CustomButton from "../custom-button/custom-button.component";
+import CustomLink from "../custom-link/custom-link.component";
 
-import { PaginationWrapper, PaginationInner } from "./pagination.styles";
+import {
+  PaginationWrapper,
+  PaginationInner,
+  PaginationList,
+} from "./pagination.styles";
 
 interface PaginationProps {
   setCurrentPage: (number: number) => void;
@@ -16,14 +21,11 @@ const Pagination: FC<PaginationProps> = ({ pageNumbers, handleClick }) => {
       <PaginationInner>
         {pageNumbers.map((number) => {
           return (
-            <li key={number}>
-              <CustomButton
-                isPaginationButton
-                onClick={() => handleClick(number)}
-              >
+            <PaginationList key={number}>
+              <CustomButton onClick={() => handleClick(number)}>
                 {number}
               </CustomButton>
-            </li>
+            </PaginationList>
           );
         })}
       </PaginationInner>

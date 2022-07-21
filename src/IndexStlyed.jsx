@@ -37,7 +37,7 @@ ul {
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: grey;
+    color: #bbacac;
     font-weight: normal;
     font-size: 18px;  
   }

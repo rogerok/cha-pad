@@ -17,6 +17,10 @@ export const ModalLayout = styled.div`
   top: 0;
   left: 0;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
@@ -30,14 +34,21 @@ export const TeaPhoto = styled.img`
   box-shadow: 3px 5px 7px rgba(0, 0, 0, 0.5);
   border: 3px color black;
   animation: ${loadingAnimation} 300ms ease-in-out;
+  @media screen and (max-width: 480px) {
+    max-width: 80%;
+  }
 `;
 
 export const CloseModalButton = styled(AiOutlineClose)`
   position: absolute;
-  top: 3rem;
-  right: 3rem;
+  top: 10%;
+  right: 5%;
   background-color: transparent;
   cursor: pointer;
-  font-size: 2rem;
-  color: white;
+  font-size: 5rem;
+  color: #ffffff;
+  transition: 0.3s all ease-out;
+  &:hover {
+    color: #000000;
+  }
 `;

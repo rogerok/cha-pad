@@ -6,6 +6,6 @@ export const HeaderContainer = styled.header`
   border-bottom: 1px solid white;
   @media screen and (max-width: 480px) {
     padding: 1rem;
-    min-height: 10vh;
+    height: 6vh;
   }
 `;

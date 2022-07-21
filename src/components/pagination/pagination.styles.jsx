@@ -6,6 +6,13 @@ export const PaginationWrapper = styled.nav`
 `;
 export const PaginationInner = styled.ul`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
+`;
+
+export const PaginationList = styled.li`
+  margin-right: 1rem;
+  &:last-child {
+    margin-right: 0;
+  }
 `;

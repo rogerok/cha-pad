@@ -12,7 +12,6 @@ interface IModalProps {
 const Modal: FC<IModalProps> = ({ selectedImage, setSelectedImage }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const isOpen: boolean = selectedImage ? true : false;
-
   useDisableByScroll(isOpen);
 
   const handleOuterClose = (e: React.MouseEvent) => {
@@ -23,8 +22,8 @@ const Modal: FC<IModalProps> = ({ selectedImage, setSelectedImage }) => {
 
   return (
     <ModalLayout ref={modalRef} onClick={handleOuterClose}>
-      <TeaPhoto src={selectedImage} alt="" />
       <CloseModalButton onClick={() => setSelectedImage(null)} />
+      <TeaPhoto src={selectedImage} alt="" />
     </ModalLayout>
   );
 };

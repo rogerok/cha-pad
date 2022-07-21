@@ -101,11 +101,11 @@ const AddTea: FC = () => {
             value={teaData.teaReview}
           />
           <ButtonsContainer>
-            <CustomButton primary type="submit">
-              Добавить
-            </CustomButton>
             <CustomButton primary onClick={goBack}>
               Назад
+            </CustomButton>
+            <CustomButton primary type="submit">
+              Добавить
             </CustomButton>
           </ButtonsContainer>
         </form>

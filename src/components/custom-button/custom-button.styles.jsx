@@ -4,43 +4,32 @@ const customButtonStyles = css`
   background-color: black;
   color: white;
   border: 1px solid gray;
-  transition: 0.2s linear;
+  transition: 0.2s ease-out;
   cursor: pointer;
-  min-width: 40%;
+  min-width: 30%;
   max-width: 45%;
-  @media screen and (max-width: 480px) {
-    min-width: 100%;
-  }
+  padding: 1rem;
   &:hover {
-    padding: 15px;
     background-color: transparent;
     border: 1px solid white;
+    transform: scale(1.2);
+  }
+  @media screen and (max-width: 480px) {
+    min-width: 100%;
   }
 `;
 
 const googleSignInButtonStyles = css`
   background-color: #4285f4;
   color: #ffffff;
-  /*   @media screen and (max-width: 480px) {
-    min-width: 100%;
-  } */
 `;
 const paginationButtonStyles = css`
   width: 3rem;
 `;
 
-/* const primaryButtonStyles = css`
-  min-width: 40%;
-  max-width: 45%;
-  @media screen and (max-width: 480px) {
-    min-width: 100%;
-  }
-`; */
-
 const getButtonsStyles = (props) => {
   if (props.isGoogleButton) return googleSignInButtonStyles;
   if (props.isPaginationButton) return paginationButtonStyles;
-  /*   if (props.primary) return primaryButtonStyles; */
   return "";
 };
 
