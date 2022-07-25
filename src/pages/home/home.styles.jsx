@@ -38,10 +38,6 @@ const GalleryItemStyles4 = css`
   grid-row-end: 6;
 
   @media screen and (max-width: 480px) {
-    /*     grid-column-start: 1;
-    grid-column-end: 6;
-    grid-row-start: 3;
-    grid-row-end: 6; */
     display: none;
   }
 `;
@@ -80,6 +76,7 @@ const loadingAnimation = keyframes`
 `;
 
 export const Gallery = styled.section`
+  margin-top: 4rem;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(5, 5vw);
@@ -116,4 +113,11 @@ export const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+`;
+
+export const HomePage = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
