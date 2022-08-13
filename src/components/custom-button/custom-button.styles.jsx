@@ -9,11 +9,15 @@ const customButtonStyles = css`
   min-width: 30%;
   max-width: 45%;
   padding: 1rem;
-  &:hover {
-    background-color: transparent;
-    border: 1px solid white;
-    transform: scale(1.2);
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: transparent;
+      border: 1px solid white;
+      transform: scale(1.2);
+    }
   }
+
   @media screen and (max-width: 480px) {
     min-width: 100%;
   }

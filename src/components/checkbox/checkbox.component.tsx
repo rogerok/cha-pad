@@ -6,7 +6,7 @@ interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {}
 const Checkbox: FC<CheckboxProps> = ({ onChange, children, ...props }) => {
   return (
     <CheckboxContainer>
-      {children ?? null}
+      {children}
       <input onChange={onChange} {...props} />
       <label htmlFor="would-taste" />
     </CheckboxContainer>

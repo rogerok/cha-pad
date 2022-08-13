@@ -186,7 +186,6 @@ export const fetchUserPosts = createAsyncThunk(
       const data = gradeData.docs
         .map((doc) => doc.data())
         .sort((a, b) => b.date - a.date);
-      /*      const sortedByDate = data.sort((a, b) => b.date - a.date); */
 
       return wouldTaste
         ? data.filter((item) => item.wouldTaste === true)

@@ -7,7 +7,7 @@ interface FormWrapperProps {
 
 const FormWrapper: FC<FormWrapperProps> = ({ children, wide }) => {
   return (
-    <FormWrapperContainer wide={wide ?? ""}>{children}</FormWrapperContainer>
+    <FormWrapperContainer wide={wide || ""}>{children}</FormWrapperContainer>
   );
 };
 export default FormWrapper;

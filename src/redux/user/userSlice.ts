@@ -3,6 +3,7 @@ import {
   createSlice,
   createSelector,
   createAsyncThunk,
+  PayloadAction,
 } from "@reduxjs/toolkit";
 import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 
@@ -57,7 +58,7 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setCurrentUser: (state, action) => {
+    setCurrentUser: (state: User, action: PayloadAction<any>) => {
       state.currentUser = action.payload;
     },
   },

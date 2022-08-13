@@ -11,8 +11,10 @@ export const CustomLinkContainer = styled(Link)`
   color: white;
   border: 1px solid gray;
   transition: 0.2s linear;
-  &:hover {
-    background-color: transparent;
-    border: 1px solid white;
+  @media (hover: hover) {
+    &:hover {
+      background-color: transparent;
+      border: 1px solid white;
+    }
   }
 `;

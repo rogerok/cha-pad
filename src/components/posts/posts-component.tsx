@@ -14,6 +14,7 @@ import { ITea } from "../../ts/types";
 import Post from "../post/post.component";
 import SpinnerComponent from "../spinner/spinner.component";
 import WrapperComponent from "../wrapper/wrapper.component";
+
 const Pagination = React.lazy(
   () => import("../pagination/pagination.component")
 );
@@ -38,7 +39,7 @@ const Posts: FC = () => {
 
   useEffect(() => {
     dispatch(dispatcher(fetchData));
-  }, [dispatcher]);
+  }, [dispatcher, dispatch]);
 
   if (error) return <div> {error} </div>;
 

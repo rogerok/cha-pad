@@ -25,7 +25,7 @@ const SignInAndSignUpPage = () => {
       navigate(location.state.from.pathname);
     }
     if (location.state === null && currentUser) navigate("/");
-  }, [currentUser, location]);
+  }, [currentUser, location, navigate]);
 
   return isLoading ? (
     <SpinnerComponent style={{ margin: "auto" }} />

@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 
 import CustomButton from "../custom-button/custom-button.component";
-import CustomLink from "../custom-link/custom-link.component";
 
 import {
   PaginationWrapper,

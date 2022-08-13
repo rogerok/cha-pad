@@ -58,7 +58,7 @@ const routes = [
       { path: ROUTES.ADD_TEA, element: <AddTea /> },
       {
         path: ROUTES.TASTED_TEA,
-        element: <TeaCategory teaCollection={[]} />,
+        element: <TeaCategory />,
       },
       {
         path: ROUTES.TASTED_TEA_COLLECTION,
@@ -91,14 +91,14 @@ const App: FC = () => {
         const userRef = await createUserProfileDocument(userAuth);
 
         //if user logged in we add event listener and update our app state, if something was changed in our user database
-        userRef.onSnapshot((snapshot) => {
+        userRef.onSnapshot((snapshot) =>
           dispatch(
             setCurrentUser({
               id: snapshot.id,
               ...snapshot.data(),
             })
-          );
-        });
+          )
+        );
       } else {
         //userAuth will be null, if user log out
         dispatch(setCurrentUser(userAuth));
@@ -107,7 +107,7 @@ const App: FC = () => {
     });
 
     return unsubscribeFromAuth;
-  }, []);
+  }, [dispatch]);
   return isLoading ? (
     <SpinnerComponent />
   ) : (

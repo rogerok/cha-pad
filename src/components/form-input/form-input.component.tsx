@@ -16,7 +16,7 @@ const FormInput: FC<FormInputProps> = (
       <WrapperInput>
         <Input onChange={onChange} id={id} {...otherProps} />
       </WrapperInput>
-      {children ?? null}
+      {children}
     </Wrapper>
   );
 };

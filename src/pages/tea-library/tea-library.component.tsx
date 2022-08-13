@@ -12,7 +12,7 @@ const TeaLibrary: FC<TeaLibraryData> = () => {
   return (
     <>
       <Title>Чай, добавленный пользователями</Title>
-      <TeaCategory teaCollection={[]} />
+      <TeaCategory />
     </>
   );
 };
