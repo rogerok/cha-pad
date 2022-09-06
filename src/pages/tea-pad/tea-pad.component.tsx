@@ -12,7 +12,7 @@ interface TeaPadData {
   uiData: ITeaDataForInterfaces[];
 }
 
-const TeaPad: FC<TeaPadData> = () => {
+const TeaPad/* : FC<TeaPadData> */ = () => {
   const uiData = useAppSelector(selectUiData);
 
   return (

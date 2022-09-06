@@ -41,7 +41,7 @@ const routes = [
       { index: true, element: <Home /> },
       {
         path: ROUTES.TEA_LIBRARY,
-        element: <TeaLibrary teaCollection={[]} />,
+        element: <TeaLibrary  />,
       },
       {
         path: ROUTES.TEA_LIBRARY_COLLECTIONS,
@@ -51,7 +51,7 @@ const routes = [
         path: ROUTES.TEA_PAD,
         element: (
           <AuthorizedRoute>
-            <TeaPad uiData={[]} />
+            <TeaPad  />
           </AuthorizedRoute>
         ),
       },

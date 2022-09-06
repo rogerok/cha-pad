@@ -8,7 +8,7 @@ interface TeaLibraryData {
   teaCollection: ITeaDataForInterfaces[];
 }
 
-const TeaLibrary: FC<TeaLibraryData> = () => {
+const TeaLibrary/* : FC<TeaLibraryData>  */= () => {
   return (
     <>
       <Title>Чай, добавленный пользователями</Title>
